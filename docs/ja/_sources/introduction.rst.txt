@@ -1,0 +1,66 @@
+******************************
+はじめに
+******************************
+
+NIMOとは
+===========
+
+NIMOは，自動材料探索を実現するために，人が介入することなくロボット実験と人工知能のクローズドループを実現するためのPythonライブラリです．
+NIMS-OS(NIMS Orchestration System)として開発を始め(https://github.com/nimsos-dev/nimsos)，オープンソースソフトウェアとして広めるため，愛称としてNIMOを採用することにしました．
+NIMOでは，人工知能，ロボット実験をそれぞれモジュールと捉えることで，様々な組み合わせで自動材料探索を実施することができます（下図）．
+材料科学用人工知能として，ベイズ最適化手法（PHYSBO），無目的探索手法（BLOX），相図作成効率化手法（PDC）および，ランダム実験が使用できます．
+ロボット実験として，NIMS電気化学自動実験ロボット（NAREE）が標準では使用できます．
+結果の可視化ツールも同包することで，リアルタイムで最適化結果の確認が可能です．
+独自に開発した人工知能，ロボット実験操作用モジュールを追加し利用することもできます．
+今後モジュールは増やしていく予定です．
+
+|
+
+.. image:: ../img/modules.png
+   :align: center
+
+
+|
+
+
+NIMOでは，下図のように３種類のPythonスクリプトでクローズドループを形成します．
+
+* ``ai_tool.py`` : 候補となる実験条件がリストアップされた ``candidadates file`` の中から，AIによって好ましい実験条件を選定し， ``proposal file`` に出力します．
+* ``preparation_input.py`` : ``proposal file`` からロボット実験用のインプットファイルを作成し，ロボット実験装置のスタート指示をします．このPythonスクリプトの一部は使用するロボット実験装置に依存して書き換える必要があります．
+* ``analysis_output.py`` : ロボット実験装置から終了の信号を受け，実験結果から目的関数を抽出し， ``candidadates file`` をアップデートします．このPythonスクリプトの一部は使用するロボット実験装置に依存して書き換える必要があります．
+
+
+.. image:: ../img/cycle.png
+   :align: center
+
+
+|
+
+
+NIMOの引用
+==============
+
+NIMOを使用した際は，以下の文献を引用してください．
+
+Ryo Tamura, Koji Tsuda, and Shoichi Matsuda,
+NIMS-OS: An automation software to implement a closed loop between artificial intelligence and robotic experiments in materials science,
+Science and Technology of Advanced Materials: Methods 3, 1, 2232297 (2023).
+
+Available from `https://www.tandfonline.com/doi/full/10.1080/27660400.2023.2232297 <https://www.tandfonline.com/doi/full/10.1080/27660400.2023.2232297>`_.
+
+
+
+
+
+主な開発者
+===========
+
+* 田村 亮（物質・材料研究機構，東京大学）
+* 松田 翔一（物質・材料研究機構）
+* 津田 宏治（東京大学，物質・材料研究機構）
+
+
+ライセンス
+===========
+
+本ソフトウェアのプログラムパッケージおよびソースコード一式はMIT Licenseに準じて配布しています．

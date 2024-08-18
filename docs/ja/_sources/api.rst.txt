@@ -1,0 +1,14 @@
+API Reference
+=============
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   nimo
+   nimo.ai_tools
+   nimo.input_tools
+   nimo.output_tools
+   nimo.visualization
+

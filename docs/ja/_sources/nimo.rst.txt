@@ -1,0 +1,12 @@
+nimo package
+==============
+
+
+nimo.nimo\_modules module
+-------------------------------
+
+.. automodule:: nimo.nimo_modules
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

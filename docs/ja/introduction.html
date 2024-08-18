@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>はじめに &mdash; NIMO 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="インストール" href="install.html" />
+    <link rel="prev" title="Welcome to NIMO’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/NIMO.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">はじめに</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#nimo">NIMOとは</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">NIMOの引用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">主な開発者</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">ライセンス</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">インストール</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_usage.html">基本的な使い方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_sample.html">メインスクリプト例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NIMO</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">はじめに</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>はじめに<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<section id="nimo">
+<h2>NIMOとは<a class="headerlink" href="#nimo" title="Link to this heading"></a></h2>
+<p>NIMOは，自動材料探索を実現するために，人が介入することなくロボット実験と人工知能のクローズドループを実現するためのPythonライブラリです．
+NIMS-OS(NIMS Orchestration System)として開発を始め(<a class="reference external" href="https://github.com/nimsos-dev/nimsos">https://github.com/nimsos-dev/nimsos</a>)，オープンソースソフトウェアとして広めるため，愛称としてNIMOを採用することにしました．
+NIMOでは，人工知能，ロボット実験をそれぞれモジュールと捉えることで，様々な組み合わせで自動材料探索を実施することができます（下図）．
+材料科学用人工知能として，ベイズ最適化手法（PHYSBO），無目的探索手法（BLOX），相図作成効率化手法（PDC）および，ランダム実験が使用できます．
+ロボット実験として，NIMS電気化学自動実験ロボット（NAREE）が標準では使用できます．
+結果の可視化ツールも同包することで，リアルタイムで最適化結果の確認が可能です．
+独自に開発した人工知能，ロボット実験操作用モジュールを追加し利用することもできます．
+今後モジュールは増やしていく予定です．</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="_images/modules.png" class="align-center" src="_images/modules.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>NIMOでは，下図のように３種類のPythonスクリプトでクローズドループを形成します．</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ai_tool.py</span></code> : 候補となる実験条件がリストアップされた <code class="docutils literal notranslate"><span class="pre">candidadates</span> <span class="pre">file</span></code> の中から，AIによって好ましい実験条件を選定し， <code class="docutils literal notranslate"><span class="pre">proposal</span> <span class="pre">file</span></code> に出力します．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">preparation_input.py</span></code> : <code class="docutils literal notranslate"><span class="pre">proposal</span> <span class="pre">file</span></code> からロボット実験用のインプットファイルを作成し，ロボット実験装置のスタート指示をします．このPythonスクリプトの一部は使用するロボット実験装置に依存して書き換える必要があります．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">analysis_output.py</span></code> : ロボット実験装置から終了の信号を受け，実験結果から目的関数を抽出し， <code class="docutils literal notranslate"><span class="pre">candidadates</span> <span class="pre">file</span></code> をアップデートします．このPythonスクリプトの一部は使用するロボット実験装置に依存して書き換える必要があります．</p></li>
+</ul>
+<img alt="_images/cycle.png" class="align-center" src="_images/cycle.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+<section id="id2">
+<h2>NIMOの引用<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>NIMOを使用した際は，以下の文献を引用してください．</p>
+<p>Ryo Tamura, Koji Tsuda, and Shoichi Matsuda,
+NIMS-OS: An automation software to implement a closed loop between artificial intelligence and robotic experiments in materials science,
+Science and Technology of Advanced Materials: Methods 3, 1, 2232297 (2023).</p>
+<p>Available from <a class="reference external" href="https://www.tandfonline.com/doi/full/10.1080/27660400.2023.2232297">https://www.tandfonline.com/doi/full/10.1080/27660400.2023.2232297</a>.</p>
+</section>
+<section id="id3">
+<h2>主な開発者<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>田村 亮（物質・材料研究機構，東京大学）</p></li>
+<li><p>松田 翔一（物質・材料研究機構）</p></li>
+<li><p>津田 宏治（東京大学，物質・材料研究機構）</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>ライセンス<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>本ソフトウェアのプログラムパッケージおよびソースコード一式はMIT Licenseに準じて配布しています．</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to NIMO’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="install.html" class="btn btn-neutral float-right" title="インストール" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024-, NIMO developers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXX-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-XXXXXXX-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>
