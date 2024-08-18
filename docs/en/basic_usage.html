@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic Usage &mdash; NIMO 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Example of Main Script" href="main_sample.html" />
+    <link rel="prev" title="Install and Uninstall" href="install.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/NIMO.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install and Uninstall</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Basic Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#import">Import</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#definition-of-parameters">Definition of parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#preparation-of-candidates-file">Preparation of candidates file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#proposals-file-by-ai">Proposals file by AI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#storage-of-data-for-robotic-experiments">Storage of data for robotic experiments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#execution-of-ai">Execution of AI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#arguments">Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#creation-of-input-files-for-robotic-experiments-and-execution-of-robotic-experiments">Creation of input files for robotic experiments and execution of robotic experiments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#analysis-of-results-by-robotic-experiments-and-update-of-candidates-files">Analysis of results by robotic experiments and update of candidates files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#storing-and-updating-results-history">Storing and updating results history</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#visualization-of-results">Visualization of results</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#visualization-of-history">Visualization of history</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#distributions-of-objective-functions">Distributions of objective functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#predicted-phase-diagram">Predicted phase diagram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#usage-of-original-module">Usage of original module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#preparation-of-ai-tool-original-py">Preparation of <code class="docutils literal notranslate"><span class="pre">ai_tool_original.py</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preparation-of-preparation-input-original-py">Preparation of <code class="docutils literal notranslate"><span class="pre">preparation_input_original.py</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preparation-of-analysis-output-original-py">Preparation of <code class="docutils literal notranslate"><span class="pre">analysis_output_original.py</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="main_sample.html">Example of Main Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NIMO</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Basic Usage</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="basic-usage">
+<h1>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h1>
+<section id="import">
+<h2>Import<a class="headerlink" href="#import" title="Link to this heading"></a></h2>
+<p>First, we will import NIMO.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nimo</span>
+</pre></div>
+</div>
+</section>
+<section id="definition-of-parameters">
+<h2>Definition of parameters<a class="headerlink" href="#definition-of-parameters" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ObjectivesNum</span></code>: Specify the number of objective functions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ProposalsNum</span></code>: Specify the number of experimental conditions proposed by the AI in one cycle. This corresponds to the number of parallel experiments in a robotic experiments.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CyclesNum</span></code>: Specify the number of cycles.</p></li>
+</ul>
+<p>For example, if the number of objective functions is two, the number of parallel experiments is two, and the optimization is performed in three cycles,
+the following settings are used.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ObjectivesNum</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">ProposalsNum</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">CyclesNum</span> <span class="o">=</span> <span class="mi">3</span>
+</pre></div>
+</div>
+</section>
+<section id="preparation-of-candidates-file">
+<h2>Preparation of candidates file<a class="headerlink" href="#preparation-of-candidates-file" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">candidates_file</span></code> is a file listing the conditions of the experiment.</p>
+<p>The candidates file is prepared in advance as follows.
+The example is that there is a <span class="math notranslate nohighlight">\(d\)</span> dimensional descriptor and <span class="math notranslate nohighlight">\(l\)</span> objective functions are considered.
+Enter all the candidate descriptors in the first <span class="math notranslate nohighlight">\(d\)</span> column.
+This is the search space for the materials, and there should be no empty space in this part.
+In the subsequent <span class="math notranslate nohighlight">\(l\)</span> column, enter the value of the objective functions.
+If there is no experimental data in the initial stage, the all part of objective functions will be left blank.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>descriptor 1</p></th>
+<th class="head"><p>…</p></th>
+<th class="head"><p>descriptor <span class="math notranslate nohighlight">\(d\)</span></p></th>
+<th class="head"><p>objective 1</p></th>
+<th class="head"><p>…</p></th>
+<th class="head"><p>objective <span class="math notranslate nohighlight">\(l\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>…</p></td>
+<td><p>0</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>…</p></td>
+<td><p>0.5</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>…</p></td>
+<td><p>1</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>0.5</p></td>
+<td><p>…</p></td>
+<td><p>0</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>0.5</p></td>
+<td><p>…</p></td>
+<td><p>0.5</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>0.5</p></td>
+<td><p>…</p></td>
+<td><p>1</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>…</p></td>
+<td><p>0</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>…</p></td>
+<td><p>0.5</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>…</p></td>
+<td><p>1</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>For example, if the name of the candidates file is “candidates.csv” and the file is stored in the same folder as the main script,
+set as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">candidates_file</span> <span class="o">=</span> <span class="s2">&quot;./candidates.csv&quot;</span>
+</pre></div>
+</div>
+<p>If you have some experimental data, enter all <span class="math notranslate nohighlight">\(l\)</span> objective functions as follows</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>descriptor 1</p></th>
+<th class="head"><p>…</p></th>
+<th class="head"><p>descriptor <span class="math notranslate nohighlight">\(d\)</span></p></th>
+<th class="head"><p>objective 1</p></th>
+<th class="head"><p>…</p></th>
+<th class="head"><p>objective <span class="math notranslate nohighlight">\(l\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>…</p></td>
+<td><p>0</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>…</p></td>
+<td><p>0.5</p></td>
+<td><p>12</p></td>
+<td><p>…</p></td>
+<td><p>20</p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>…</p></td>
+<td><p>1</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>0.5</p></td>
+<td><p>…</p></td>
+<td><p>0</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>0.5</p></td>
+<td><p>…</p></td>
+<td><p>0.5</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>0.5</p></td>
+<td><p>…</p></td>
+<td><p>1</p></td>
+<td><p>5</p></td>
+<td><p>…</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>…</p></td>
+<td><p>0</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>…</p></td>
+<td><p>0.5</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>…</p></td>
+<td><p>1</p></td>
+<td><p>23</p></td>
+<td><p>…</p></td>
+<td><p>2</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note: If a non-numeric value is entered in the cell for the objective function, the cell is treated by NIMO as a blank cell. Therefore, AI may suggest experimental conditions for cells with non-numeric values.</strong></p>
+</section>
+<section id="proposals-file-by-ai">
+<h2>Proposals file by AI<a class="headerlink" href="#proposals-file-by-ai" title="Link to this heading"></a></h2>
+<p>Specify a file in <code class="docutils literal notranslate"><span class="pre">proposals_file</span></code> that describes the experimental conditions proposed by the AI.
+This file is automatically created by the NIMO, and you do not need to create the file in advance.
+You only need to specify the name of the file.</p>
+<p>For example, if you want to store the file named “proposals.csv” in the same folder as the main script,
+set as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">proposals_file</span> <span class="o">=</span> <span class="s2">&quot;./proposals.csv&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="storage-of-data-for-robotic-experiments">
+<h2>Storage of data for robotic experiments<a class="headerlink" href="#storage-of-data-for-robotic-experiments" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">input_folder</span></code>: Specify the folder to store the input files for the robotic experiments.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_folder</span></code>: Specify the folder where the output files from the robotic experiments will be stored.</p></li>
+</ul>
+<p>For example, when the input folder is “./EXPInput” and the output folder is “./EXPOutput”,
+set as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">input_folder</span> <span class="o">=</span> <span class="s2">&quot;./EXPInput&quot;</span>
+<span class="n">output_folder</span> <span class="o">=</span> <span class="s2">&quot;./EXPOutput&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="execution-of-ai">
+<h2>Execution of AI<a class="headerlink" href="#execution-of-ai" title="Link to this heading"></a></h2>
+<p>Using <code class="docutils literal notranslate"><span class="pre">nimo.selection</span></code> , computes suggestions for experimental conditions by AI.</p>
+<section id="arguments">
+<h3>Arguments<a class="headerlink" href="#arguments" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">method</span></code>: Specify the AI method.” PHYSBO”: Bayesian Optimization by PHYSBO, “BLOX”: Boundless objective-free exploration by BLOX, “PDC”: Phase diagram construction by PDC, “RE”: Random exploration can be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: Specify the file stored experimental conditions, that is, “candidates_file”.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code>: Specify the file stored proposal conditions by AI, that is “proposals_file”.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code>: Specify “ObjectivesNum”, the number of objective functions. Of course, you can also directly specify a numerical value.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_proposals</span></code>: Specify “ProposalsNum”, the number of conditions proposed by the AI in one cycle. Of course, you can also directly specify a numerical value.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_res</span></code>: By specifying “True”, we can obtain output_res.csv that contains the predicted values of the objective functions and the acquisition function when using an AI other than “RE”. The default value is “False”.</p></li>
+</ul>
+<p>For example, to compute proposals by Bayesian optimization,
+set as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nimo</span><span class="o">.</span><span class="n">selection</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;PHYSBO&quot;</span><span class="p">,</span>
+                 <span class="n">input_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">,</span>
+                 <span class="n">output_file</span> <span class="o">=</span> <span class="n">proposals_file</span><span class="p">,</span>
+                 <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">ObjectivesNum</span><span class="p">,</span>
+                 <span class="n">num_proposals</span> <span class="o">=</span> <span class="n">ProposalsNum</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="creation-of-input-files-for-robotic-experiments-and-execution-of-robotic-experiments">
+<h2>Creation of input files for robotic experiments and execution of robotic experiments<a class="headerlink" href="#creation-of-input-files-for-robotic-experiments-and-execution-of-robotic-experiments" title="Link to this heading"></a></h2>
+<p>Using <code class="docutils literal notranslate"><span class="pre">nimo.preparation_input</span></code>, create input files for the robotic experiments and execute the robotic experiments.</p>
+<p>This part must be revised <strong>depending on the robot to be used</strong>.</p>
+<section id="id1">
+<h3>Arguments<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">machine</span></code>: Specify the robot to be used. “STAN”: Standard format module, “NAREE”: NIMS automated robotic electrochemical experiments can be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: Specify “proposals_file”, which is a file of proposals from the AI.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">input_folder</span></code>: Specify the folder “input_folder” to store the input files for the robotic experiments.</p></li>
+</ul>
+<p>For example, to use a standard format module,
+set as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nimo</span><span class="o">.</span><span class="n">preparation_input</span><span class="p">(</span><span class="n">machine</span> <span class="o">=</span> <span class="s2">&quot;STAN&quot;</span><span class="p">,</span>
+                         <span class="n">input_file</span> <span class="o">=</span> <span class="n">proposals_file</span><span class="p">,</span>
+                         <span class="n">input_folder</span> <span class="o">=</span> <span class="n">input_folder</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="analysis-of-results-by-robotic-experiments-and-update-of-candidates-files">
+<h2>Analysis of results by robotic experiments and update of candidates files<a class="headerlink" href="#analysis-of-results-by-robotic-experiments-and-update-of-candidates-files" title="Link to this heading"></a></h2>
+<p>Using <code class="docutils literal notranslate"><span class="pre">nimo.analysis_output</span></code> , analyze the results by the robotic experiments and update the candidates file.</p>
+<p>This part must be revised <strong>depending on the robot to be used</strong>.</p>
+<section id="id2">
+<h3>Arguments<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">machine</span></code>: Specify the robot to be used. “STAN”: Standard format module, “NAREE”: NIMS automated robotic electrochemical experiments can be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: Specify “proposals_file”, which is a file of proposals from the AI.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code>: Specify the file stored experimental conditions, that is, “candidates_file”.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code>: Specify “ObjectivesNum”, the number of objective functions. Of course, you can also directly specify a numerical value.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_folder</span></code>: Specify the folder “output_folder” to store the results by the robotic experiments.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">objectives_info</span></code>: If “NAREE” is specified, we set which properties of the experimental results are used as the objective functios. It must be specified as dictionary.</p></li>
+</ul>
+<p>For example, to use a standard format module,
+set as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nimo</span><span class="o">.</span><span class="n">analysis_output</span><span class="p">(</span><span class="n">machine</span> <span class="o">=</span> <span class="s2">&quot;STAN&quot;</span><span class="p">,</span>
+                       <span class="n">input_file</span> <span class="o">=</span> <span class="n">proposals_file</span><span class="p">,</span>
+                       <span class="n">output_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">,</span>
+                       <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">ObjectivesNum</span><span class="p">,</span>
+                       <span class="n">output_folder</span> <span class="o">=</span> <span class="n">output_folder</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="storing-and-updating-results-history">
+<h2>Storing and updating results history<a class="headerlink" href="#storing-and-updating-results-history" title="Link to this heading"></a></h2>
+<p>Using <code class="docutils literal notranslate"><span class="pre">nimo.history</span></code> , save a history of optimization results.</p>
+<section id="id3">
+<h3>Arguments<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: Specify the file stored experimental conditions, that is, “candidates_file”.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code>: Specify “ObjectivesNum”, the number of objective functions. Of course, you can also directly specify a numerical value.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">itt</span></code>: Enter the current number of cycles. If not specified, a new list will be created to store the history.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">history_file</span></code>: If a <code class="docutils literal notranslate"><span class="pre">history_file</span></code> has already been created, this will update the file. If not specified, a new history list is created.</p></li>
+</ul>
+<p>When storing optimization results for the first time,
+set as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">res_history</span> <span class="o">=</span> <span class="n">nimo</span><span class="o">.</span><span class="n">history</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">,</span>
+                             <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">ObjectivesNum</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you want to update <code class="docutils literal notranslate"><span class="pre">res_history</span></code> in cycle K,
+set as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">res_history</span> <span class="o">=</span> <span class="n">nimo</span><span class="o">.</span><span class="n">history</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">,</span>
+                             <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">ObjectivesNum</span><span class="p">,</span>
+                             <span class="n">itt</span> <span class="o">=</span> <span class="n">K</span><span class="p">,</span>
+                             <span class="n">history_file</span> <span class="o">=</span> <span class="n">res_history</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="visualization-of-results">
+<h2>Visualization of results<a class="headerlink" href="#visualization-of-results" title="Link to this heading"></a></h2>
+<p>Using <code class="docutils literal notranslate"><span class="pre">nimo.visualization</span></code>, figures of the results are obtained.
+First, create a folder named <code class="docutils literal notranslate"><span class="pre">fig</span></code> in the same folder as the main script.
+The output will be stored in this folder.</p>
+<section id="visualization-of-history">
+<h3>Visualization of history<a class="headerlink" href="#visualization-of-history" title="Link to this heading"></a></h3>
+<p>Using <code class="docutils literal notranslate"><span class="pre">nimo.visualization.plot_history</span></code> , figures for history are obtained.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nimo.visualization.plot_history.cycle</span></code>: The cycle dependence of all data can be plotted.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nimo.visualization.plot_history.best</span></code>: The maximum value in each cycle can be plotted.</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>Arguments<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: Specify the file “res_history” that contains the history.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_cycles</span></code>: Specify the number of cycles “CyclesNum”. Of course, you can also directly specify a numerical value.</p></li>
+</ul>
+<p>Specifically, set as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nimo</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">plot_history</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">res_history</span><span class="p">,</span>
+                                        <span class="n">num_cycles</span> <span class="o">=</span> <span class="n">CyclesNum</span><span class="p">)</span>
+
+<span class="n">nimo</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">plot_history</span><span class="o">.</span><span class="n">best</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">res_history</span><span class="p">,</span>
+                                       <span class="n">num_cycles</span> <span class="o">=</span> <span class="n">CyclesNum</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="distributions-of-objective-functions">
+<h3>Distributions of objective functions<a class="headerlink" href="#distributions-of-objective-functions" title="Link to this heading"></a></h3>
+<p>Using <code class="docutils literal notranslate"><span class="pre">nimo.visualization.plot_distribution.plot</span></code> , the distributions of objective functions are obtained.
+If the objective function is one dimensional, it is output as a histogram.
+If the objective function is two or three dimensional, it is output as a scatter plot.
+For four or more dimensions, no plot is output.</p>
+</section>
+<section id="id5">
+<h3>Arguments<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: Specify the file “res_history” that contains the history.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code>: Specify the number of objective functions “ObjectivesNum”. Of course, you can also directly specify a numerical value.</p></li>
+</ul>
+<p>Specifically, set as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nimo</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">plot_distribution</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">,</span>
+                                            <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">ObjectivesNum</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="predicted-phase-diagram">
+<h3>Predicted phase diagram<a class="headerlink" href="#predicted-phase-diagram" title="Link to this heading"></a></h3>
+<p>Using <code class="docutils literal notranslate"><span class="pre">nimo.visualization.plot_phase_diagram.plot</span></code> , the predicted phase diagrams are obtained.</p>
+<p>This can be used when “PDC” is used as the AI method.
+If the descriptor has one dimension or four or more dimensions, no plot is output.</p>
+</section>
+<section id="id6">
+<h3>Arguments<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: Specify the file stored experimental conditions, that is, “candidates_file”.</p></li>
+</ul>
+<p>Specifically, set as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nimo</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">plot_phase_diagram</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="usage-of-original-module">
+<h2>Usage of original module<a class="headerlink" href="#usage-of-original-module" title="Link to this heading"></a></h2>
+<section id="preparation-of-ai-tool-original-py">
+<h3>Preparation of <code class="docutils literal notranslate"><span class="pre">ai_tool_original.py</span></code><a class="headerlink" href="#preparation-of-ai-tool-original-py" title="Link to this heading"></a></h3>
+<p>If we want to use original AI method, create a <code class="docutils literal notranslate"><span class="pre">ai_tool_original.py</span></code> and put it in the same folder containing the main script.
+To create it, the most basic module <code class="docutils literal notranslate"><span class="pre">ai_tool_re.py</span></code> should be rewritten appropriately.
+If <code class="docutils literal notranslate"><span class="pre">ORIGINAL</span></code> is used as the class name, this module can also be used in the GUI version.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ORIGINAL</span><span class="p">():</span>
+</pre></div>
+</div>
+<p>Specifically, set as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ai_tool_original</span>
+<span class="n">ai_tool_original</span><span class="o">.</span><span class="n">ORIGINAL</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">,</span>
+                          <span class="n">output_file</span> <span class="o">=</span> <span class="n">proposals_file</span><span class="p">,</span>
+                          <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">ObjectivesNum</span><span class="p">,</span>
+                          <span class="n">num_proposals</span> <span class="o">=</span> <span class="n">ProposalsNum</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="preparation-of-preparation-input-original-py">
+<h3>Preparation of <code class="docutils literal notranslate"><span class="pre">preparation_input_original.py</span></code><a class="headerlink" href="#preparation-of-preparation-input-original-py" title="Link to this heading"></a></h3>
+<p>If we want to use original robotic system, create a <code class="docutils literal notranslate"><span class="pre">preparation_input_original.py</span></code> and put it in the same folder containing the main script.
+To create it, the most basic module <code class="docutils literal notranslate"><span class="pre">preparation_input_standard.py</span></code> should be rewritten appropriately.
+If <code class="docutils literal notranslate"><span class="pre">ORIGINAL</span></code> is used as the class name, this module can also be used in the GUI version.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ORIGINAL</span><span class="p">():</span>
+</pre></div>
+</div>
+<p>Specifically, set as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">preparation_input_original</span>
+<span class="n">preparation_input_original</span><span class="o">.</span><span class="n">ORIGINAL</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">proposals_file</span><span class="p">,</span>
+                                    <span class="n">input_folder</span> <span class="o">=</span> <span class="n">input_folder</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="preparation-of-analysis-output-original-py">
+<h3>Preparation of <code class="docutils literal notranslate"><span class="pre">analysis_output_original.py</span></code><a class="headerlink" href="#preparation-of-analysis-output-original-py" title="Link to this heading"></a></h3>
+<p>If we want to use original robotic system, create a <code class="docutils literal notranslate"><span class="pre">analysis_output_original.py</span></code> and put it in the same folder containing the main script.
+To create it, the most basic module <code class="docutils literal notranslate"><span class="pre">analysis_output_standard.py</span></code> should be rewritten appropriately.
+If <code class="docutils literal notranslate"><span class="pre">ORIGINAL</span></code> is used as the class name, this module can also be used in the GUI version.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ORIGINAL</span><span class="p">():</span>
+</pre></div>
+</div>
+<p>Specifically, set as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">analysis_output_original</span>
+<span class="n">analysis_output_original</span><span class="o">.</span><span class="n">ORIGINAL</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">proposals_file</span><span class="p">,</span>
+                                  <span class="n">output_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">,</span>
+                                  <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">ObjectivesNum</span><span class="p">,</span>
+                                  <span class="n">output_folder</span> <span class="o">=</span> <span class="n">output_folder</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="install.html" class="btn btn-neutral float-left" title="Install and Uninstall" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="main_sample.html" class="btn btn-neutral float-right" title="Example of Main Script" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024-, NIMO developers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXX-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-XXXXXXX-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

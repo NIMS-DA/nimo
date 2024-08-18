@@ -1,0 +1,65 @@
+******************************
+Install and Uninstall
+******************************
+
+Install
+==================
+
+Required packages
+--------------------------
+
+* Python >= 3.6
+* Cython
+* matplotlib
+* numpy
+* physbo >= 2.0
+* scikit-learn
+* scipy
+
+
+
+.. _install_jp:
+
+Install procedures
+------------------
+
+* From ``PyPI`` (Required packages will also be installed at the same time.)
+
+
+.. code-block:: python
+
+    pip3 install nimo
+
+
+
+* If you add the ``--user`` option, it will be installed under the user’s home directory
+
+.. code-block:: python
+
+    pip3 install --user nimo
+
+
+
+For Windows PC
+------------------
+
+* Install of Visual Studio
+
+For Windows PCs, there is the case that an install of PHYSBO using the above pip is failed.
+This is because PHYSBO uses Cython and requires a C++ compiler.
+To install PHYSBO on a Windows PC, Visual Studio from the Microsoft website may be required.
+
+https://visualstudio.microsoft.com/
+
+
+
+Uninstall
+=====================
+
+
+* Execute the following command.
+
+.. code-block:: python
+
+   pip uninstall nimo
+
