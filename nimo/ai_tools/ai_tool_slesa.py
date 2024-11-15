@@ -14,7 +14,7 @@ class SLESA():
 
     """
 
-    def __init__(self, input_file, output_file, num_objectives, num_proposals, slesa_beta_max, slesa_beta_num, re_seed):
+    def __init__(self, input_file, output_file, num_objectives, num_proposals, slesa_beta_max, slesa_beta_num, re_seed, output_res):
         """Constructor
         
         This function do not depend on robot.
@@ -24,7 +24,11 @@ class SLESA():
             output_file (str): the file for proposals from MI algorithm
             num_objectives (int): the number of objectives
             num_proposals (int): the number of proposals
-            ranges (list): the ranges for SLESA
+            slesa_beta_max (float): the maximum value of beta (inverse temperature)
+            slesa_beta_num (int): the number of beta (number of cycles)
+            re_seed (int): seed of random number
+            output_res (str): True or False to export prediction results
+
 
         """
 
@@ -37,6 +41,7 @@ class SLESA():
         self.beta_num = slesa_beta_num
         self.seed = re_seed
 
+        self.output_res = output_res
 
 
     def load_data(self):
@@ -228,6 +233,45 @@ class SLESA():
                     if id[ii] not in actions:
                         actions.append(id[ii])
 
+
+            #Output prediction results
+            if self.output_res == True:
+
+                res_tot = []
+
+                f = open(self.input_file, 'r')
+                reader = csv.reader(f)
+                header = next(reader)
+
+                header.append('variance')
+
+                res_tot.append(header)
+
+                X_test = X[test_actions]
+                X_test_original = X_all[test_actions]
+
+                mean = gp.get_post_fmean(X_train, X_test)
+                var = gp.get_post_fcov(X_train, X_test)
+
+
+                for ii in range(len(X_test)):
+
+                    res_each = []
+
+                    for jj in range(len(X_test[0])):
+                        res_each.append(X_test_original[ii][jj])
+
+                    res_each.append(mean[ii])
+                        
+                    res_each.append(var[ii])
+
+                    res_tot.append(res_each)
+
+
+                with open('output_res.csv', 'w', newline="") as f:
+                    writer = csv.writer(f)
+                    writer.writerows(res_tot)
+        
         else:
             
             if self.seed  != None:

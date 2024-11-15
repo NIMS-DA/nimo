@@ -22,7 +22,8 @@ class PTR():
             output_file (str): the file for proposals from MI algorithm
             num_objectives (int): the number of objectives
             num_proposals (int): the number of proposals
-            ranges (list): the ranges for PTR
+            ptr_ranges (list): the ranges for PTR
+            output_res (str): True or False to export prediction results
 
         """
 
@@ -93,6 +94,20 @@ class PTR():
         X_test = np.array(X[test_actions])
 
         actions = []
+
+        max_list = np.max(t_train, axis=0)
+
+        min_list = np.min(t_train, axis=0)
+
+
+        for jj in range(len(self.ranges)):
+            for ii in range(len(self.ranges[0])):
+
+                if self.ranges[jj][ii] == "max":
+                    self.ranges[jj][ii] = max_list[jj]
+                if self.ranges[jj][ii] == "min":
+                    self.ranges[jj][ii] = min_list[jj]
+
 
         for kk in range(self.num_proposals):
 

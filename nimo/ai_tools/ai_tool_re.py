@@ -21,6 +21,7 @@ class RE():
             output_file (str): the file for proposals from MI algorithm
             num_objectives (int): the number of objectives
             num_proposals (int): the number of proposals
+            re_seed (int): seed of random number
 
         """
 

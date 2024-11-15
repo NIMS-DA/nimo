@@ -2,6 +2,7 @@ import numpy as np
 import random
 import copy
 import csv
+from scipy import stats
 
 import sklearn.semi_supervised
 from sklearn.preprocessing import StandardScaler
@@ -15,7 +16,7 @@ class PDC():
 
     """
 
-    def __init__(self, input_file, output_file, num_objectives, num_proposals):
+    def __init__(self, input_file, output_file, num_objectives, num_proposals, pdc_estimation, pdc_sampling, output_res):
         """Constructor
         
         This function do not depend on robot.
@@ -25,6 +26,9 @@ class PDC():
             output_file (str): the file for proposals from MI algorithm
             num_objectives (int): the number of objectives
             num_proposals (int): the number of proposals
+            pdc_estimation (str): estimation methods: 'LP' or 'LS'
+            pdc_sampling (str): sampling methods: 'LC' ,'MS', 'EA'
+            output_res (str): True or False to export prediction results
 
         """
 
@@ -32,6 +36,15 @@ class PDC():
         self.output_file = output_file
         self.num_objectives = num_objectives
         self.num_proposals = num_proposals
+
+        self.LP_algorithm = pdc_estimation
+        self.US_strategy = pdc_sampling
+        self.output_res = output_res
+        
+        if self.LP_algorithm == None:
+            self.LP_algorithm = 'LP'
+        if self.US_strategy == None:
+            self.US_strategy = 'LC'
 
 
     def load_data(self):
@@ -89,8 +102,8 @@ class PDC():
         """
 
         #parameters
-        LP_algorithm = 'LP' #'LP', 'LS'                                                                   
-        US_strategy = 'LC'  #'LC' ,'MS', 'EA', 'RS'
+        #LP_algorithm = 'LP' #'LP', 'LS'                                                                   
+        #US_strategy = 'LC'  #'LC' ,'MS', 'EA', 'RS'
         multi_method = 'OU' #'OU', 'NE'
         k = 2
 
@@ -123,10 +136,10 @@ class PDC():
         label_train = np.copy(label_list)
 
         #estimate phase of each point
-        if LP_algorithm == 'LS':
+        if self.LP_algorithm == 'LS':
             #lp_model = label_propagation.LabelSpreading()
             lp_model = sklearn.semi_supervised.LabelSpreading()
-        elif LP_algorithm == 'LP':
+        elif self.LP_algorithm == 'LP':
             #lp_model = label_propagation.LabelPropagation()
             lp_model = sklearn.semi_supervised.LabelPropagation()
 
@@ -138,9 +151,44 @@ class PDC():
         classes = lp_model.classes_
 
 
+        #Output prediction results
+        if self.output_res == True:
+
+            res_tot = []
+
+            f = open(self.input_file, 'r')
+            reader = csv.reader(f)
+            header = next(reader)
+
+            for jj in range(len(label_distributions_all[0])):
+
+                header.append('probability_' + str(jj))
+
+            res_tot.append(header)
+
+            for ii in range(len(X_all)):
+
+                res_each = []
+
+                for jj in range(len(X_all[0])):
+                    res_each.append(X_all[ii][jj])
+
+                res_each.append(predicted_all_labels[ii])
+                
+                for jj in range(len(label_distributions_all[0])):
+                    res_each.append(label_distributions_all[ii][jj])
+
+                res_tot.append(res_each)
+
+
+            with open('output_res.csv', 'w', newline="") as f:
+                writer = csv.writer(f)
+                writer.writerows(res_tot)
+
+
 
         #calculate Uncertainly Score
-        if US_strategy == 'EA':
+        if self.US_strategy == 'EA':
             pred_entropies = stats.distributions.entropy(label_distributions.T)
             u_score_list = pred_entropies/np.max(pred_entropies)
             
@@ -152,7 +200,7 @@ class PDC():
             multi_uncertainty_index = [unlabeled_index_list[ranking[i]] for i in range(len(unlabeled_index_list))]
             #############
 
-        elif US_strategy == 'LC':
+        elif self.US_strategy == 'LC':
             u_score_list = 1 - np.max(label_distributions, axis = 1)
             uncertainty_index = [unlabeled_index_list[np.argmax(u_score_list)]]
                     
@@ -163,7 +211,7 @@ class PDC():
             #############
             
 
-        elif US_strategy == 'MS':
+        elif self.US_strategy == 'MS':
 
             u_score_list = []
             for pro_dist in label_distributions:

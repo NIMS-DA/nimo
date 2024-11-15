@@ -26,6 +26,7 @@ class BLOX():
             output_file (str): the file for proposals from MI algorithm
             num_objectives (int): the number of objectives
             num_proposals (int): the number of proposals
+            output_res (str): True or False to export prediction results
 
         """
 
