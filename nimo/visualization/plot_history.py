@@ -3,7 +3,7 @@ import time
 import collections
 
 
-def cycle(input_file, num_cycles):
+def cycle(input_file, num_cycles, fig_folder = None):
     """Creating the figure of datapoints depending on the cycles
 
     This function do not depend on robot.
@@ -13,6 +13,11 @@ def cycle(input_file, num_cycles):
         num_cycles (int): the number of cycles
 
     """
+    
+    if fig_folder == None:
+        fig_path = "./fig"
+    else:
+        fig_path = fig_folder
 
     obs_itt = []
     obs_y = []
@@ -32,12 +37,12 @@ def cycle(input_file, num_cycles):
         plt.xlim(0, num_cycles)
         plt.xlabel("Cycle")
         plt.ylabel("Objective"+str(i+1))
-        plt.savefig("./fig/history_step_" + time.strftime('%y%m%d%H%M%S', dt_now) + "_" + str(i+1)+ ".png")
+        plt.savefig(fig_path + "/history_step_" + time.strftime('%y%m%d%H%M%S', dt_now) + "_" + str(i+1)+ ".png")
         plt.clf()
         plt.close() 
 
 
-def best(input_file, num_cycles):
+def best(input_file, num_cycles, fig_folder = None):
     """Creating the figure of best datapoints depending on the cycles
 
     This function do not depend on robot.
@@ -47,6 +52,11 @@ def best(input_file, num_cycles):
         num_cycles (int): the number of cycles
 
     """
+    
+    if fig_folder == None:
+        fig_path = "./fig"
+    else:
+        fig_path = fig_folder
     
     obs_itt = []
     obs_y = []
@@ -99,6 +109,6 @@ def best(input_file, num_cycles):
         plt.xlim(0, num_cycles)
         plt.xlabel("Cycle")
         plt.ylabel("Best objective"+str(i+1))
-        plt.savefig("./fig/history_best_" + time.strftime('%y%m%d%H%M%S', dt_now) + "_" + str(i+1)+ ".png")
+        plt.savefig(fig_path + "/history_best_" + time.strftime('%y%m%d%H%M%S', dt_now) + "_" + str(i+1)+ ".png")
         plt.clf()
         plt.close() 

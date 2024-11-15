@@ -6,7 +6,7 @@ import time
 from mpl_toolkits.mplot3d import Axes3D
 
 
-def plot(input_file, num_objectives):
+def plot(input_file, num_objectives, fig_folder = None):
     """Loading candidates
 
     This function do not depend on robot.
@@ -16,6 +16,11 @@ def plot(input_file, num_objectives):
         num_objectives (int): the number of objectives
 
     """
+
+    if fig_folder == None:
+        fig_path = "./fig"
+    else:
+        fig_path = fig_folder
 
     t_train, X_all, train_actions, test_actions = load_data(input_file, num_objectives)
 
@@ -28,7 +33,7 @@ def plot(input_file, num_objectives):
         plt.hist(t_train)
         plt.xlabel("Objectives")
         plt.ylabel("Counts")
-        plt.savefig("./fig/distribution_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png")
+        plt.savefig(fig_path + "/distribution_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png")
         plt.clf()
         plt.close() 
 
@@ -47,7 +52,7 @@ def plot(input_file, num_objectives):
         plt.scatter(x, y)
         plt.xlabel("Objective 1")
         plt.ylabel("Objective 2")
-        plt.savefig("./fig/distribution_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png")
+        plt.savefig(fig_path + "/distribution_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png")
         plt.clf()
         plt.close() 
 
@@ -70,7 +75,7 @@ def plot(input_file, num_objectives):
         ax.set_xlabel("Objective 1")
         ax.set_ylabel("Objective 2")
         ax.set_zlabel("Objective 3")
-        plt.savefig("./fig/distribution_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png")
+        plt.savefig(fig_path + "/distribution_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png")
         plt.clf()
         plt.close() 
 
@@ -109,7 +114,7 @@ def load_data(input_file, num_objectives):
 
     all_actions = [i for i in range(len(X_all))]
 
-    train_actions =list(set(all_actions) - set(test_actions))
+    train_actions = np.sort(list(set(all_actions) - set(test_actions)))
 
     return t_train, X_all, train_actions, test_actions
 

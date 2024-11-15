@@ -10,7 +10,7 @@ import sklearn.semi_supervised
 from sklearn.preprocessing import StandardScaler
 from scipy.spatial import distance
 
-def plot(input_file):
+def plot(input_file, fig_folder = None):
     """Loading candidates
 
     This function do not depend on robot.
@@ -19,6 +19,11 @@ def plot(input_file):
         input_file (str): the file for candidates for MI algorithm
 
     """
+    
+    if fig_folder == None:
+        fig_path = "./fig"
+    else:
+        fig_path = fig_folder
 
     t_train, X_all, train_actions, test_actions = load_data(input_file)
 
@@ -78,6 +83,22 @@ def plot(input_file):
         
         fig = plt.figure()
 
+        #for i in unlabeled_index_list:
+        #    plt.scatter(data_list[i][0], data_list[i][1], c=[color_list[predicted_all_labels[i]]], marker = 's')
+
+        for i in labeled_index_list:
+            plt.scatter(data_list[i][0], data_list[i][1], c=[color_list[label_list[i]]], marker="o")
+
+        plt.xlabel("x")
+        plt.ylabel("y")
+        
+        plt.savefig(fig_path + "/phase_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png")
+        plt.clf()
+        plt.close() 
+        
+
+        fig = plt.figure()
+
         for i in unlabeled_index_list:
             plt.scatter(data_list[i][0], data_list[i][1], c=[color_list[predicted_all_labels[i]]], marker = 's')
 
@@ -87,7 +108,7 @@ def plot(input_file):
         plt.xlabel("x")
         plt.ylabel("y")
         
-        plt.savefig("./fig/phase_diagram_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png")
+        plt.savefig(fig_path + "/phase_diagram_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png")
         plt.clf()
         plt.close() 
 
@@ -96,6 +117,28 @@ def plot(input_file):
         
         fig = plt.figure()
         ax = Axes3D(fig)
+
+        fig.add_axes(ax)
+
+        #for i in unlabeled_index_list:
+        #    ax.scatter(data_list[i][0], data_list[i][1], data_list[i][2], c=[color_list[predicted_all_labels[i]]], marker = 's', alpha = 0.7)
+
+        for i in labeled_index_list:
+            ax.scatter(data_list[i][0], data_list[i][1], data_list[i][2], c=[color_list[label_list[i]]], marker="o", alpha = 0.7)
+
+        ax.set_xlabel("x")
+        ax.set_ylabel("y")
+        ax.set_zlabel("z")
+     
+        plt.savefig(fig_path + "/phase_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png")
+        plt.clf()
+        plt.close() 
+
+
+        fig = plt.figure()
+        ax = Axes3D(fig)
+        
+        fig.add_axes(ax)
 
         for i in unlabeled_index_list:
             ax.scatter(data_list[i][0], data_list[i][1], data_list[i][2], c=[color_list[predicted_all_labels[i]]], marker = 's', alpha = 0.7)
@@ -107,7 +150,7 @@ def plot(input_file):
         ax.set_ylabel("y")
         ax.set_zlabel("z")
         
-        plt.savefig("./fig/phase_diagram_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png")
+        plt.savefig(fig_path + "/phase_diagram_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png")
         plt.clf()
         plt.close() 
 
@@ -148,7 +191,7 @@ def load_data(input_file):
 
     all_actions = [i for i in range(len(X_all))]
 
-    train_actions =list(set(all_actions) - set(test_actions))
+    train_actions = list(np.sort(list(set(all_actions) - set(test_actions))))
 
     return t_train, X_all, train_actions, test_actions
 
