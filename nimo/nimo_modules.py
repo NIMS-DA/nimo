@@ -14,8 +14,8 @@ class selection():
                  re_seed = None,
                  ptr_ranges = None,
                  slesa_beta_max = None, slesa_beta_num = None,
-                 physbo_score = None,
-                 ard = None,
+                 physbo_score = None, ard = None,
+                 pdc_estimation = None, pdc_sampling = None,
                  output_res = None):
 
         """Constructor
@@ -43,6 +43,8 @@ class selection():
         self.slesa_beta_num = slesa_beta_num
         self.physbo_score = physbo_score
         self.ard = ard
+        self.pdc_estimation = pdc_estimation
+        self.pdc_sampling = pdc_sampling
 
         self.output_res = output_res
 
@@ -72,7 +74,8 @@ class selection():
 
         if self.method == "PDC":
             res = nimo.ai_tools.ai_tool_pdc.PDC(self.input_file, self.output_file, 
-            self.num_objectives, self.num_proposals).select()
+            self.num_objectives, self.num_proposals, self.pdc_estimation, self.pdc_sampling,
+            self.output_res).select()
             return res
 
         if self.method == "BLOX":
@@ -88,7 +91,7 @@ class selection():
         if self.method == "SLESA":
             res = nimo.ai_tools.ai_tool_slesa.SLESA(self.input_file, self.output_file, 
             self.num_objectives, self.num_proposals, self.slesa_beta_max, self.slesa_beta_num, 
-            self.re_seed).select()
+            self.re_seed, self.output_res).select()
             return res
 
 
