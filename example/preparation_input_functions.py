@@ -4,7 +4,7 @@ import time
 import pathlib
 
 
-class Original():
+class ORIGINAL():
     """Class of Original
 
     This class can create input file for robot experiments and start the robot experiments.

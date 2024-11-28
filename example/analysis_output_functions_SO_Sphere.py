@@ -5,7 +5,7 @@ import sys
 import os
 
 
-class Original():
+class ORIGINAL():
     """Class of Original
 
     This class can perform analysis of outputs from robot.

@@ -33,13 +33,13 @@ for K in range(CyclesNum):
 
 
     import preparation_input_functions
-    preparation_input_functions.Original(input_file = proposals_file,
+    preparation_input_functions.ORIGINAL(input_file = proposals_file,
                                          input_folder = "./").perform()
 
 
 
     import analysis_output_functions_SO_Sphere
-    analysis_output_functions_SO_Sphere.Original(input_file = proposals_file,
+    analysis_output_functions_SO_Sphere.ORIGINAL(input_file = proposals_file,
                                        output_file = candidates_file,
                                        num_objectives = ObjectivesNum,
                                        output_folder = "./").perform()
