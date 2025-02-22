@@ -15,6 +15,8 @@ from .ai_tools import ai_tool_pdc
 from .ai_tools import ai_tool_ptr
 from .ai_tools import ai_tool_slesa
 from .ai_tools import ai_tool_slesa_WAM
+from .ai_tools import ai_tool_bomp
+from .ai_tools import ai_tool_es
 
 from .input_tools import preparation_input_standard
 from .input_tools import preparation_input_naree

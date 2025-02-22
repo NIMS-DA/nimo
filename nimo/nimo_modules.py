@@ -16,6 +16,7 @@ class selection():
                  slesa_beta_max = None, slesa_beta_num = None,
                  physbo_score = None, ard = None,
                  pdc_estimation = None, pdc_sampling = None,
+                 process_X = None,
                  output_res = None):
 
         """Constructor
@@ -45,6 +46,8 @@ class selection():
         self.ard = ard
         self.pdc_estimation = pdc_estimation
         self.pdc_sampling = pdc_sampling
+        
+        self.process_X = process_X
 
         self.output_res = output_res
 
@@ -64,7 +67,7 @@ class selection():
         res = 'False'
         if self.method == "RE":
             res = nimo.ai_tools.ai_tool_re.RE(self.input_file, self.output_file, 
-            self.num_objectives, self.num_proposals, self.re_seed).select()
+            self.num_objectives, self.num_proposals, self.process_X, self.re_seed).select()
             return res
 
         if self.method == "PHYSBO":
@@ -92,6 +95,16 @@ class selection():
             res = nimo.ai_tools.ai_tool_slesa.SLESA(self.input_file, self.output_file, 
             self.num_objectives, self.num_proposals, self.slesa_beta_max, self.slesa_beta_num, 
             self.re_seed, self.output_res).select()
+            return res
+        
+        if self.method == "BOMP":
+            res = nimo.ai_tools.ai_tool_bomp.BOMP(self.input_file, self.output_file, 
+            self.num_objectives, self.num_proposals, self.physbo_score, self.process_X, self.output_res).select()
+            return res
+
+        if self.method == "ES":
+            res = nimo.ai_tools.ai_tool_es.ES(self.input_file, self.output_file, 
+            self.num_objectives, self.num_proposals).select()
             return res
 
 
