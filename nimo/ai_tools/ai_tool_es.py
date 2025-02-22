@@ -4,14 +4,14 @@ import copy
 import csv
 
 
-class RE():
-    """Class of RE
+class ES():
+    """Class of ES
 
-    This class can select the next candidates by random exploration.
+    This class can select the next candidates by exhaustive search.
 
     """
 
-    def __init__(self, input_file, output_file, num_objectives, num_proposals, process_X, re_seed):
+    def __init__(self, input_file, output_file, num_objectives, num_proposals):
         """Constructor
         
         This function do not depend on robot.
@@ -21,8 +21,6 @@ class RE():
             output_file (str): the file for proposals from MI algorithm
             num_objectives (int): the number of objectives
             num_proposals (int): the number of proposals
-            process_X (list): process parameters
-            re_seed (int): seed of random number
 
         """
 
@@ -30,8 +28,6 @@ class RE():
         self.output_file = output_file
         self.num_objectives = num_objectives
         self.num_proposals = num_proposals
-        self.process_X = process_X
-        self.seed = re_seed
 
 
     def load_data(self):
@@ -88,42 +84,17 @@ class RE():
 
         """
 
-        if self.seed  != None:
-            random.seed(self.seed) 
+        if len(test_actions) < self.num_proposals:
+
+            actions = test_actions
+
+        else:
         
-        actions = random.sample(test_actions, self.num_proposals)
+            actions = test_actions[0:self.num_proposals]
 
-
-        #################
-        #################
-        #################
-
-        if self.process_X != None:
-
-            best_action = actions[0]
-
-            best = X_all[best_action]
-            best_process = np.array(best)[self.process_X]
-
-            candidates_actions = []
-
-            for ii in range(len(test_actions)):
-
-                if str(best_process) == str(np.array(X_all[test_actions[ii]])[self.process_X]):
-
-                    if best_action != test_actions[ii]:
-                        candidates_actions.append(test_actions[ii])
-
-            actions_same_process = random.sample(candidates_actions, self.num_proposals - 1)
-
-            actions = [best_action]
-
-            for ii in range(len(actions_same_process)):
-
-                actions.append(actions_same_process[ii])
-        
 
         return actions
+        
 
 
     def select(self):
@@ -136,12 +107,17 @@ class RE():
 
         """
 
-        print("Start selection of proposals by RE!")
+        print("Start selection of proposals by ES!")
 
         t_train, X_all, train_actions, test_actions = self.load_data()
 
         actions = self.calc_ai(t_train = t_train, X_all = X_all, 
         train_actions = train_actions, test_actions = test_actions)
+
+        if len(actions) == 0:
+            print("!!!There are no new proposals at this time!!!")
+            import sys
+            sys.exit()
 
 
         print('Proposals')
