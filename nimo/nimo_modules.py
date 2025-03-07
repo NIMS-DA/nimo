@@ -17,6 +17,7 @@ class selection():
                  physbo_score = None, ard = None,
                  pdc_estimation = None, pdc_sampling = None,
                  process_X = None,
+                 combi_ranges = None, spread_elements = None,
                  output_res = None):
 
         """Constructor
@@ -29,6 +30,18 @@ class selection():
             output_file (str): the file for proposals from AI algorithm
             num_objectives (int): the number of objectives
             num_proposals (int): the number of proposals
+            re_seed (int): the value of seed
+            ptr_ranges (list): the target ranges in PTR method
+            slesa_beta_max (float): the value of beta max in SLESA method
+            slesa_beta_num (int): the number of beta in SLESA method
+            physbo_score (str): the acquisition function in PHYSBO method
+            ard (str): True or False to use ard mode in PHYSBO method
+            pdc_estimation (str): estimation methods: 'LP' or 'LS' in PDC method
+            pdc_sampling (str): sampling methods: 'LC' ,'MS', 'EA' in PDC method
+            process_X (list) : index for process parameters in BOMP method
+            combi_ranges (list[float]): the ranges for each element in COMBI method
+            spread_elements (list[int]): the list of spread elements in COMBI method
+            output_res (str): True or False to output res file
 
         """
 
@@ -48,6 +61,9 @@ class selection():
         self.pdc_sampling = pdc_sampling
         
         self.process_X = process_X
+
+        self.combi_ranges = combi_ranges
+        self.spread_elements = spread_elements
 
         self.output_res = output_res
 
@@ -107,6 +123,12 @@ class selection():
             self.num_objectives, self.num_proposals).select()
             return res
 
+        if self.method == "COMBI":
+            res = nimo.ai_tools.ai_tool_combi.COMBI(self.input_file, self.output_file, 
+            self.num_objectives, self.num_proposals, self.physbo_score, self.combi_ranges, 
+            self.spread_elements).select()
+            return res
+
 
 class preparation_input():
     """Class of preparation input
@@ -152,6 +174,9 @@ class preparation_input():
             res = nimo.input_tools.preparation_input_naree.NAREE(self.input_file, self.input_folder).perform()
             return res
 
+        if self.machine == "COMBAT":
+            res = nimo.input_tools.preparation_input_combat.COMBAT(self.input_file, self.input_folder).perform()
+            return res
 
 
 class analysis_output():
@@ -200,8 +225,13 @@ class analysis_output():
         if self.machine == "STAN":
             res = nimo.output_tools.analysis_output_standard.Standard(self.input_file, self.output_file, self.num_objectives, self.output_folder).perform()
             return res
+
         if self.machine == "NAREE":
             res = nimo.output_tools.analysis_output_naree.NAREE(self.input_file, self.output_file, self.num_objectives, self.output_folder, self.objectives_info).perform()
+            return res
+
+        if self.machine == "COMBAT":
+            res = nimo.output_tools.analysis_output_combat.COMBAT(self.input_file, self.output_file, self.num_objectives, self.output_folder).perform()
             return res
 
 
