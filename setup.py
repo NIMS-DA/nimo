@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="nimo",
-    version="1.0.0",
+    version="1.0.5",
     author="NIMO developers",
     license="MIT",
     description='NIMO package',
