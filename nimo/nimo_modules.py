@@ -14,7 +14,7 @@ class selection():
                  re_seed = None,
                  ptr_ranges = None,
                  slesa_beta_max = None, slesa_beta_num = None,
-                 physbo_score = None, ard = None,
+                 physbo_score = None, minimization = None, ard = None,
                  pdc_estimation = None, pdc_sampling = None,
                  process_X = None,
                  combi_ranges = None, spread_elements = None,
@@ -35,6 +35,7 @@ class selection():
             slesa_beta_max (float): the value of beta max in SLESA method
             slesa_beta_num (int): the number of beta in SLESA method
             physbo_score (str): the acquisition function in PHYSBO method
+            minimization (str): True or False for minimize or maximize
             ard (str): True or False to use ard mode in PHYSBO method
             pdc_estimation (str): estimation methods: 'LP' or 'LS' in PDC method
             pdc_sampling (str): sampling methods: 'LC' ,'MS', 'EA' in PDC method
@@ -56,6 +57,7 @@ class selection():
         self.slesa_beta_max = slesa_beta_max
         self.slesa_beta_num = slesa_beta_num
         self.physbo_score = physbo_score
+        self.minimization = minimization
         self.ard = ard
         self.pdc_estimation = pdc_estimation
         self.pdc_sampling = pdc_sampling
@@ -88,7 +90,7 @@ class selection():
 
         if self.method == "PHYSBO":
             res = nimo.ai_tools.ai_tool_physbo.PHYSBO(self.input_file, self.output_file, 
-            self.num_objectives, self.num_proposals, self.physbo_score, self.ard, self.output_res).select()
+            self.num_objectives, self.num_proposals, self.physbo_score, self.minimization, self.ard, self.output_res).select()
             return res
 
         if self.method == "PDC":
@@ -115,7 +117,7 @@ class selection():
         
         if self.method == "BOMP":
             res = nimo.ai_tools.ai_tool_bomp.BOMP(self.input_file, self.output_file, 
-            self.num_objectives, self.num_proposals, self.physbo_score, self.process_X, self.output_res).select()
+            self.num_objectives, self.num_proposals, self.physbo_score, self.minimization, self.process_X, self.output_res).select()
             return res
 
         if self.method == "ES":
@@ -125,7 +127,7 @@ class selection():
 
         if self.method == "COMBI":
             res = nimo.ai_tools.ai_tool_combi.COMBI(self.input_file, self.output_file, 
-            self.num_objectives, self.num_proposals, self.physbo_score, self.combi_ranges, 
+            self.num_objectives, self.num_proposals, self.physbo_score, self.minimization, self.combi_ranges, 
             self.spread_elements).select()
             return res
 
