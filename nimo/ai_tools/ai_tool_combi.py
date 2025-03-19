@@ -17,7 +17,7 @@ class COMBI():
 
     """
 
-    def __init__(self, input_file, output_file, num_objectives, num_proposals, physbo_score, combi_ranges, spread_elements):
+    def __init__(self, input_file, output_file, num_objectives, num_proposals, physbo_score, minimization, combi_ranges, spread_elements):
         """Constructor
         
         This function do not depend on robot.
@@ -38,9 +38,13 @@ class COMBI():
         self.num_objectives = num_objectives
         self.num_proposals = num_proposals
         self.score = physbo_score
+        self.minimization = minimization
 
         if self.score is None:
             self.score = 'TS'
+        
+        if self.minimization == None:
+            self.minimization = False
 
         self.combi_ranges = combi_ranges
         self.spread_elements = spread_elements
@@ -66,7 +70,11 @@ class COMBI():
 
 
         X_train = arr_train[:, : - self.num_objectives]
-        t_train = arr_train[:, - self.num_objectives:]
+        
+        if self.minimization == False:
+            t_train = arr_train[:, - self.num_objectives:]
+        else:
+            t_train = - arr_train[:, - self.num_objectives:]
 
         X_test = arr_test[:, : - self.num_objectives]
 

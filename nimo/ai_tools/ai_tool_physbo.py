@@ -17,7 +17,7 @@ class PHYSBO():
 
     """
 
-    def __init__(self, input_file, output_file, num_objectives, num_proposals, physbo_score, ard, output_res):
+    def __init__(self, input_file, output_file, num_objectives, num_proposals, physbo_score, minimization, ard, output_res):
         """Constructor
         
         This function do not depend on robot.
@@ -38,11 +38,15 @@ class PHYSBO():
         self.num_objectives = num_objectives
         self.num_proposals = num_proposals
         self.score = physbo_score
+        self.minimization = minimization
         self.ard = ard
         self.output_res = output_res
 
         if self.score == None:
             self.score = 'TS'
+
+        if self.minimization == None:
+            self.minimization = False
 
 
     def load_data(self):
@@ -65,7 +69,11 @@ class PHYSBO():
 
 
         X_train = arr_train[:, : - self.num_objectives]
-        t_train = arr_train[:, - self.num_objectives:]
+        
+        if self.minimization == False:
+            t_train = arr_train[:, - self.num_objectives:]
+        else:
+            t_train = - arr_train[:, - self.num_objectives:]
 
         X_test = arr_test[:, : - self.num_objectives]
 

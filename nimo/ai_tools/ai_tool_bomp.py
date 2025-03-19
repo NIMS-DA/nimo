@@ -17,7 +17,7 @@ class BOMP():
 
     """
 
-    def __init__(self, input_file, output_file, num_objectives, num_proposals, physbo_score, process_X, output_res):
+    def __init__(self, input_file, output_file, num_objectives, num_proposals, physbo_score, minimization, process_X, output_res):
         """Constructor
         
         This function do not depend on robot.
@@ -28,7 +28,7 @@ class BOMP():
             num_objectives (int): the number of objectives
             num_proposals (int): the number of proposals
             physbo_score (str): 'TS', 'EI', 'PI'
-            ard (str) : True or False to perform ARD
+            process_X (list) : index for process parameters
             output_res (str): True or False to export prediction results
 
         """
@@ -38,12 +38,15 @@ class BOMP():
         self.num_objectives = num_objectives
         self.num_proposals = num_proposals
         self.score = physbo_score
+        self.minimization = minimization
         self.process_X = process_X
         self.output_res = output_res
 
         if self.score == None:
             self.score = 'TS'
 
+        if self.minimization == None:
+            self.minimization = False
 
     def load_data(self):
         """Loading candidates
@@ -65,7 +68,11 @@ class BOMP():
 
 
         X_train = arr_train[:, : - self.num_objectives]
-        t_train = arr_train[:, - self.num_objectives:]
+        
+        if self.minimization == False:
+            t_train = arr_train[:, - self.num_objectives:]
+        else:
+            t_train = - arr_train[:, - self.num_objectives:]
 
         X_test = arr_test[:, : - self.num_objectives]
 
