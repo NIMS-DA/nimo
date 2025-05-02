@@ -237,6 +237,39 @@ class analysis_output():
             return res
 
 
+
+class output_update():
+    """Class of output update
+
+    This class can update output to candidate file.
+
+    """
+
+    def __init__(self, input_file, output_file, num_objectives, objective_values):
+        """Constructor
+        
+        This function do not depend on robot.
+
+        Args:
+            input_file (str): the file for proposals from MI algorithm
+            output_file (str): the file for candidates which will be updated in this script
+            num_objectives (int): the number of objectives
+            objective_values (list[float]): the list having objective function values
+
+        """
+
+        self.input_file = input_file
+        self.output_file = output_file
+        self.num_objectives = num_objectives
+        self.objective_values = objective_values
+
+        res = nimo.output_tools.analysis_output_update.Update(input_file = self.input_file, 
+                                    output_file = self.output_file, 
+                                    num_objectives = self.num_objectives, 
+                                    objective_values = self.objective_values).perform()
+
+
+
 def history(input_file, num_objectives, itt = None, history_file = None):
     """Containing history results
 
