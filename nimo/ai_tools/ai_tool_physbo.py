@@ -213,7 +213,7 @@ class PHYSBO():
                 policy.set_seed( 0 )
 
                 actions = policy.bayes_search( max_num_probes = 1, num_search_each_probe = self.num_proposals, 
-                simulator = None, score = self.score, interval = 0,  num_rand_basis = 500 )
+                simulator = None, score = self.score, interval = 0)
 
                 #Output prediction results
                 if self.output_res == True:
@@ -337,7 +337,7 @@ class PHYSBO():
                 policy.set_seed( 0 )
 
                 actions = policy.bayes_search( max_num_probes = 1, num_search_each_probe = self.num_proposals, 
-                simulator = None, score = self.score, interval = 0,  num_rand_basis = 500 )
+                simulator = None, score = self.score, interval = 0)
 
 
                 #Output prediction results
