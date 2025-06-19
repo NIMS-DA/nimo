@@ -76,7 +76,8 @@ class RSVM():
         all_actions = [i for i in range(len(X_all))]
 
         train_actions = np.sort(list(set(all_actions) - set(test_actions)))
-        
+      
+
         return t_train, X_all, train_actions, test_actions
 
 
@@ -113,7 +114,8 @@ class RSVM():
             features_observed = sc.transform(X_all[train_actions])
             properties_observed = t_train
 
-            combi = list(itertools.combinations(range(len(properties_observed)), 2))
+            combi = list(itertools.permutations(range(len(properties_observed)), 2))
+
 
             for ii in range(len(combi)):
                 X_train.append(features_observed[combi[ii][0]] - features_observed[combi[ii][1]])
@@ -174,6 +176,8 @@ class RSVM():
             f = open(self.input_file, 'r')
             reader = csv.reader(f)
             header = next(reader)
+
+            header = header[0 : - self.num_objectives]
 
             header.append('acquisition')
 
