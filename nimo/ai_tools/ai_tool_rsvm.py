@@ -137,7 +137,7 @@ class RSVM():
             features_observed = sc.transform(X_data)
             properties_observed = t_data
 
-            combi = list(itertools.combinations(range(len(properties_observed)), 2))
+            combi = list(itertools.permutations(range(len(properties_observed)), 2))
 
             for ii in range(len(combi)):
                 X_train.append(features_observed[combi[ii][0]] - features_observed[combi[ii][1]])
