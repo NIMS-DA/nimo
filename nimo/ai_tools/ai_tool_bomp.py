@@ -17,7 +17,7 @@ class BOMP():
 
     """
 
-    def __init__(self, input_file, output_file, num_objectives, num_proposals, physbo_score, minimization, process_X, output_res):
+    def __init__(self, input_file, output_file, num_objectives, num_proposals, physbo_score, minimization, process_X, output_res, training_res):
         """Constructor
         
         This function do not depend on robot.
@@ -41,6 +41,7 @@ class BOMP():
         self.minimization = minimization
         self.process_X = process_X
         self.output_res = output_res
+        self.training_res = training_res
 
         if self.score == None:
             self.score = 'TS'
@@ -184,7 +185,10 @@ class BOMP():
                     for jj in range(len(X_test[0])):
                         res_each.append(X_test_original[ii][jj])
 
-                    res_each.append(mean[ii])
+                    if self.minimization == False:
+                        res_each.append(mean[ii])
+                    else:
+                        res_each.append(- mean[ii])
                     res_each.append(var[ii])
                     res_each.append(score[ii])
 
@@ -194,6 +198,50 @@ class BOMP():
                 with open('output_res.csv', 'w', newline="") as f:
                     writer = csv.writer(f)
                     writer.writerows(res_tot)
+
+            #Training results
+            if self.training_res == True:
+
+                res_tot = []
+
+                f = open(self.input_file, 'r')
+                reader = csv.reader(f)
+                header = next(reader)
+
+                header.append('variance')
+                header.append('acquisition')
+
+                res_tot.append(header)
+
+                X_test = X[train_actions]
+                X_test_original = X_all[train_actions]
+
+                mean = policy.get_post_fmean(X_test)
+                var = policy.get_post_fcov(X_test)
+                score = policy.get_score(mode = self.score, xs = X_test)
+
+
+                for ii in range(len(X_test)):
+
+                    res_each = []
+
+                    for jj in range(len(X_test[0])):
+                        res_each.append(X_test_original[ii][jj])
+
+                    if self.minimization == False:
+                        res_each.append(mean[ii])
+                    else:
+                        res_each.append(- mean[ii])
+                    res_each.append(var[ii])
+                    res_each.append(score[ii])
+
+                    res_tot.append(res_each)
+
+
+                with open('training_res.csv', 'w', newline="") as f:
+                    writer = csv.writer(f)
+                    writer.writerows(res_tot)
+
 
             return actions
 
@@ -276,8 +324,12 @@ class BOMP():
                     for jj in range(len(X_test[0])):
                         res_each.append(X_test_original[ii][jj])
 
-                    for jj in range(self.num_objectives):
-                        res_each.append(mean[ii][jj])
+                    if self.minimization == False:
+                        for jj in range(self.num_objectives):
+                            res_each.append(mean[ii][jj])
+                    else:
+                        for jj in range(self.num_objectives):
+                            res_each.append(- mean[ii][jj])
                     
                     for jj in range(self.num_objectives):
                         res_each.append(var[ii][jj])
@@ -288,6 +340,52 @@ class BOMP():
                 with open('output_res.csv', 'w', newline="") as f:
                     writer = csv.writer(f)
                     writer.writerows(res_tot)
+
+
+            #Training results
+            if self.training_res == True:
+
+                res_tot = []
+
+                f = open(self.input_file, 'r')
+                reader = csv.reader(f)
+                header = next(reader)
+
+                for ii in range(self.num_objectives):
+                    header.append('variance' + str(int(ii)))
+
+                res_tot.append(header)
+
+                X_test = X[train_actions]
+                X_test_original = X_all[train_actions]
+
+                mean = policy.get_post_fmean(X_test)
+                var = policy.get_post_fcov(X_test)
+
+                for ii in range(len(X_test)):
+
+                    res_each = []
+
+                    for jj in range(len(X_test[0])):
+                        res_each.append(X_test_original[ii][jj])
+
+                    if self.minimization == False:
+                        for jj in range(self.num_objectives):
+                            res_each.append(mean[ii][jj])
+                    else:
+                        for jj in range(self.num_objectives):
+                            res_each.append(- mean[ii][jj])
+                    
+                    for jj in range(self.num_objectives):
+                        res_each.append(var[ii][jj])
+
+                    res_tot.append(res_each)
+
+
+                with open('training_res.csv', 'w', newline="") as f:
+                    writer = csv.writer(f)
+                    writer.writerows(res_tot)
+
 
             return actions
 
