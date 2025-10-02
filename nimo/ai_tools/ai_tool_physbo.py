@@ -41,7 +41,7 @@ class PHYSBO():
         self.score = physbo_score
         self.minimization = minimization
         self.output_res = output_res
-        self.training_res = ttraining_resraining_res
+        self.training_res = training_res
 
         if self.num_objectives == 1:
 
