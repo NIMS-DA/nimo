@@ -40,9 +40,16 @@ class COMBI():
         self.score = physbo_score
         self.minimization = minimization
 
-        if self.score is None:
-            self.score = 'TS'
+        if self.score == None:
+            self.score = 'EI'
+
+        if self.score == 'TS':
+            self.num_rand_basis = 1000
+
+        if self.score == 'EI' or self.score == 'PI':
+            self.num_rand_basis = 0
         
+
         if self.minimization == None:
             self.minimization = False
 
@@ -121,18 +128,18 @@ class COMBI():
         if self.score == "RE":
        
             if len(t_initial) == 0:
-                policy = physbo.search.discrete.policy( test_X = X )
+                policy = physbo.search.discrete.Policy( test_X = X )
             else:
-                policy = physbo.search.discrete.policy( test_X = X, initial_data = [calculated_ids, t_initial] )
+                policy = physbo.search.discrete.Policy( test_X = X, initial_data = [calculated_ids, t_initial] )
 
             actions = policy.random_search(max_num_probes=1, simulator=None)
 
         else:
 
-            policy = physbo.search.discrete.policy( test_X = X, initial_data = [calculated_ids, t_initial] )
+            policy = physbo.search.discrete.Policy( test_X = X, initial_data = [calculated_ids, t_initial] )
             policy.set_seed( 0 )
             actions = policy.bayes_search( max_num_probes = 1, num_search_each_probe = 1, 
-                    simulator = None, score = self.score, interval = 0,  num_rand_basis = 1000 )
+                    simulator = None, score = self.score, interval = 0,  num_rand_basis = self.num_rand_basis )
 
         best_action = actions[0]
 

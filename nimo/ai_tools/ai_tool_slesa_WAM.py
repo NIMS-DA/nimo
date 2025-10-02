@@ -2,7 +2,6 @@ import numpy as np
 import random
 import copy
 import csv
-import physbo
 import itertools
 import sys
 import os

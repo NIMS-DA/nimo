@@ -139,11 +139,11 @@ class SLESA():
             #small objective function is large energy
             y_train = np.array([(E_max - t_train[i][0])/(E_max - E_min) for i in range(len(t_train))])
 
-            cov  = physbo.gp.cov.gauss( X_train.shape[1], ard = True )
-            mean = physbo.gp.mean.const()
-            lik  = physbo.gp.lik.gauss()
-            gp = physbo.gp.model( lik=lik, mean=mean, cov=cov )
-            config = physbo.misc.set_config()
+            cov  = physbo.gp.cov.Gauss( X_train.shape[1], ard = True )
+            mean = physbo.gp.mean.Const()
+            lik  = physbo.gp.lik.Gauss()
+            gp = physbo.gp.Model( lik=lik, mean=mean, cov=cov )
+            config = physbo.misc.SetConfig()
 
             gp.fit( X_train, y_train, config )
 

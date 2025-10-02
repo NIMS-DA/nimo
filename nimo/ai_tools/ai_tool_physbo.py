@@ -17,7 +17,7 @@ class PHYSBO():
 
     """
 
-    def __init__(self, input_file, output_file, num_objectives, num_proposals, physbo_score, minimization, ard, output_res, training_res):
+    def __init__(self, input_file, output_file, num_objectives, num_proposals, physbo_score, minimization, output_res, training_res):
         """Constructor
         
         This function do not depend on robot.
@@ -28,7 +28,7 @@ class PHYSBO():
             num_objectives (int): the number of objectives
             num_proposals (int): the number of proposals
             physbo_score (str): 'TS', 'EI', 'PI'
-            ard (str) : True or False to perform ARD
+            minimization (str): True or False to perform minimization
             output_res (str): True or False to export prediction results
             training_res (str): True or False to export training results
 
@@ -40,12 +40,25 @@ class PHYSBO():
         self.num_proposals = num_proposals
         self.score = physbo_score
         self.minimization = minimization
-        self.ard = ard
         self.output_res = output_res
-        self.training_res = training_res
+        self.training_res = ttraining_resraining_res
 
-        if self.score == None:
-            self.score = 'TS'
+        if self.num_objectives == 1:
+
+            if self.score == None:
+                self.score = 'EI'
+
+            if self.score == 'TS':
+                self.num_rand_basis = 1000
+
+            if self.score == 'EI' or self.score == 'PI':
+                self.num_rand_basis = 0
+
+        else:
+
+            if self.score == None:
+                self.score = 'TS'
+            
 
         if self.minimization == None:
             self.minimization = False
@@ -109,469 +122,221 @@ class PHYSBO():
 
         """
 
-        if self.ard == True:
+        ##
+        if self.num_objectives == 1:
 
-            ##
-            if self.num_objectives == 1:
+            calculated_ids = train_actions
 
-                calculated_ids = train_actions
+            t_initial = np.array( list(itertools.chain.from_iterable(t_train)) )
 
-                t_initial = np.array( list(itertools.chain.from_iterable(t_train)) )
+            X = physbo.misc.centering( X_all )
 
-                X = physbo.misc.centering( X_all )
-                
-                policy = physbo.search.discrete.policy( test_X = X, initial_data = [calculated_ids, t_initial] )
+            policy = physbo.search.discrete.Policy( test_X = X, initial_data = [calculated_ids, t_initial] )
 
-                print("ard mode")
+            policy.set_seed( 0 )
 
-                from physbo.gp.predictor import predictor as Predictor
-                from physbo.gp.cov.gauss import gauss as Gauss
-                from physbo.gp.core import model as Model
-                from physbo.gp.mean import const as Const
-                from physbo.gp.lik import gauss as GaussLik
-                from physbo.misc import set_config
+            actions = policy.bayes_search( max_num_probes = 1, num_search_each_probe = self.num_proposals, 
+            simulator = None, score = self.score, interval = 0, num_rand_basis = self.num_rand_basis )
 
-                policy.predictor = Predictor(set_config(), Model(
-                    cov=Gauss(len(X[0]), ard=True),
-                    mean=Const(),
-                    lik=GaussLik()
-                ))
+            
+            #Output prediction results
+            if self.output_res == True:
 
-                policy.set_seed( 0 )
-                
-                actions = policy.bayes_search( max_num_probes = 1, num_search_each_probe = self.num_proposals, 
-                simulator = None, score = self.score, interval = 0,  num_rand_basis = 10 )
+                res_tot = []
 
-                #Output prediction results
-                if self.output_res == True:
+                f = open(self.input_file, 'r')
+                reader = csv.reader(f)
+                header = next(reader)
 
-                    res_tot = []
+                header.append('variance')
+                header.append('acquisition')
 
-                    f = open(self.input_file, 'r')
-                    reader = csv.reader(f)
-                    header = next(reader)
+                res_tot.append(header)
 
-                    header.append('variance')
-                    header.append('acquisition')
+                X_test = X[test_actions]
+                X_test_original = X_all[test_actions]
 
-                    res_tot.append(header)
+                mean = policy.get_post_fmean(X_test)
+                var = policy.get_post_fcov(X_test)
+                score = policy.get_score(mode = self.score, xs = X_test)
 
-                    X_test = X[test_actions]
-                    X_test_original = X_all[test_actions]
 
-                    mean = policy.get_post_fmean(X_test)
-                    var = policy.get_post_fcov(X_test)
-                    score = policy.get_score(mode = self.score, xs = X_test)
+                for ii in range(len(X_test)):
 
+                    res_each = []
 
-                    for ii in range(len(X_test)):
+                    for jj in range(len(X_test[0])):
+                        res_each.append(X_test_original[ii][jj])
 
-                        res_each = []
+                    if self.minimization == False:
+                        res_each.append(mean[ii])
+                    else:
+                        res_each.append(- mean[ii])
+                    res_each.append(var[ii])
+                    res_each.append(score[ii])
 
-                        for jj in range(len(X_test[0])):
-                            res_each.append(X_test_original[ii][jj])
+                    res_tot.append(res_each)
 
-                        if self.minimization == False:
-                            res_each.append(mean[ii])
-                        else:
-                            res_each.append(- mean[ii])
-                        res_each.append(var[ii])
-                        res_each.append(score[ii])
 
-                        res_tot.append(res_each)
+                with open('output_res.csv', 'w', newline="") as f:
+                    writer = csv.writer(f)
+                    writer.writerows(res_tot)
 
+            #Training results
+            if self.training_res == True:
 
-                    with open('output_res.csv', 'w', newline="") as f:
-                        writer = csv.writer(f)
-                        writer.writerows(res_tot)
+                res_tot = []
 
-                #Training results
-                if self.training_res == True:
+                f = open(self.input_file, 'r')
+                reader = csv.reader(f)
+                header = next(reader)
 
-                    res_tot = []
+                header.append('variance')
+                header.append('acquisition')
 
-                    f = open(self.input_file, 'r')
-                    reader = csv.reader(f)
-                    header = next(reader)
+                res_tot.append(header)
 
-                    header.append('variance')
-                    header.append('acquisition')
+                X_test = X[train_actions]
+                X_test_original = X_all[train_actions]
 
-                    res_tot.append(header)
+                mean = policy.get_post_fmean(X_test)
+                var = policy.get_post_fcov(X_test)
+                score = policy.get_score(mode = self.score, xs = X_test)
 
-                    X_test = X[train_actions]
-                    X_test_original = X_all[train_actions]
 
-                    mean = policy.get_post_fmean(X_test)
-                    var = policy.get_post_fcov(X_test)
-                    score = policy.get_score(mode = self.score, xs = X_test)
+                for ii in range(len(X_test)):
 
+                    res_each = []
 
-                    for ii in range(len(X_test)):
+                    for jj in range(len(X_test[0])):
+                        res_each.append(X_test_original[ii][jj])
 
-                        res_each = []
+                    if self.minimization == False:
+                        res_each.append(mean[ii])
+                    else:
+                        res_each.append(- mean[ii])
+                    res_each.append(var[ii])
+                    res_each.append(score[ii])
 
-                        for jj in range(len(X_test[0])):
-                            res_each.append(X_test_original[ii][jj])
+                    res_tot.append(res_each)
 
-                        if self.minimization == False:
-                            res_each.append(mean[ii])
-                        else:
-                            res_each.append(- mean[ii])
-                        res_each.append(var[ii])
-                        res_each.append(score[ii])
 
-                        res_tot.append(res_each)
+                with open('training_res.csv', 'w', newline="") as f:
+                    writer = csv.writer(f)
+                    writer.writerows(res_tot)
 
-
-                    with open('training_res.csv', 'w', newline="") as f:
-                        writer = csv.writer(f)
-                        writer.writerows(res_tot)
-
-
-                return actions
-
-
-            ##
-            if self.num_objectives > 1:
-
-                calculated_ids = train_actions
-
-                t_initial = np.array( t_train )
-
-                X = physbo.misc.centering( X_all )
-
-                policy = physbo.search.discrete_multi.policy( test_X = X, num_objectives = self.num_objectives,
-                initial_data = [calculated_ids, t_initial])
-
-                print("ard mode")
-                
-                from physbo.gp.predictor import predictor as Predictor
-                from physbo.gp.cov.gauss import gauss as Gauss
-                from physbo.gp.core import model as Model
-                from physbo.gp.mean import const as Const
-                from physbo.gp.lik import gauss as GaussLik
-                from physbo.misc import set_config
-
-                policy.predictor = Predictor(set_config(), Model(
-                    cov=Gauss(len(X[0]), ard=True),
-                    mean=Const(),
-                    lik=GaussLik()
-                ))
-
-                policy.set_seed( 0 )
-
-                actions = policy.bayes_search( max_num_probes = 1, num_search_each_probe = self.num_proposals, 
-                simulator = None, score = self.score, interval = 0)
-
-                #Output prediction results
-                if self.output_res == True:
-
-                    res_tot = []
-
-                    f = open(self.input_file, 'r')
-                    reader = csv.reader(f)
-                    header = next(reader)
-
-                    for ii in range(self.num_objectives):
-                        header.append('variance' + str(int(ii)))
-
-                    res_tot.append(header)
-
-                    X_test = X[test_actions]
-                    X_test_original = X_all[test_actions]
-
-                    mean = policy.get_post_fmean(X_test)
-                    var = policy.get_post_fcov(X_test)
-
-                    for ii in range(len(X_test)):
-
-                        res_each = []
-
-                        for jj in range(len(X_test[0])):
-                            res_each.append(X_test_original[ii][jj])
-
-                        if self.minimization == False:
-                            for jj in range(self.num_objectives):
-                                res_each.append(mean[ii][jj])
-                        else:
-                            for jj in range(self.num_objectives):
-                                res_each.append(- mean[ii][jj])
-                        
-                        for jj in range(self.num_objectives):
-                            res_each.append(var[ii][jj])
-
-                        res_tot.append(res_each)
-
-
-                    with open('output_res.csv', 'w', newline="") as f:
-                        writer = csv.writer(f)
-                        writer.writerows(res_tot)
-
-                #Training results
-                if self.training_res == True:
-
-                    res_tot = []
-
-                    f = open(self.input_file, 'r')
-                    reader = csv.reader(f)
-                    header = next(reader)
-
-                    for ii in range(self.num_objectives):
-                        header.append('variance' + str(int(ii)))
-
-                    res_tot.append(header)
-
-                    X_test = X[train_actions]
-                    X_test_original = X_all[train_actions]
-
-                    mean = policy.get_post_fmean(X_test)
-                    var = policy.get_post_fcov(X_test)
-
-                    for ii in range(len(X_test)):
-
-                        res_each = []
-
-                        for jj in range(len(X_test[0])):
-                            res_each.append(X_test_original[ii][jj])
-
-                        if self.minimization == False:
-                            for jj in range(self.num_objectives):
-                                res_each.append(mean[ii][jj])
-                        else:
-                            for jj in range(self.num_objectives):
-                                res_each.append(- mean[ii][jj])
-                        
-                        for jj in range(self.num_objectives):
-                            res_each.append(var[ii][jj])
-
-                        res_tot.append(res_each)
-
-
-                    with open('training_res.csv', 'w', newline="") as f:
-                        writer = csv.writer(f)
-                        writer.writerows(res_tot)
 
             return actions
 
 
-        else:
 
-            ##
-            if self.num_objectives == 1:
+        ##
+        if self.num_objectives > 1:
 
-                calculated_ids = train_actions
+            calculated_ids = train_actions
 
-                t_initial = np.array( list(itertools.chain.from_iterable(t_train)) )
+            t_initial = np.array( t_train )
 
-                X = physbo.misc.centering( X_all )
+            X = physbo.misc.centering( X_all )
 
-                policy = physbo.search.discrete.policy( test_X = X, initial_data = [calculated_ids, t_initial] )
+            policy = physbo.search.discrete_multi.Policy( test_X = X, num_objectives = self.num_objectives,
+            initial_data = [calculated_ids, t_initial])
 
-                policy.set_seed( 0 )
+            policy.set_seed( 0 )
 
-                actions = policy.bayes_search( max_num_probes = 1, num_search_each_probe = self.num_proposals, 
-                simulator = None, score = self.score, interval = 0,  num_rand_basis = 1000 )
-
-                
-                #Output prediction results
-                if self.output_res == True:
-
-                    res_tot = []
-
-                    f = open(self.input_file, 'r')
-                    reader = csv.reader(f)
-                    header = next(reader)
-
-                    header.append('variance')
-                    header.append('acquisition')
-
-                    res_tot.append(header)
-
-                    X_test = X[test_actions]
-                    X_test_original = X_all[test_actions]
-
-                    mean = policy.get_post_fmean(X_test)
-                    var = policy.get_post_fcov(X_test)
-                    score = policy.get_score(mode = self.score, xs = X_test)
+            actions = policy.bayes_search( max_num_probes = 1, num_search_each_probe = self.num_proposals, 
+            simulator = None, score = self.score, interval = 0)
 
 
-                    for ii in range(len(X_test)):
+            #Output prediction results
+            if self.output_res == True:
 
-                        res_each = []
+                res_tot = []
 
-                        for jj in range(len(X_test[0])):
-                            res_each.append(X_test_original[ii][jj])
+                f = open(self.input_file, 'r')
+                reader = csv.reader(f)
+                header = next(reader)
 
-                        if self.minimization == False:
-                            res_each.append(mean[ii])
-                        else:
-                            res_each.append(- mean[ii])
-                        res_each.append(var[ii])
-                        res_each.append(score[ii])
+                for ii in range(self.num_objectives):
+                    header.append('variance' + str(int(ii)))
 
-                        res_tot.append(res_each)
+                res_tot.append(header)
 
+                X_test = X[test_actions]
+                X_test_original = X_all[test_actions]
 
-                    with open('output_res.csv', 'w', newline="") as f:
-                        writer = csv.writer(f)
-                        writer.writerows(res_tot)
+                mean = policy.get_post_fmean(X_test)
+                var = policy.get_post_fcov(X_test)
 
-                #Training results
-                if self.training_res == True:
+                for ii in range(len(X_test)):
 
-                    res_tot = []
+                    res_each = []
 
-                    f = open(self.input_file, 'r')
-                    reader = csv.reader(f)
-                    header = next(reader)
+                    for jj in range(len(X_test[0])):
+                        res_each.append(X_test_original[ii][jj])
 
-                    header.append('variance')
-                    header.append('acquisition')
-
-                    res_tot.append(header)
-
-                    X_test = X[train_actions]
-                    X_test_original = X_all[train_actions]
-
-                    mean = policy.get_post_fmean(X_test)
-                    var = policy.get_post_fcov(X_test)
-                    score = policy.get_score(mode = self.score, xs = X_test)
-
-
-                    for ii in range(len(X_test)):
-
-                        res_each = []
-
-                        for jj in range(len(X_test[0])):
-                            res_each.append(X_test_original[ii][jj])
-
-                        if self.minimization == False:
-                            res_each.append(mean[ii])
-                        else:
-                            res_each.append(- mean[ii])
-                        res_each.append(var[ii])
-                        res_each.append(score[ii])
-
-                        res_tot.append(res_each)
-
-
-                    with open('training_res.csv', 'w', newline="") as f:
-                        writer = csv.writer(f)
-                        writer.writerows(res_tot)
-
-
-                return actions
-
-
-
-            ##
-            if self.num_objectives > 1:
-
-                calculated_ids = train_actions
-
-                t_initial = np.array( t_train )
-
-                X = physbo.misc.centering( X_all )
-
-                policy = physbo.search.discrete_multi.policy( test_X = X, num_objectives = self.num_objectives,
-                initial_data = [calculated_ids, t_initial])
-
-                policy.set_seed( 0 )
-
-                actions = policy.bayes_search( max_num_probes = 1, num_search_each_probe = self.num_proposals, 
-                simulator = None, score = self.score, interval = 0)
-
-
-                #Output prediction results
-                if self.output_res == True:
-
-                    res_tot = []
-
-                    f = open(self.input_file, 'r')
-                    reader = csv.reader(f)
-                    header = next(reader)
-
-                    for ii in range(self.num_objectives):
-                        header.append('variance' + str(int(ii)))
-
-                    res_tot.append(header)
-
-                    X_test = X[test_actions]
-                    X_test_original = X_all[test_actions]
-
-                    mean = policy.get_post_fmean(X_test)
-                    var = policy.get_post_fcov(X_test)
-
-                    for ii in range(len(X_test)):
-
-                        res_each = []
-
-                        for jj in range(len(X_test[0])):
-                            res_each.append(X_test_original[ii][jj])
-
-                        if self.minimization == False:
-                            for jj in range(self.num_objectives):
-                                res_each.append(mean[ii][jj])
-                        else:
-                            for jj in range(self.num_objectives):
-                                res_each.append(- mean[ii][jj])
-                        
+                    if self.minimization == False:
                         for jj in range(self.num_objectives):
-                            res_each.append(var[ii][jj])
-
-                        res_tot.append(res_each)
-
-
-                    with open('output_res.csv', 'w', newline="") as f:
-                        writer = csv.writer(f)
-                        writer.writerows(res_tot)
-
-                #Training results
-                if self.training_res == True:
-
-                    res_tot = []
-
-                    f = open(self.input_file, 'r')
-                    reader = csv.reader(f)
-                    header = next(reader)
-
-                    for ii in range(self.num_objectives):
-                        header.append('variance' + str(int(ii)))
-
-                    res_tot.append(header)
-
-                    X_test = X[train_actions]
-                    X_test_original = X_all[train_actions]
-
-                    mean = policy.get_post_fmean(X_test)
-                    var = policy.get_post_fcov(X_test)
-
-                    for ii in range(len(X_test)):
-
-                        res_each = []
-
-                        for jj in range(len(X_test[0])):
-                            res_each.append(X_test_original[ii][jj])
-
-                        if self.minimization == False:
-                            for jj in range(self.num_objectives):
-                                res_each.append(mean[ii][jj])
-                        else:
-                            for jj in range(self.num_objectives):
-                                res_each.append(- mean[ii][jj])
-                        
+                            res_each.append(mean[ii][jj])
+                    else:
                         for jj in range(self.num_objectives):
-                            res_each.append(var[ii][jj])
+                            res_each.append(- mean[ii][jj])
+                    
+                    for jj in range(self.num_objectives):
+                        res_each.append(var[ii][jj])
 
-                        res_tot.append(res_each)
+                    res_tot.append(res_each)
 
 
-                    with open('training_res.csv', 'w', newline="") as f:
-                        writer = csv.writer(f)
-                        writer.writerows(res_tot)
+                with open('output_res.csv', 'w', newline="") as f:
+                    writer = csv.writer(f)
+                    writer.writerows(res_tot)
 
-                return actions
+            #Training results
+            if self.training_res == True:
+
+                res_tot = []
+
+                f = open(self.input_file, 'r')
+                reader = csv.reader(f)
+                header = next(reader)
+
+                for ii in range(self.num_objectives):
+                    header.append('variance' + str(int(ii)))
+
+                res_tot.append(header)
+
+                X_test = X[train_actions]
+                X_test_original = X_all[train_actions]
+
+                mean = policy.get_post_fmean(X_test)
+                var = policy.get_post_fcov(X_test)
+
+                for ii in range(len(X_test)):
+
+                    res_each = []
+
+                    for jj in range(len(X_test[0])):
+                        res_each.append(X_test_original[ii][jj])
+
+                    if self.minimization == False:
+                        for jj in range(self.num_objectives):
+                            res_each.append(mean[ii][jj])
+                    else:
+                        for jj in range(self.num_objectives):
+                            res_each.append(- mean[ii][jj])
+                    
+                    for jj in range(self.num_objectives):
+                        res_each.append(var[ii][jj])
+
+                    res_tot.append(res_each)
+
+
+                with open('training_res.csv', 'w', newline="") as f:
+                    writer = csv.writer(f)
+                    writer.writerows(res_tot)
+
+            return actions
 
 
 

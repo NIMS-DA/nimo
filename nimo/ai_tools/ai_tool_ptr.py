@@ -118,11 +118,11 @@ class PTR():
 
                 y_train = np.array([r[ii] for r in t_train])
 
-                cov  = physbo.gp.cov.gauss( X_train.shape[1], ard = True )
-                mean = physbo.gp.mean.const()
-                lik  = physbo.gp.lik.gauss()
-                gp = physbo.gp.model( lik=lik, mean=mean, cov=cov )
-                config = physbo.misc.set_config()
+                cov  = physbo.gp.cov.Gauss( X_train.shape[1], ard = True )
+                mean = physbo.gp.mean.Const()
+                lik  = physbo.gp.lik.Gauss()
+                gp = physbo.gp.Model( lik=lik, mean=mean, cov=cov )
+                config = physbo.misc.SetConfig()
 
                 gp.fit( X_train, y_train, config )
 

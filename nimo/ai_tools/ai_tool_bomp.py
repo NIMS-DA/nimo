@@ -43,8 +43,21 @@ class BOMP():
         self.output_res = output_res
         self.training_res = training_res
 
-        if self.score == None:
-            self.score = 'TS'
+        if self.num_objectives == 1:
+            
+            if self.score == None:
+                self.score = 'EI'
+
+            if self.score == 'TS':
+                self.num_rand_basis = 1000
+
+            if self.score == 'EI' or self.score == 'PI':
+                self.num_rand_basis = 0
+
+        else:
+
+            if self.score == None:
+                self.score = 'TS'
 
         if self.minimization == None:
             self.minimization = False
@@ -116,12 +129,12 @@ class BOMP():
 
             X = physbo.misc.centering( X_all )
 
-            policy = physbo.search.discrete.policy( test_X = X, initial_data = [calculated_ids, t_initial] )
+            policy = physbo.search.discrete.Policy( test_X = X, initial_data = [calculated_ids, t_initial] )
 
             policy.set_seed( 0 )
 
             actions = policy.bayes_search( max_num_probes = 1, num_search_each_probe = 1, 
-            simulator = None, score = self.score, interval = 0,  num_rand_basis = 1000 )
+            simulator = None, score = self.score, interval = 0,  num_rand_basis = self.num_rand_basis )
 
             best = X_all[actions[0]]
             best_process = np.array(best)[self.process_X]
@@ -143,12 +156,12 @@ class BOMP():
                     X_red.append(X[ii])
                     real_actions.append(ii)
            
-            policy = physbo.search.discrete.policy( test_X = np.array(X_red), initial_data = [calculated_ids_red, t_initial] )
+            policy = physbo.search.discrete.Policy( test_X = np.array(X_red), initial_data = [calculated_ids_red, t_initial] )
 
             policy.set_seed( 0 )
 
             actions_red = policy.bayes_search( max_num_probes = 1, num_search_each_probe = self.num_proposals, 
-            simulator = None, score = self.score, interval = 0,  num_rand_basis = 1000 )
+            simulator = None, score = self.score, interval = 0,  num_rand_basis = self.num_rand_basis )
 
             actions = []
 
@@ -256,13 +269,13 @@ class BOMP():
 
             X = physbo.misc.centering( X_all )
 
-            policy = physbo.search.discrete_multi.policy( test_X = X, num_objectives = self.num_objectives,
+            policy = physbo.search.discrete_multi.Policy( test_X = X, num_objectives = self.num_objectives,
             initial_data = [calculated_ids, t_initial])
 
             policy.set_seed( 0 )
 
             actions = policy.bayes_search( max_num_probes = 1, num_search_each_probe = 1, 
-            simulator = None, score = self.score, interval = 0,  num_rand_basis = 500 )
+            simulator = None, score = self.score, interval = 0)
 
             best = X_all[actions[0]]
             best_process = np.array(best)[self.process_X]
@@ -284,12 +297,12 @@ class BOMP():
                     X_red.append(X[ii])
                     real_actions.append(ii)
                     
-            policy = physbo.search.discrete_multi.policy( test_X = np.array(X_red), num_objectives = self.num_objectives, initial_data = [calculated_ids_red, t_initial] )
+            policy = physbo.search.discrete_multi.Policy( test_X = np.array(X_red), num_objectives = self.num_objectives, initial_data = [calculated_ids_red, t_initial] )
 
             policy.set_seed( 0 )
 
             actions_red = policy.bayes_search( max_num_probes = 1, num_search_each_probe = self.num_proposals, 
-            simulator = None, score = self.score, interval = 0,  num_rand_basis = 1000 )
+            simulator = None, score = self.score, interval = 0)
 
             actions = []
 
