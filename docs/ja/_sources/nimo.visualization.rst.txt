@@ -1,0 +1,30 @@
+nimo.visualization package
+============================
+
+
+nimo.visualization.plot\_history module
+-----------------------------------------
+
+.. automodule:: nimo.visualization.plot_history
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+nimo.visualization.plot\_distribution module
+----------------------------------------------
+
+.. automodule:: nimo.visualization.plot_distribution
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+nimo.visualization.plot\_phase\_diagram module
+------------------------------------------------
+
+.. automodule:: nimo.visualization.plot_phase_diagram
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

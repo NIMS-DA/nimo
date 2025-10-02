@@ -1,0 +1,78 @@
+******************************
+インストール
+******************************
+
+インストール
+==================
+
+必要パッケージ
+-----------------
+
+- Python >= 3.6
+- matplotlib
+- numpy
+- physbo >= 3.0.0
+- scikit-learn
+- scipy
+
+
+
+.. _install_jp:
+
+インストール手順
+------------------------------------------
+
+* ``PyPI`` からのインストール（依存パッケージも同時にインストールされます．）
+
+.. code-block:: python
+
+    pip install nimo
+
+
+
+* ``--user`` オプションを追加するとユーザのホームディレクトリ以下にインストールされます．
+
+.. code-block:: python
+
+    pip install --user nimo
+
+
+
+C++コンパイラが使える場合
+------------------------------------------
+``physbo-core-cython`` を追加でインストールすることで，
+PHYSBO，PTR，BOMP，COMBI等，PHYSBOを使用したアルゴリズムが高速化されます．
+
+``physbo-core-cython`` は，以下のようにpipでインストール可能です．
+
+.. code-block:: python
+    
+    pip install physbo-core-cython
+
+
+Windows PCにおいてC++コンパイラを導入する方法
+------------------------------------------------------------
+
+**高速化したい場合のオプションのため必須ではありません．**
+
+* Visual Studioのインストール
+
+MicrosoftのサイトよりVisual Studioをインストールすることで，C++を使用することができます．
+
+https://visualstudio.microsoft.com/ja/
+
+Windows11へのインストールをサポートするために動画を公開しています．
+
+https://www.youtube.com/watch?v=qk-flhphewc
+
+
+アンインストール
+=====================
+
+
+* 以下のコマンドを実行します。
+
+.. code-block:: python
+
+   pip uninstall nimo
+
