@@ -1,23 +1,21 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Install and Uninstall &mdash; NIMO 0.0.1 documentation</title>
+  <title>Install and Uninstall &mdash; NIMO 3.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=d45e8c67"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=acc74ff5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -52,7 +50,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#install">Install</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#required-packages">Required packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#install-procedures">Install procedures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#for-windows-pc">For Windows PC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#if-c-compire-is-avaiable">If C++ compire is avaiable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-install-a-c-compiler-on-a-windows-pc">How to install a C++ compiler on a Windows PC</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#uninstall">Uninstall</a></li>
@@ -95,10 +94,9 @@
 <h3>Required packages<a class="headerlink" href="#required-packages" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Python &gt;= 3.6</p></li>
-<li><p>Cython</p></li>
 <li><p>matplotlib</p></li>
 <li><p>numpy</p></li>
-<li><p>physbo &gt;= 2.0</p></li>
+<li><p>physbo &gt;= 3.0.0</p></li>
 <li><p>scikit-learn</p></li>
 <li><p>scipy</p></li>
 </ul>
@@ -108,24 +106,31 @@
 <ul class="simple">
 <li><p>From <code class="docutils literal notranslate"><span class="pre">PyPI</span></code> (Required packages will also be installed at the same time.)</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip3</span> <span class="n">install</span> <span class="n">nimo</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">nimo</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>If you add the <code class="docutils literal notranslate"><span class="pre">--user</span></code> option, it will be installed under the user’s home directory</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip3</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="n">nimo</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="n">nimo</span>
 </pre></div>
 </div>
 </section>
-<section id="for-windows-pc">
-<h3>For Windows PC<a class="headerlink" href="#for-windows-pc" title="Link to this heading"></a></h3>
+<section id="if-c-compire-is-avaiable">
+<h3>If C++ compire is avaiable<a class="headerlink" href="#if-c-compire-is-avaiable" title="Link to this heading"></a></h3>
+<p>By additionally installing <code class="docutils literal notranslate"><span class="pre">physbo-core-cython</span></code> , algorithms that use PHYSBO—such as PHYSBO, PTR, BOMP, and COMBI—can be accelerated.</p>
+<p><code class="docutils literal notranslate"><span class="pre">physbo-core-cython</span></code> can be installed via pip as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">physbo</span><span class="o">-</span><span class="n">core</span><span class="o">-</span><span class="n">cython</span>
+</pre></div>
+</div>
+</section>
+<section id="how-to-install-a-c-compiler-on-a-windows-pc">
+<h3>How to install a C++ compiler on a Windows PC<a class="headerlink" href="#how-to-install-a-c-compiler-on-a-windows-pc" title="Link to this heading"></a></h3>
+<p><strong>It is optional for acceleration and therefore not mandatory．</strong></p>
 <ul class="simple">
 <li><p>Install of Visual Studio</p></li>
 </ul>
-<p>For Windows PCs, there is the case that an install of PHYSBO using the above pip is failed.
-This is because PHYSBO uses Cython and requires a C++ compiler.
-To install PHYSBO on a Windows PC, Visual Studio from the Microsoft website may be required.</p>
+<p>Visual Studio from the Microsoft website may be required.</p>
 <p><a class="reference external" href="https://visualstudio.microsoft.com/">https://visualstudio.microsoft.com/</a></p>
 </section>
 </section>
