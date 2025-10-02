@@ -1,23 +1,21 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>インストール &mdash; NIMO 0.0.1 documentation</title>
+  <title>インストール &mdash; NIMO 2.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=d45e8c67"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=51b770b3"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -52,7 +50,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#id2">インストール</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id3">必要パッケージ</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#install-jp">インストール手順</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#windows-pc">Windows PCの場合</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#c">C++コンパイラが使える場合</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#windows-pcc">Windows PCにおいてC++コンパイラを導入する方法</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#id5">アンインストール</a></li>
@@ -61,7 +60,6 @@
 <li class="toctree-l1"><a class="reference internal" href="basic_usage.html">基本的な使い方</a></li>
 <li class="toctree-l1"><a class="reference internal" href="main_sample.html">メインスクリプト例</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI版</a></li>
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
 </ul>
 
@@ -96,10 +94,9 @@
 <h3>必要パッケージ<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Python &gt;= 3.6</p></li>
-<li><p>Cython</p></li>
 <li><p>matplotlib</p></li>
 <li><p>numpy</p></li>
-<li><p>physbo &gt;= 2.0</p></li>
+<li><p>physbo &gt;= 3.0.0</p></li>
 <li><p>scikit-learn</p></li>
 <li><p>scipy</p></li>
 </ul>
@@ -109,24 +106,32 @@
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">PyPI</span></code> からのインストール（依存パッケージも同時にインストールされます．）</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip3</span> <span class="n">install</span> <span class="n">nimo</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">nimo</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">--user</span></code> オプションを追加するとユーザのホームディレクトリ以下にインストールされます．</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip3</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="n">nimo</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="n">nimo</span>
 </pre></div>
 </div>
 </section>
-<section id="windows-pc">
-<h3>Windows PCの場合<a class="headerlink" href="#windows-pc" title="Link to this heading"></a></h3>
+<section id="c">
+<h3>C++コンパイラが使える場合<a class="headerlink" href="#c" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">physbo-core-cython</span></code> を追加でインストールすることで，
+PHYSBO，PTR，BOMP，COMBI等，PHYSBOを使用したアルゴリズムが高速化されます．</p>
+<p><code class="docutils literal notranslate"><span class="pre">physbo-core-cython</span></code> は，以下のようにpipでインストール可能です．</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">physbo</span><span class="o">-</span><span class="n">core</span><span class="o">-</span><span class="n">cython</span>
+</pre></div>
+</div>
+</section>
+<section id="windows-pcc">
+<h3>Windows PCにおいてC++コンパイラを導入する方法<a class="headerlink" href="#windows-pcc" title="Link to this heading"></a></h3>
+<p><strong>高速化したい場合のオプションのため必須ではありません．</strong></p>
 <ul class="simple">
 <li><p>Visual Studioのインストール</p></li>
 </ul>
-<p>Windows PCでは上記pipでインストールできない場合があります．
-これは，PHYSBOがCythonを利用しているため，C++コンパイラが必要なためです．
-MicrosoftのサイトよりVisual Studioをインストールすることで，pipでインストール可能となります．</p>
+<p>MicrosoftのサイトよりVisual Studioをインストールすることで，C++を使用することができます．</p>
 <p><a class="reference external" href="https://visualstudio.microsoft.com/ja/">https://visualstudio.microsoft.com/ja/</a></p>
 <p>Windows11へのインストールをサポートするために動画を公開しています．</p>
 <p><a class="reference external" href="https://www.youtube.com/watch?v=qk-flhphewc">https://www.youtube.com/watch?v=qk-flhphewc</a></p>

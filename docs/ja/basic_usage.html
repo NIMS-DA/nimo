@@ -1,24 +1,22 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>基本的な使い方 &mdash; NIMO 0.0.1 documentation</title>
+  <title>基本的な使い方 &mdash; NIMO 2.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=d45e8c67"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=51b770b3"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -54,43 +52,46 @@
 <li class="toctree-l2"><a class="reference internal" href="#id2">インポート</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id3">各種パラメータを定義</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id4">実験条件ファイルを指定</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">人工知能による提案ファイルを指定</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id6">ロボット実験用データの保管場所を指定</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id7">人工知能の実行</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id8">引数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">探索アルゴリズムによる提案ファイルを指定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">探索アルゴリズムの実行</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">引数</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id9">ロボット実験用インプットファイルの作成およびロボット実験の実行</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id10">引数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">ロボット実験用インプットファイルの作成およびロボット実験の実行</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id9">引数</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id11">ロボット実験結果の解析と実験条件ファイルの更新</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id12">引数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">ロボット実験結果の解析と実験条件ファイルの更新</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id11">引数</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id13">結果履歴の格納・更新</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id14">引数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">結果履歴の格納・更新</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id13">引数</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id15">結果の可視化</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id16">履歴の可視化</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id17">引数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id14">結果の可視化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id15">履歴の可視化</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id16">引数</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id18">目的関数の分布の可視化</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id19">引数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id17">目的関数の分布の可視化</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id18">引数</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id20">相図の可視化</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id21">引数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id19">相図の可視化</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id20">引数</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id22">自作モジュールを利用する場合</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id21">自作モジュールを利用する場合</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#ai-tool-original-py"><code class="docutils literal notranslate"><span class="pre">ai_tool_original.py</span></code> の作成</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#preparation-input-original-py"><code class="docutils literal notranslate"><span class="pre">preparation_input_original.py</span></code> の作成</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#analysis-output-original-py"><code class="docutils literal notranslate"><span class="pre">analysis_output_original.py</span></code> の作成</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id22">目的関数を実験条件ファイルに書き込む</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id23">引数</a></li>
 </ul>
 </li>
 </ul>
@@ -135,16 +136,16 @@
 <section id="id3">
 <h2>各種パラメータを定義<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ObjectivesNum</span></code>: 目的関数の個数を指定します．</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ProposalsNum</span></code>: 一度のサイクルで人工知能が提案する実験条件数を指定します．これはロボット実験における並列実験数に対応します．</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">CyclesNum</span></code>: サイクル数を指定します．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_objectives</span></code>: 目的関数の個数を指定します．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_proposals</span></code>: 一度のサイクルで探索アルゴリズムが提案する実験条件数を指定します．これはロボット実験における並列実験数に対応します．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_cycles</span></code>: サイクル数を指定します．</p></li>
 </ul>
 <p>例えば，目的関数の個数が２つであり，並列実験数を２とする場合，
 ３回サイクルを回し最適化を実施する場合は，
 以下のように設定する．</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ObjectivesNum</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="n">ProposalsNum</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="n">CyclesNum</span> <span class="o">=</span> <span class="mi">3</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">n_objectives</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">n_proposals</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">n_cycles</span> <span class="o">=</span> <span class="mi">3</span>
 </pre></div>
 </div>
 </section>
@@ -153,9 +154,9 @@
 <p><code class="docutils literal notranslate"><span class="pre">candidates_file</span></code> に実験条件をリスト化したファイルを指定します．</p>
 <p>実験条件ファイルは，以下のようにあらかじめ用意します．
 <span class="math notranslate nohighlight">\(d\)</span> 次元のdescriptorがあり，<span class="math notranslate nohighlight">\(l\)</span> 個の目的関数を考える場合を例としています．
-初めの:math:<cite>d</cite> 列にdescriptorの候補を全て入力します．
+初めの <span class="math notranslate nohighlight">\(d\)</span> 列にdescriptorの候補を全て入力します．
 これが材料の探索空間となり，この部分には空欄が無いようにします．
-続く:math:<cite>l</cite> 列は，目的関数の値を入力します．
+続く <span class="math notranslate nohighlight">\(l\)</span> 列は，目的関数の値を入力します．
 初期段階で実験データが全くない場合，目的関数の部分は空欄となります．</p>
 <table class="docutils align-default">
 <thead>
@@ -315,11 +316,11 @@
 </tr>
 </tbody>
 </table>
-<p><strong>注意：目的関数のセルに，数字以外が記載された場合，そのセルは空欄としてNIMOでは扱われます．そのため，人工知能によって，数字以外が記載されたセルの実験条件が提案される場合があります．</strong></p>
+<p><strong>注意：目的関数のセルに，数字以外が記載された場合，そのセルは空欄としてNIMOでは扱われます．そのため，探索アルゴリズムによって，数字以外が記載されたセルの実験条件が提案される場合があります．</strong></p>
 </section>
 <section id="id5">
-<h2>人工知能による提案ファイルを指定<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">proposals_file</span></code>  に人工知能が提案する条件を記載するファイルを指定します．
+<h2>探索アルゴリズムによる提案ファイルを指定<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">proposals_file</span></code>  に探索アルゴリズムが提案する条件を記載するファイルを指定します．
 このファイルは，NIMOにより作成されるため，ファイルをあらかじめ作成する必要はなく，
 名前を指定するだけになります．</p>
 <p>例えば，メインスクリプトと同じフォルダにproposals.csvという名前で格納する場合は，以下のように設定します．</p>
@@ -328,50 +329,40 @@
 </div>
 </section>
 <section id="id6">
-<h2>ロボット実験用データの保管場所を指定<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">input_folder</span></code>: ロボット実験における入力ファイルを格納するフォルダを指定します．</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">output_folder</span></code>: ロボット実験からの出力ファイルを格納するフォルダを指定します．</p></li>
-</ul>
-<p>例えば，入力用のフォルダを./EXPInputとし，出力用のフォルダを./EXPOutputとする場合，
-以下のように指定します．</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">input_folder</span> <span class="o">=</span> <span class="s2">&quot;./EXPInput&quot;</span>
-<span class="n">output_folder</span> <span class="o">=</span> <span class="s2">&quot;./EXPOutput&quot;</span>
-</pre></div>
-</div>
-</section>
+<h2>探索アルゴリズムの実行<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">nimo.selection</span></code> を利用し，探索アルゴリズムによる実験条件の提案を計算します．
+結果は，”proposals_file”に出力されます．
+このとき，”proposals_file”の最初の列には，”candidates_file”の順番で各実験条件のIDが記載されます．
+実験を実施する際には必要ない情報なため，最初の列は無視してください．</p>
 <section id="id7">
-<h2>人工知能の実行<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">nimo.selection</span></code> を利用し，人工知能による実験条件の提案を計算します．</p>
-<section id="id8">
-<h3>引数<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<h3>引数<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">method</span></code>: 人工知能の手法を指定します．”PHYSBO”: PHYSBOによるベイズ最適化，”BLOX”: BLOXによる無目的探索，”PDC”: PDCによる相図作成， “RE”: ランダム探索が指定できます．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">method</span></code>: 探索アルゴリズムの手法を指定します．”PHYSBO”: PHYSBOによるベイズ最適化，”BLOX”: BLOXによる無目的探索，”PDC”: PDCによる相図作成， “RE”: ランダム探索等が指定できます．</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: 実験条件ファイル”candidates_file”を指定します．</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code>: 人工知能からの提案ファイル”proposals_file”を指定します．</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code>: 目的関数の個数”ObjectivesNum”を指定します．もちろん，直接，値を指定することもできます．</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">num_proposals</span></code>: 一度のサイクルで人工知能が提案する条件数”ProposalsNum”を指定します．もちろん，直接，値を指定することもできます．</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">output_res</span></code>: “True”を指定することで，”RE”以外の人工知能を利用する場合，目的関数の予測値および獲得関数が格納されたoutput_res.csvを得ることができます．デフォルトでは”False”になっています．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code>: 探索アルゴリズムからの提案ファイル”proposals_file”を指定します．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code>: 目的関数の個数”n_objectives”を指定します．もちろん，直接，値を指定することもできます．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_proposals</span></code>: 一度のサイクルで探索アルゴリズムが提案する条件数”n_proposals”を指定します．もちろん，直接，値を指定することもできます．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_res</span></code>: “True”を指定することで，”RE”以外の探索アルゴリズムを利用する場合，目的関数の予測値および獲得関数が格納されたoutput_res.csvを得ることができます．デフォルトでは”False”になっています．</p></li>
 </ul>
 <p>例えば，ベイズ最適化による提案を計算する場合は以下のように指定します．</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nimo</span><span class="o">.</span><span class="n">selection</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;PHYSBO&quot;</span><span class="p">,</span>
                  <span class="n">input_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">,</span>
                  <span class="n">output_file</span> <span class="o">=</span> <span class="n">proposals_file</span><span class="p">,</span>
-                 <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">ObjectivesNum</span><span class="p">,</span>
-                 <span class="n">num_proposals</span> <span class="o">=</span> <span class="n">ProposalsNum</span><span class="p">)</span>
+                 <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">n_objectives</span><span class="p">,</span>
+                 <span class="n">num_proposals</span> <span class="o">=</span> <span class="n">n_proposals</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 </section>
-<section id="id9">
-<h2>ロボット実験用インプットファイルの作成およびロボット実験の実行<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<section id="id8">
+<h2>ロボット実験用インプットファイルの作成およびロボット実験の実行<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">nimo.preparation_input</span></code> を利用し，ロボット実験用インプットファイルを作成し，ロボット実験を実行します．</p>
 <p>この部分は， <strong>扱うロボットに依存して書き換える必要</strong> があります．</p>
-<section id="id10">
-<h3>引数<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<section id="id9">
+<h3>引数<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">machine</span></code>: 使用するロボットを指定します．”STAN”: 標準形式のモジュール，”NAREE”: NIMS電気化学自動実験ロボット用のモジュールが指定できます．</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: 人工知能からの提案ファイル”proposals_file”を指定します．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: 探索アルゴリズムからの提案ファイル”proposals_file”を指定します．</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">input_folder</span></code>: ロボット実験における入力ファイルを格納するフォルダ”input_folder”を指定します．</p></li>
 </ul>
 <p>例えば，標準形式のモジュールを使用する場合は以下のように指定します．</p>
@@ -382,17 +373,17 @@
 </div>
 </section>
 </section>
-<section id="id11">
-<h2>ロボット実験結果の解析と実験条件ファイルの更新<a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<section id="id10">
+<h2>ロボット実験結果の解析と実験条件ファイルの更新<a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">nimo.analysis_output</span></code> を利用し，ロボット実験の結果を解析し，実験条件ファイルを更新します．</p>
 <p>この部分は， <strong>扱うロボットに依存して書き換える必要</strong> があります．</p>
-<section id="id12">
-<h3>引数<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<section id="id11">
+<h3>引数<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">machine</span></code>: 使用するロボットを指定します．（”STAN”: 標準形式のモジュール，”NAREE”: NIMS電気化学自動実験ロボット用のモジュール）</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: 人工知能からの提案ファイル”proposals_file”を指定します．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: 探索アルゴリズムからの提案ファイル”proposals_file”を指定します．</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code>: 実験条件ファイル”candidates_file”を指定します．</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code>: 目的関数の個数”ObjectivesNum”を指定します．もちろん，直接，値を指定することもできます．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code>: 目的関数の個数”n_objectives”を指定します．もちろん，直接，値を指定することもできます．</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">output_folder</span></code>: ロボット実験からの出力ファイルを格納するフォルダ”output_folder”を指定します．</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">objectives_info</span></code>: “NAREE”を指定した場合に，実験結果のうちどの特性を目的関数として利用するかを指定します．辞書形式で指定する必要があります．</p></li>
 </ul>
@@ -400,92 +391,92 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nimo</span><span class="o">.</span><span class="n">analysis_output</span><span class="p">(</span><span class="n">machine</span> <span class="o">=</span> <span class="s2">&quot;STAN&quot;</span><span class="p">,</span>
                        <span class="n">input_file</span> <span class="o">=</span> <span class="n">proposals_file</span><span class="p">,</span>
                        <span class="n">output_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">,</span>
-                       <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">ObjectivesNum</span><span class="p">,</span>
+                       <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">n_objectives</span><span class="p">,</span>
                        <span class="n">output_folder</span> <span class="o">=</span> <span class="n">output_folder</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 </section>
-<section id="id13">
-<h2>結果履歴の格納・更新<a class="headerlink" href="#id13" title="Link to this heading"></a></h2>
+<section id="id12">
+<h2>結果履歴の格納・更新<a class="headerlink" href="#id12" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">nimo.history</span></code> を利用することで，最適化結果の履歴を保存できます．</p>
-<section id="id14">
-<h3>引数<a class="headerlink" href="#id14" title="Link to this heading"></a></h3>
+<section id="id13">
+<h3>引数<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: 実験条件ファイル”candidates_file”を指定します．</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code>: 目的関数の個数”ObjectivesNum”を指定します．もちろん，直接，値を指定することもできます．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code>: 目的関数の個数”n_objectives”を指定します．もちろん，直接，値を指定することもできます．</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">itt</span></code>: 現在のサイクル数を入力します．指定しない場合，新しく履歴を保存するリストが作成されます．</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">history_file</span></code>: すでに <code class="docutils literal notranslate"><span class="pre">history_file</span></code> を作成済みな場合，ここで指定することで，ファイルが更新されます．指定しない場合，新しく履歴を保存するリストが作成されます．</p></li>
 </ul>
 <p>具体的には，初めて最適化結果を格納する場合以下のように実行します．</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">res_history</span> <span class="o">=</span> <span class="n">nimo</span><span class="o">.</span><span class="n">history</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">,</span>
-                             <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">ObjectivesNum</span><span class="p">)</span>
+                             <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">n_objectives</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">res_history</span></code> を更新する場合，</p>
 <p>Kサイクル目に <code class="docutils literal notranslate"><span class="pre">res_history</span></code> を更新する場合，
 以下のように実行します．</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">res_history</span> <span class="o">=</span> <span class="n">nimo</span><span class="o">.</span><span class="n">history</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">,</span>
-                             <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">ObjectivesNum</span><span class="p">,</span>
+                             <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">n_objectives</span><span class="p">,</span>
                              <span class="n">itt</span> <span class="o">=</span> <span class="n">K</span><span class="p">,</span>
                              <span class="n">history_file</span> <span class="o">=</span> <span class="n">res_history</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 </section>
-<section id="id15">
-<h2>結果の可視化<a class="headerlink" href="#id15" title="Link to this heading"></a></h2>
+<section id="id14">
+<h2>結果の可視化<a class="headerlink" href="#id14" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">nimo.visualization</span></code> を利用することで，結果を可視化することができます．
 メインスクリプトと同じフォルダに <code class="docutils literal notranslate"><span class="pre">fig</span></code> という名前のフォルダを作成してください．
 その中に図が出力されることになります．</p>
-<section id="id16">
-<h3>履歴の可視化<a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
+<section id="id15">
+<h3>履歴の可視化<a class="headerlink" href="#id15" title="Link to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">nimo.visualization.plot_history</span></code> を利用することで，履歴を可視化することができます．</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">nimo.visualization.plot_history.cycle</span></code>: 全データのサイクル依存性をプロットすることができます．</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">nimo.visualization.plot_history.best</span></code>: 各サイクルにおける最大値をプロットすることができます．</p></li>
 </ul>
-<section id="id17">
-<h4>引数<a class="headerlink" href="#id17" title="Link to this heading"></a></h4>
+<section id="id16">
+<h4>引数<a class="headerlink" href="#id16" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: 履歴を格納したファイル”res_history”を指定します．</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">num_cycles</span></code>: サイクル数”CyclesNum”を指定します．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_cycles</span></code>: サイクル数”n_cycles”を指定します．</p></li>
 </ul>
 <p>具体的には，以下のように実行します．</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nimo</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">plot_history</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">res_history</span><span class="p">,</span>
-                                        <span class="n">num_cycles</span> <span class="o">=</span> <span class="n">CyclesNum</span><span class="p">)</span>
+                                        <span class="n">num_cycles</span> <span class="o">=</span> <span class="n">n_cycles</span><span class="p">)</span>
 
 <span class="n">nimo</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">plot_history</span><span class="o">.</span><span class="n">best</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">res_history</span><span class="p">,</span>
-                                       <span class="n">num_cycles</span> <span class="o">=</span> <span class="n">CyclesNum</span><span class="p">)</span>
+                                       <span class="n">num_cycles</span> <span class="o">=</span> <span class="n">n_cycles</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 </section>
-<section id="id18">
-<h3>目的関数の分布の可視化<a class="headerlink" href="#id18" title="Link to this heading"></a></h3>
+<section id="id17">
+<h3>目的関数の分布の可視化<a class="headerlink" href="#id17" title="Link to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">nimo.visualization.plot_distribution.plot</span></code> を利用することで，目的関数値の分布を可視化することができます．
 目的関数が１次元の場合は，ヒストグラムとして，２次元，３次元の場合はscatter plotとして出力されます．
 ４次元以上は指定しても図は出力されません．</p>
-<section id="id19">
-<h4>引数<a class="headerlink" href="#id19" title="Link to this heading"></a></h4>
+<section id="id18">
+<h4>引数<a class="headerlink" href="#id18" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: 実験条件ファイル”candidates_file”を指定します．</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code>: 目的関数の個数”ObjectivesNum”を指定します．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code>: 目的関数の個数”n_objectives”を指定します．</p></li>
 </ul>
 <p>具体的には，以下のように実行します．</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nimo</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">plot_distribution</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">,</span>
-                                            <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">ObjectivesNum</span><span class="p">)</span>
+                                            <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">n_objectives</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 </section>
-<section id="id20">
-<h3>相図の可視化<a class="headerlink" href="#id20" title="Link to this heading"></a></h3>
+<section id="id19">
+<h3>相図の可視化<a class="headerlink" href="#id19" title="Link to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">nimo.visualization.plot_phase_diagram.plot</span></code> を利用することで，予測相図を出力することができます．
-人工知能の方法としてPDCを利用する場合に利用できます．
+探索アルゴリズムの方法としてPDCを利用する場合に利用できます．
 descriptorの次元が１次元の場合，４次元以上の場合は出力されません．</p>
-<section id="id21">
-<h4>引数<a class="headerlink" href="#id21" title="Link to this heading"></a></h4>
+<section id="id20">
+<h4>引数<a class="headerlink" href="#id20" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: 実験条件ファイル”candidates_file”を指定します．</p></li>
 </ul>
@@ -496,8 +487,8 @@ descriptorの次元が１次元の場合，４次元以上の場合は出力さ�
 </section>
 </section>
 </section>
-<section id="id22">
-<h2>自作モジュールを利用する場合<a class="headerlink" href="#id22" title="Link to this heading"></a></h2>
+<section id="id21">
+<h2>自作モジュールを利用する場合<a class="headerlink" href="#id21" title="Link to this heading"></a></h2>
 <section id="ai-tool-original-py">
 <h3><code class="docutils literal notranslate"><span class="pre">ai_tool_original.py</span></code> の作成<a class="headerlink" href="#ai-tool-original-py" title="Link to this heading"></a></h3>
 <p>自作のAIを利用する場合， <code class="docutils literal notranslate"><span class="pre">ai_tool_original.py</span></code> を作成しメインスクリプトと同じフォルダに格納してください．
@@ -510,8 +501,8 @@ descriptorの次元が１次元の場合，４次元以上の場合は出力さ�
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ai_tool_original</span>
 <span class="n">ai_tool_original</span><span class="o">.</span><span class="n">ORIGINAL</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">,</span>
                           <span class="n">output_file</span> <span class="o">=</span> <span class="n">proposals_file</span><span class="p">,</span>
-                          <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">ObjectivesNum</span><span class="p">,</span>
-                          <span class="n">num_proposals</span> <span class="o">=</span> <span class="n">ProposalsNum</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+                          <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">n_objectives</span><span class="p">,</span>
+                          <span class="n">num_proposals</span> <span class="o">=</span> <span class="n">n_proposals</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
@@ -542,8 +533,29 @@ descriptorの次元が１次元の場合，４次元以上の場合は出力さ�
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">analysis_output_original</span>
 <span class="n">analysis_output_original</span><span class="o">.</span><span class="n">ORIGINAL</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">proposals_file</span><span class="p">,</span>
                                   <span class="n">output_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">,</span>
-                                  <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">ObjectivesNum</span><span class="p">,</span>
+                                  <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">n_objectives</span><span class="p">,</span>
                                   <span class="n">output_folder</span> <span class="o">=</span> <span class="n">output_folder</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id22">
+<h2>目的関数を実験条件ファイルに書き込む<a class="headerlink" href="#id22" title="Link to this heading"></a></h2>
+<p>上記 <code class="docutils literal notranslate"><span class="pre">nimo.analysis_output</span></code> 関数では，実験条件ファイルの更新も関数内で実行するようになっています．
+一方で，実験操作を異なるプログラムで実施し，探索アルゴリズムだけを使用したい場合も想定し，
+実験により得られた目的関数を実験ファイルに書き込む関数 <code class="docutils literal notranslate"><span class="pre">nimo.output_update</span></code> を用意しています．</p>
+<section id="id23">
+<h3>引数<a class="headerlink" href="#id23" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: 探索アルゴリズムからの提案ファイル”proposals_file”を指定します．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code>: 実験条件ファイル”candidates_file”を指定します．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code>: 目的関数の個数”n_objectives”を指定します．もちろん，直接，値を指定することもできます．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">objective_values</span></code>: 書き込む目的関数をリストとして指定します．順番は”proposals_file”に書かれた順番にしてください．例えば，単目的の場合，objs = [0.5, 1.0, …]，多目的の場合，objs = [[1.1, 3.2], [5, 8.2]…]とリストを準備してください．</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nimo</span><span class="o">.</span><span class="n">output_update</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">proposals_file</span><span class="p">,</span>
+                     <span class="n">output_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">,</span>
+                     <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">n_objectives</span><span class="p">,</span>
+                     <span class="n">objective_values</span> <span class="o">=</span> <span class="n">objs</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
