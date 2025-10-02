@@ -1,0 +1,73 @@
+******************************
+Install and Uninstall
+******************************
+
+Install
+==================
+
+Required packages
+--------------------------
+
+- Python >= 3.6
+- matplotlib
+- numpy
+- physbo >= 3.0.0
+- scikit-learn
+- scipy
+
+
+
+.. _install_jp:
+
+Install procedures
+------------------
+
+* From ``PyPI`` (Required packages will also be installed at the same time.)
+
+
+.. code-block:: python
+
+    pip install nimo
+
+
+
+* If you add the ``--user`` option, it will be installed under the user’s home directory
+
+.. code-block:: python
+
+    pip install --user nimo
+
+If C++ compire is avaiable
+------------------------------------------
+By additionally installing ``physbo-core-cython`` , algorithms that use PHYSBO—such as PHYSBO, PTR, BOMP, and COMBI—can be accelerated.
+
+``physbo-core-cython`` can be installed via pip as follows.
+
+.. code-block:: python
+    
+    pip install physbo-core-cython
+
+
+How to install a C++ compiler on a Windows PC
+------------------------------------------------------------
+
+**It is optional for acceleration and therefore not mandatory．**
+
+* Install of Visual Studio
+
+Visual Studio from the Microsoft website may be required.
+
+https://visualstudio.microsoft.com/
+
+
+
+Uninstall
+=====================
+
+
+* Execute the following command.
+
+.. code-block:: python
+
+   pip uninstall nimo
+

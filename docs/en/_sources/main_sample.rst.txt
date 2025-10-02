@@ -1,0 +1,302 @@
+******************************
+Example of Main Script
+******************************
+
+
+Bayesian optimization
+===========================
+
+.. code-block:: python
+
+    import nimo
+
+    #Specify the number of objective functions
+    n_objectives = 2
+
+    #Specify the number of experimental conditions proposed by the exploration algorithm in one cycle.
+    n_proposals = 2
+
+    #Specify the number of cycles.
+    n_cycles = 3
+
+
+    #Specify a file listing experimental conditions.
+    candidates_file = "./candidates.csv"
+
+    #Specify a file that describes the experimental conditions proposed by the exploration algorithm.
+    proposals_file = "./proposals.csv"
+
+
+    #Create a list to store history
+    res_history = nimo.history(input_file = candidates_file, 
+                                 num_objectives = n_objectives)
+
+    for K in range(n_cycles):
+
+        print("Start cycle", K+1)
+
+        #Random exploration is performed for the first cycle due to the lack of experimental data.
+        #If some experimental data are available from the beginning, the PHYSBO can be executed from the beginning and no branching is required.
+        if K==0:
+            method = "RE"
+        else:
+            method = "PHYSBO"
+
+        #Execution of the exploration algorithm.            
+        nimo.selection(method = method, 
+                         input_file = candidates_file, 
+                         output_file = proposals_file,
+                         num_objectives = n_objectives, 
+                         num_proposals = n_proposals)
+
+
+        #Creation of input files for robotic experiments and execution of robotic experiments.
+        nimo.preparation_input(machine = "STAN", 
+                                 input_file = proposals_file, 
+                                 input_folder = "./EXPInput")
+
+        #Analysis of results by robotic experiments and update of candidates files.
+        nimo.analysis_output(machine = "STAN", 
+                               input_file = proposals_file, 
+                               output_file = candidates_file,
+                               num_objectives = n_objectives, 
+                               output_folder = "./EXPOutput")
+
+        #Update list to store history
+        res_history = nimo.history(input_file = candidates_file, 
+                                     num_objectives = n_objectives, 
+                                     itt = K, 
+                                     history_file = res_history)
+
+        #Output the distribution of the objective functions for each cycle.
+        nimo.visualization.plot_distribution.plot(input_file = candidates_file, 
+                                                    num_objectives = n_objectives)
+
+
+    #Plot the cycle dependence of the objective functions.
+    nimo.visualization.plot_history.cycle(input_file = res_history, 
+                                            num_cycles = n_cycles)
+
+    #Plot the cycle dependence of the maximum value of the objective functions.
+    nimo.visualization.plot_history.best(input_file = res_history, 
+                                           num_cycles = n_cycles)
+
+
+
+
+
+Boundless objective-free exploration
+==========================================
+
+.. code-block:: python
+
+    import nimo
+
+    #Specify the number of objective functions.
+    n_objectives = 2
+
+    #Specify the number of experimental conditions proposed by the exploration algorithm in one cycle.
+    n_proposals = 2
+
+    #Specify the number of cycles.
+    n_cycles = 3
+
+
+    #Specify a file listing experimental conditions.
+    candidates_file = "./candidates.csv"
+
+    #Specify a file that describes the experimental conditions proposed by the exploration algorithm.
+    proposals_file = "./proposals.csv"
+
+
+    #Create a list to store history
+    res_history = nimo.history(input_file = candidates_file, 
+                                 num_objectives = n_objectives)
+
+    for K in range(n_cycles):
+
+        print("Start cycle", K+1)
+
+        #Random exploration is performed for the first cycle due to the lack of experimental data.
+        #If some experimental data are available from the beginning, the BLOX can be executed from the beginning and no branching is required.
+        if K==0:
+            method = "RE"
+        else:
+            method = "BLOX"
+
+        #Execution of the exploration algorithm.
+        nimo.selection(method = method, 
+                         input_file = candidates_file, 
+                         output_file = proposals_file,
+                         num_objectives = n_objectives, 
+                         num_proposals = n_proposals)
+
+        #Creation of input files for robotic experiments and execution of robotic experiments.
+        nimo.preparation_input(machine = "STAN", 
+                                 input_file = proposals_file, 
+                                 input_folder = "./EXPInput")
+
+        #Analysis of results by robotic experiments and update of candidates files.
+        nimo.analysis_output(machine = "STAN", 
+                               input_file = proposals_file, 
+                               output_file = candidates_file,
+                               num_objectives = n_objectives, 
+                               output_folder = "./EXPOutput")
+
+        #Update list to store history
+        res_history = nimo.history(input_file = candidates_file, 
+                                     num_objectives = n_objectives, 
+                                     itt = K, 
+                                     history_file = res_history)
+
+        #Output the distribution of the objective functions for each cycle.
+        nimo.visualization.plot_distribution.plot(input_file = candidates_file, 
+                                                    num_objectives = n_objectives)
+
+
+    #Plot the cycle dependence of the objective functions.
+    nimo.visualization.plot_history.cycle(input_file = res_history, 
+                                            num_cycles = n_cycles)
+
+    #Plot the cycle dependence of the maximum value of the objective functions.
+    nimo.visualization.plot_history.best(input_file = res_history, 
+                                           num_cycles = n_cycles)
+
+
+
+
+Phase diagram construction
+================================
+
+.. code-block:: python
+
+    import nimo
+
+    #Specify the number of objective functions.
+    n_objectives = 2
+
+    #Specify the number of experimental conditions proposed by the exploration algorithm in one cycle.
+    n_proposals = 2
+
+    #Specify the number of cycles.
+    n_cycles = 3
+
+
+    #Specify a file listing experimental conditions.
+    candidates_file = "./candidates.csv"
+
+    #Specify a file that describes the experimental conditions proposed by the exploration algorithm.
+    proposals_file = "./proposals.csv"
+
+
+    #Create a list to store history.
+    res_history = nimo.history(input_file = candidates_file, 
+                                 num_objectives = n_objectives)
+
+    for K in range(n_cycles):
+
+        print("Start cycle", K+1)
+
+        #Random exploration is performed for the first cycle due to the lack of experimental data.
+        #If some experimental data are available from the beginning, the PDC can be executed from the beginning and no branching is required.
+        if K==0:
+            method = "RE"
+        else:
+            method = "PDC"
+
+        #Execution of the exploration algorithm.
+        nimo.selection(method = method, 
+                         input_file = candidates_file, 
+                         output_file = proposals_file,
+                         num_objectives = n_objectives, 
+                         num_proposals = n_proposals)
+
+        #Creation of input files for robotic experiments and execution of robotic experiments.
+        nimo.preparation_input(machine = "STAN", 
+                                 input_file = proposals_file, 
+                                 input_folder = "./EXPInput")
+
+        #Analysis of results by robotic experiments and update of candidates files.
+        nimo.analysis_output(machine = "STAN", 
+                               input_file = proposals_file, 
+                               output_file = candidates_file,
+                               num_objectives = n_objectives, 
+                               output_folder = "./EXPOutput")
+
+        #Update list to store history.
+        res_history = nimo.history(input_file = candidates_file, 
+                                     num_objectives = n_objectives, 
+                                     itt = K, 
+                                     history_file = res_history)
+
+        #Output phase diagram for each cycle.
+        nimo.visualization.plot_phase_diagram.plot(input_file = candidates_file)
+
+
+
+
+Usage of original modules
+==============================
+
+.. code-block:: python
+
+  import nimo
+
+  #Specify the number of objective functions.
+  n_objectives = 2
+
+  #Specify the number of experimental conditions proposed by the exploration algorithm in one cycle.
+  n_proposals = 2
+
+  #Specify the number of cycles.
+  n_cycles = 3
+
+
+  #Specify a file listing experimental conditions.
+  candidates_file = "./candidates.csv"
+
+  #Specify a file that describes the experimental conditions proposed by the exploration algorithm.
+  proposals_file = "./proposals.csv"
+
+
+  #Create a list to store history.
+  res_history = nimo.history(input_file = candidates_file, num_objectives = n_objectives)
+
+  for K in range(n_cycles):
+
+      print("Start cycle", K+1)
+
+
+      #Execution of the exploration algorithm.
+      import ai_tool_original
+      ai_tool_original.ORIGINAL(input_file = candidates_file,
+                                output_file = proposals_file,
+                                num_objectives = n_objectives,
+                                num_proposals = n_proposals).select()
+    
+
+      #Creation of input files for robotic experiments and execution of robotic experiments.
+      import preparation_input_original
+      preparation_input_original.ORIGINAL(input_file = proposals_file, 
+                                          input_folder = "./EXPInput").perform()
+
+
+      #Analysis of results by robotic experiments and update of candidates files.
+      import analysis_output_original
+      analysis_output_original.ORIGINAL(input_file = proposals_file, 
+                                        output_file = candidates_file,
+                                        num_objectives = n_objectives, 
+                                        output_folder = "./EXPOutput").perform()
+
+      #Update list to store history
+      res_history = nimo.history(input_file = candidates_file, num_objectives = n_objectives, itt = K, history_file = res_history)
+
+      #Output the distribution of the objective functions for each cycle.
+      nimo.visualization.plot_distribution.plot(input_file = candidates_file, num_objectives = n_objectives)
+
+
+  #Plot the cycle dependence of the objective functions.
+  nimo.visualization.plot_history.cycle(input_file = res_history, num_cycles = n_cycles)
+
+  #Plot the cycle dependence of the maximum value of the objective functions.
+  nimo.visualization.plot_history.best(input_file = res_history, num_cycles = n_cycles)

@@ -1,0 +1,69 @@
+******************************
+Introduction
+******************************
+
+What is NIMO?
+===================
+
+NIMO is a Python library to realize a closed loop of robotic experiments and artificial intelligence for exploration algorithm without human intervention for automated materials exploration.
+We started development as NIMS-OS (NIMS Orchestration System) (https://github.com/nimsos-dev/nimsos) and decided to adopt NIMO as a nickname to promote it as open source software.
+NIMO can perform automated materials exploration in various combinations by considering exploration algorithm and robotic experiments as modules (see the figure below).
+As artificial intelligence technique for materials science, Bayesian optimization method (PHYSBO), boundLess objective-free exploration method (BLOX), phase diagram construction method (PDC), 
+Probability that properties within the Target Range(PTR), Bayesian optimization for materials and process parameters(BOMP), Bayesian optimization for combinatorial materials(COMBI),and random exploration (RE) can be used.
+Visualization tools for the results are also included, allowing users to check optimization results in real time.
+Newly created modules for exploration algorithm and robotic experiments can be added and used.
+More modules will be added in the future.
+In addition, the GUI application to control NIMS-OS is developed and opened.
+
+
+|
+
+.. image:: ../img/modules.png
+   :align: center
+
+
+|
+
+
+In NIMO, three types of Python scripts form a closed loop, as shown in the figure below.
+
+* ``ai_tool.py`` : From the ``candidates file``, which lists candidate experimental conditions, the AI selects the preferred experimental conditions and outputs them to the ``proposal file``.
+* ``preparation_input.py`` : This script creates input files for the robotics experiment from ``proposal file`` and starts the robotics experiments. Some parts of this Python script will need to be revised depending on the robotics device to be used.
+* ``analysis_output.py`` : This script receives a signal from the robotic experiments when it is finished, extracts the objective functions from the results of the experiment, and updates the ``candidadates file``. Some parts of this Python script will need to be revised depending on the robotics device to be used.
+
+
+.. image:: ../img/cycle.png
+   :align: center
+
+
+|
+
+
+Citation
+==============
+
+When using NIMO, please cite the following reference:
+
+Ryo Tamura, Koji Tsuda, and Shoichi Matsuda,
+NIMS-OS: An automation software to implement a closed loop between artificial intelligence and robotic experiments in materials science,
+Science and Technology of Advanced Materials: Methods 3, 1, 2232297 (2023).
+
+Available from `https://www.tandfonline.com/doi/full/10.1080/27660400.2023.2232297 <https://www.tandfonline.com/doi/full/10.1080/27660400.2023.2232297>`_.
+
+
+
+
+
+
+Main developers
+===================
+
+* Ryo Tamura (NIMS, U. Tokyo)
+* Shoichi Matsuda（NIMS）
+* Koji Tsuda（U. Tokyo, NIMS）
+
+
+License
+===========
+
+The program package and the complete source code of this software are distributed under the MIT License.
