@@ -120,6 +120,14 @@ class PDC():
             label_list.append(phase)
 
 
+        if len(list(set(label_list))) == 2:
+            
+            print("(Kill) If there is only one phase, use RE for selection.")
+
+            import sys
+            sys.exit()
+
+
         label_index_list = range(len(data_list))
         labeled_index_list = train_actions
         unlabeled_index_list = test_actions
