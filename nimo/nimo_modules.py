@@ -1,4 +1,5 @@
 import numpy as np
+import csv
 import nimo.ai_tools
 import nimo.input_tools
 import nimo.output_tools
@@ -267,6 +268,30 @@ class output_update():
                                     output_file = self.output_file, 
                                     num_objectives = self.num_objectives, 
                                     objective_values = self.objective_values).perform()
+
+def proposed_conditions(input_file):
+    """Containing proposed conditions
+
+    This function do not depend on robot.
+
+    Args:
+        input_file (str): the file for proposals
+    
+    Returns:
+        conditions: list for proposed conditions
+
+    """
+
+    conditions = []
+
+    with open(input_file) as f:
+        reader = csv.reader(f)
+        header = next(reader)
+        for row in reader:
+            conditions.append([float(row[i + 1]) for i in range(len(row) - 1)])
+
+    return conditions
+
 
 
 

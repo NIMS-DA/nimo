@@ -8,6 +8,7 @@ from .nimo_modules import analysis_output
 from .nimo_modules import output_update
 from .nimo_modules import history
 from .nimo_modules import analysis
+from .nimo_modules import proposed_conditions
 
 from .ai_tools import ai_tool_re
 from .ai_tools import ai_tool_physbo
