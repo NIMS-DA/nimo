@@ -10,7 +10,7 @@ import sklearn.semi_supervised
 from sklearn.preprocessing import StandardScaler
 from scipy.spatial import distance
 
-def plot(input_file, fig_folder = None):
+def plot(input_file, fig_folder = None, num_phases = None):
     """Loading candidates
 
     This function do not depend on robot.
@@ -55,7 +55,18 @@ def plot(input_file, fig_folder = None):
     data_list_std = ss.transform(data_list)
 
     max_label = np.max(list(set(label_list)))
-    color_list = [cm.rainbow(float(i)/(max_label)) for i in range(max_label+1)]
+
+    if num_phases is None:
+        num_phases = np.max(list(set(label_list))) + 1
+
+    if np.max(list(set(label_list))) + 1 <= num_phases:
+
+        if num_phases == 1:
+            color_list = [cm.rainbow(0)]
+        elif np.max(list(set(label_list))) + 1 <= num_phases :
+            color_list = [cm.rainbow(float(i)/(num_phases - 1)) for i in range(num_phases)]
+    else:
+        color_list = [cm.rainbow(float(i)/(max_label)) for i in range(max_label + 1)]
 
 
     #----SAMPLING
