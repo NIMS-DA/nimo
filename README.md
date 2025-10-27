@@ -15,12 +15,9 @@ NIMO is a Python library to realize a closed loop of robotic experiments and art
 - Python >= 3.6
 - matplotlib
 - numpy
-- physbo >= 3.0.0
+- physbo >= 3.0.1
 - scikit-learn
 - scipy
-
-# About Cython
-From NIMO v2.0.0, NIMO no longer uses Cython in order to simplify installation process particularly on Windows computer. This means that the performance of PHYSBO, PTR, BOMP, and COMBI is slightly degraded from older versions. If you need more performance, you can install physbo-core-cython additionally. This package offers Cythonized version of some functions of PHYSBO.
 
 # Install
 
@@ -42,12 +39,6 @@ From NIMO v2.0.0, NIMO no longer uses Cython in order to simplify installation p
 
   ```bash
   pip install .
-  ```
-
-* For physbo-core-cython (option, if C++ compiler is available)
-
-  ```bash
-  pip install physbo-core-cython
   ```
 
 # Uninstall
