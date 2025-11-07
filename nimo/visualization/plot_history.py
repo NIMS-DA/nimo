@@ -3,7 +3,7 @@ import time
 import collections
 
 
-def cycle(input_file, num_cycles, fig_folder = None):
+def cycle(input_file, num_cycles, fig_folder = None, dpi = None):
     """Creating the figure of datapoints depending on the cycles
 
     This function do not depend on robot.
@@ -18,6 +18,9 @@ def cycle(input_file, num_cycles, fig_folder = None):
         fig_path = "./fig"
     else:
         fig_path = fig_folder
+    
+    if dpi == None:
+        dpi = 72
 
     obs_itt = []
     obs_y = []
@@ -37,7 +40,7 @@ def cycle(input_file, num_cycles, fig_folder = None):
         plt.xlim(0, num_cycles)
         plt.xlabel("Cycle")
         plt.ylabel("Objective"+str(i+1))
-        plt.savefig(fig_path + "/history_step_" + time.strftime('%y%m%d%H%M%S', dt_now) + "_" + str(i+1)+ ".png")
+        plt.savefig(fig_path + "/history_step_" + time.strftime('%y%m%d%H%M%S', dt_now) + "_" + str(i+1)+ ".png", dpi = dpi)
         plt.clf()
         plt.close() 
 
@@ -109,6 +112,6 @@ def best(input_file, num_cycles, fig_folder = None):
         plt.xlim(0, num_cycles)
         plt.xlabel("Cycle")
         plt.ylabel("Best objective"+str(i+1))
-        plt.savefig(fig_path + "/history_best_" + time.strftime('%y%m%d%H%M%S', dt_now) + "_" + str(i+1)+ ".png")
+        plt.savefig(fig_path + "/history_best_" + time.strftime('%y%m%d%H%M%S', dt_now) + "_" + str(i+1)+ ".png", dpi = dpi)
         plt.clf()
         plt.close() 

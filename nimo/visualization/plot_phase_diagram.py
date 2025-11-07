@@ -10,7 +10,7 @@ import sklearn.semi_supervised
 from sklearn.preprocessing import StandardScaler
 from scipy.spatial import distance
 
-def plot(input_file, fig_folder = None, num_phases = None):
+def plot(input_file, fig_folder = None, pdc_estimation = None, num_phases = None, dpi = None):
     """Loading candidates
 
     This function do not depend on robot.
@@ -27,10 +27,13 @@ def plot(input_file, fig_folder = None, num_phases = None):
 
     t_train, X_all, train_actions, test_actions = load_data(input_file)
 
+    LP_algorithm = pdc_estimation
 
-    #parameters
-    LP_algorithm = 'LP' #'LP', 'LS'                                                                   
+    if pdc_estimation == None:
+        LP_algorithm = 'LP'
 
+    if dpi == None:
+        dpi = 72
 
     #Preparation of data    
     data_list = np.array(X_all)
@@ -91,19 +94,23 @@ def plot(input_file, fig_folder = None, num_phases = None):
     dt_now = time.localtime()
 
     if len(data_list[0]) == 2:
+       
+        with open(input_file, 'r') as f:
+            reader = csv.reader(f)
+            header = next(reader)
         
         fig = plt.figure()
 
-        #for i in unlabeled_index_list:
-        #    plt.scatter(data_list[i][0], data_list[i][1], c=[color_list[predicted_all_labels[i]]], marker = 's')
+        for i in unlabeled_index_list:
+            plt.scatter(data_list[i][0], data_list[i][1], c="white", s=0, marker = 'o')
 
         for i in labeled_index_list:
             plt.scatter(data_list[i][0], data_list[i][1], c=[color_list[label_list[i]]], marker="o")
 
-        plt.xlabel("x")
-        plt.ylabel("y")
+        plt.xlabel(header[0])
+        plt.ylabel(header[1])
         
-        plt.savefig(fig_path + "/phase_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png")
+        plt.savefig(fig_path + "/phase_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png", dpi = dpi)
         plt.clf()
         plt.close() 
         
@@ -116,32 +123,36 @@ def plot(input_file, fig_folder = None, num_phases = None):
         for i in labeled_index_list:
             plt.scatter(data_list[i][0], data_list[i][1], c=[color_list[label_list[i]]], marker="o")
 
-        plt.xlabel("x")
-        plt.ylabel("y")
+        plt.xlabel(header[0])
+        plt.ylabel(header[1])
         
-        plt.savefig(fig_path + "/phase_diagram_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png")
+        plt.savefig(fig_path + "/phase_diagram_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png", dpi = dpi)
         plt.clf()
         plt.close() 
 
 
     if len(data_list[0]) == 3:
         
+        with open(input_file, 'r') as f:
+            reader = csv.reader(f)
+            header = next(reader)
+        
         fig = plt.figure()
         ax = Axes3D(fig)
 
         fig.add_axes(ax)
 
-        #for i in unlabeled_index_list:
-        #    ax.scatter(data_list[i][0], data_list[i][1], data_list[i][2], c=[color_list[predicted_all_labels[i]]], marker = 's', alpha = 0.7)
+        for i in unlabeled_index_list:
+            ax.scatter(data_list[i][0], data_list[i][1], data_list[i][2], c="white", s=0, marker = 'o', alpha = 0.0)
 
         for i in labeled_index_list:
             ax.scatter(data_list[i][0], data_list[i][1], data_list[i][2], c=[color_list[label_list[i]]], marker="o", alpha = 0.7)
 
-        ax.set_xlabel("x")
-        ax.set_ylabel("y")
-        ax.set_zlabel("z")
+        ax.set_xlabel(header[0])
+        ax.set_ylabel(header[1])
+        ax.set_zlabel(header[2])
      
-        plt.savefig(fig_path + "/phase_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png")
+        plt.savefig(fig_path + "/phase_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png", dpi = dpi)
         plt.clf()
         plt.close() 
 
@@ -157,11 +168,11 @@ def plot(input_file, fig_folder = None, num_phases = None):
         for i in labeled_index_list:
             ax.scatter(data_list[i][0], data_list[i][1], data_list[i][2], c=[color_list[label_list[i]]], marker="o", alpha = 0.7)
 
-        ax.set_xlabel("x")
-        ax.set_ylabel("y")
-        ax.set_zlabel("z")
+        ax.set_xlabel(header[0])
+        ax.set_ylabel(header[1])
+        ax.set_zlabel(header[2])
         
-        plt.savefig(fig_path + "/phase_diagram_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png")
+        plt.savefig(fig_path + "/phase_diagram_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png", dpi = dpi)
         plt.clf()
         plt.close() 
 
