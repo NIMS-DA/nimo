@@ -180,6 +180,14 @@ class preparation_input():
         if self.machine == "COMBAT":
             res = nimo.input_tools.preparation_input_combat.COMBAT(self.input_file, self.input_folder).perform()
             return res
+        
+        if self.machine == "CERTUS":
+            res = nimo.input_tools.preparation_input_certus.CERTUS(self.input_file, self.input_folder).perform()
+            return res
+        
+        if self.machine == "CERTUS_SC":
+            res = nimo.input_tools.preparation_input_certus_sc.CERTUS_SC(self.input_file, self.input_folder).perform()
+            return res
 
 
 class analysis_output():
@@ -237,6 +245,9 @@ class analysis_output():
             res = nimo.output_tools.analysis_output_combat.COMBAT(self.input_file, self.output_file, self.num_objectives, self.output_folder).perform()
             return res
 
+        if self.machine == "SD8":
+            res = nimo.output_tools.analysis_output_sd8.SD8(self.input_file, self.output_file, self.num_objectives, self.output_folder).perform()
+            return res
 
 
 class output_update():
