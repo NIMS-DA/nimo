@@ -233,6 +233,13 @@ class SLESA():
                     if id[ii] not in actions:
                         actions.append(id[ii])
 
+            while len(actions) < self.num_proposals:
+
+                rand_action = random.sample(test_actions, 1)[0]
+
+                if rand_action not in train_actions:
+                    if rand_action not in actions:
+                        actions.append(rand_action)
 
             #Output prediction results
             if self.output_res == True:
