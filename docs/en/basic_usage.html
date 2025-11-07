@@ -88,6 +88,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#id7">Arguments</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#storing-proposed-experimental-conditions-as-a-python-list">Storing Proposed Experimental Conditions as a Python List</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Arguments</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="main_sample.html">Example of Main Script</a></li>
@@ -439,6 +443,8 @@ The output will be stored in this folder.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: Specify the file “res_history” that contains the history.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">num_cycles</span></code>: Specify the number of cycles “n_cycles”. Of course, you can also directly specify a numerical value.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fig_folder</span></code> : Specify the folder to output figures. If not specified, a folder named <code class="docutils literal notranslate"><span class="pre">fig</span></code> should be created within the same folder as the main script, and the figures will be saved there.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dpi</span></code> : Specifies the resolution of the figures (dots per inch). If not specified, dpi=72 will be used.</p></li>
 </ul>
 <p>Specifically, set as follows.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nimo</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">plot_history</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">res_history</span><span class="p">,</span>
@@ -461,6 +467,8 @@ For four or more dimensions, no plot is output.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: Specify the file “res_history” that contains the history.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code>: Specify the number of objective functions “n_objectives”. Of course, you can also directly specify a numerical value.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fig_folder</span></code> : Specify the folder to output figures. If not specified, a folder named <code class="docutils literal notranslate"><span class="pre">fig</span></code> should be created within the same folder as the main script, and the figures will be saved there.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dpi</span></code> : Specifies the resolution of the figures (dots per inch). If not specified, dpi=72 will be used.</p></li>
 </ul>
 <p>Specifically, set as follows.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nimo</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">plot_distribution</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">,</span>
@@ -478,6 +486,9 @@ If the descriptor has one dimension or four or more dimensions, no plot is outpu
 <h3>Arguments<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: Specify the file stored experimental conditions, that is, “candidates_file”.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fig_folder</span></code> : Specify the folder to output figures. If not specified, a folder named <code class="docutils literal notranslate"><span class="pre">fig</span></code> should be created within the same folder as the main script, and the figures will be saved there.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pdc_estimation</span></code> : Selects the algorithm to be used. “LC” or “LS” can be specified. If not specified, “LC” will be selected.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dpi</span></code> : Specifies the resolution of the figures (dots per inch). If not specified, dpi=72 will be used.</p></li>
 </ul>
 <p>Specifically, set as follows.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nimo</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">plot_phase_diagram</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">)</span>
@@ -554,6 +565,22 @@ we provide the function <code class="docutils literal notranslate"><span class="
                      <span class="n">output_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">,</span>
                      <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">n_objectives</span><span class="p">,</span>
                      <span class="n">objective_values</span> <span class="o">=</span> <span class="n">objs</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="storing-proposed-experimental-conditions-as-a-python-list">
+<h2>Storing Proposed Experimental Conditions as a Python List<a class="headerlink" href="#storing-proposed-experimental-conditions-as-a-python-list" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">nimo.selection</span></code> function mentioned above writes the experimental conditions to the file specified as proposals_file.
+We provide the function <code class="docutils literal notranslate"><span class="pre">nimo.proposed_conditions</span></code> to read these conditions into a Python list.
+This allows you to obtain the experimental conditions as a list when specifying them to a robotic experimental setup via Python.
+You can read the proposals from “proposals.csv” into a list called conditions by specifying it as follows:</p>
+<section id="id8">
+<h3>Arguments<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: Specifies the proposal file, “proposals_file”, generated by the exploration algorithm.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">conditions</span> <span class="o">=</span> <span class="n">nimo</span><span class="o">.</span><span class="n">proposed_conditions</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;proposals.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

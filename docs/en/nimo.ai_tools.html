@@ -56,6 +56,18 @@
 <li class="toctree-l4"><a class="reference internal" href="#nimo.ai_tools.ai_tool_blox.BLOX"><code class="docutils literal notranslate"><span class="pre">BLOX</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nimo.ai_tools.ai_tool_bomp">nimo.ai_tools.ai_tool_bomp module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nimo.ai_tools.ai_tool_bomp.BOMP"><code class="docutils literal notranslate"><span class="pre">BOMP</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nimo.ai_tools.ai_tool_combi">nimo.ai_tools.ai_tool_combi module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nimo.ai_tools.ai_tool_combi.COMBI"><code class="docutils literal notranslate"><span class="pre">COMBI</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nimo.ai_tools.ai_tool_es">nimo.ai_tools.ai_tool_es module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nimo.ai_tools.ai_tool_es.ES"><code class="docutils literal notranslate"><span class="pre">ES</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nimo.ai_tools.ai_tool_pdc">nimo.ai_tools.ai_tool_pdc module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#nimo.ai_tools.ai_tool_pdc.PDC"><code class="docutils literal notranslate"><span class="pre">PDC</span></code></a></li>
 </ul>
@@ -64,8 +76,24 @@
 <li class="toctree-l4"><a class="reference internal" href="#nimo.ai_tools.ai_tool_physbo.PHYSBO"><code class="docutils literal notranslate"><span class="pre">PHYSBO</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nimo.ai_tools.ai_tool_ptr">nimo.ai_tools.ai_tool_ptr module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nimo.ai_tools.ai_tool_ptr.PTR"><code class="docutils literal notranslate"><span class="pre">PTR</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nimo.ai_tools.ai_tool_re">nimo.ai_tools.ai_tool_re module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#nimo.ai_tools.ai_tool_re.RE"><code class="docutils literal notranslate"><span class="pre">RE</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nimo.ai_tools.ai_tool_rsvm">nimo.ai_tools.ai_tool_rsvm module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nimo.ai_tools.ai_tool_rsvm.RSVM"><code class="docutils literal notranslate"><span class="pre">RSVM</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nimo.ai_tools.ai_tool_slesa_WAM">nimo.ai_tools.ai_tool_slesa_WAM module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nimo.ai_tools.ai_tool_slesa_WAM.SLESA_WAM"><code class="docutils literal notranslate"><span class="pre">SLESA_WAM</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nimo.ai_tools.ai_tool_slesa">nimo.ai_tools.ai_tool_slesa module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nimo.ai_tools.ai_tool_slesa.SLESA"><code class="docutils literal notranslate"><span class="pre">SLESA</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -158,6 +186,204 @@ test_actions (list[float]): the list where test actions are stored</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_blox.BLOX.select">
 <span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_blox.BLOX.select" title="Link to this definition"></a></dt>
+<dd><p>Selecting the proposals by MI algorithm</p>
+<p>This function do not depend on robot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True (str) for success.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-nimo.ai_tools.ai_tool_bomp">
+<span id="nimo-ai-tools-ai-tool-bomp-module"></span><h2>nimo.ai_tools.ai_tool_bomp module<a class="headerlink" href="#module-nimo.ai_tools.ai_tool_bomp" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_bomp.BOMP">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nimo.ai_tools.ai_tool_bomp.</span></span><span class="sig-name descname"><span class="pre">BOMP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_objectives</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_proposals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">physbo_score</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimization</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">process_X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_res</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_res</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_bomp.BOMP" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class of BOMP</p>
+<p>This class can select the next candidates by Bayesian optimization based on PHYSBO package.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_bomp.BOMP.calc_ai">
+<span class="sig-name descname"><span class="pre">calc_ai</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_all</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_actions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_actions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_bomp.BOMP.calc_ai" title="Link to this definition"></a></dt>
+<dd><p>Calculating the proposals by AI algorithm</p>
+<p>This function is for PHYSBO.
+This function do not depend on robot.
+If the new AI alborithm is developed, this function is only changed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_train</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where observed objectives are stored</p></li>
+<li><p><strong>X_all</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where all descriptors are stored</p></li>
+<li><p><strong>train_actions</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where observed actions are stored</p></li>
+<li><p><strong>test_actions</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where test actions are stored</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the list where the selected actions are stored</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>actions (list[int])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_bomp.BOMP.load_data">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_bomp.BOMP.load_data" title="Link to this definition"></a></dt>
+<dd><p>Loading candidates</p>
+<p>This function do not depend on robot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list where observed objectives are stored
+X_all (list[float]): the list where all descriptors are stored
+train_actions (list[float]): the list where observed actions are stored
+test_actions (list[float]): the list where test actions are stored</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>t_train (list[float])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_bomp.BOMP.select">
+<span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_bomp.BOMP.select" title="Link to this definition"></a></dt>
+<dd><p>Main function to select the proposals by AI algorithm</p>
+<p>This function do not depend on robot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True (str) for success.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-nimo.ai_tools.ai_tool_combi">
+<span id="nimo-ai-tools-ai-tool-combi-module"></span><h2>nimo.ai_tools.ai_tool_combi module<a class="headerlink" href="#module-nimo.ai_tools.ai_tool_combi" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_combi.COMBI">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nimo.ai_tools.ai_tool_combi.</span></span><span class="sig-name descname"><span class="pre">COMBI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_objectives</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_proposals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">physbo_score</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimization</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">combi_ranges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spread_elements</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_combi.COMBI" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class of BOCOMBI</p>
+<p>This class can select the next candidates by Bayesian optimization based on PHYSBO package.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_combi.COMBI.calc_ai">
+<span class="sig-name descname"><span class="pre">calc_ai</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_all</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_actions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_actions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_combi.COMBI.calc_ai" title="Link to this definition"></a></dt>
+<dd><p>Calculating the proposals by AI algorithm</p>
+<p>This function is for PHYSBO with inclination.
+This function do not depend on robot.
+If the new AI alborithm is developed, this function is only changed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_train</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where observed objectives are stored</p></li>
+<li><p><strong>X_all</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where all descriptors are stored</p></li>
+<li><p><strong>train_actions</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where observed actions are stored</p></li>
+<li><p><strong>test_actions</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where test actions are stored</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the list where the selected actions are stored</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>actions (list[int])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_combi.COMBI.load_data">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_combi.COMBI.load_data" title="Link to this definition"></a></dt>
+<dd><p>Loading candidates</p>
+<p>This function do not depend on robot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list where observed objectives are stored
+X_all (list[float]): the list where all descriptors are stored
+train_actions (list[float]): the list where observed actions are stored
+test_actions (list[float]): the list where test actions are stored</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>t_train (list[float])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_combi.COMBI.select">
+<span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_combi.COMBI.select" title="Link to this definition"></a></dt>
+<dd><p>Main function to select the proposals by AI algorithm</p>
+<p>This function do not depend on robot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True (str) for success.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-nimo.ai_tools.ai_tool_es">
+<span id="nimo-ai-tools-ai-tool-es-module"></span><h2>nimo.ai_tools.ai_tool_es module<a class="headerlink" href="#module-nimo.ai_tools.ai_tool_es" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_es.ES">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nimo.ai_tools.ai_tool_es.</span></span><span class="sig-name descname"><span class="pre">ES</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_objectives</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_proposals</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_es.ES" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class of ES</p>
+<p>This class can select the next candidates by exhaustive search.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_es.ES.calc_ai">
+<span class="sig-name descname"><span class="pre">calc_ai</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_all</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_actions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_actions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_es.ES.calc_ai" title="Link to this definition"></a></dt>
+<dd><p>Calculating the proposals by AI algorithm</p>
+<p>This function is for RE.
+This function do not depend on robot.
+If the new AI alborithm is developed, this function is only changed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_train</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where observed objectives are stored</p></li>
+<li><p><strong>X_all</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where all descriptors are stored</p></li>
+<li><p><strong>train_actions</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where observed actions are stored</p></li>
+<li><p><strong>test_actions</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where test actions are stored</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the list where the selected actions are stored</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>actions (list[int])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_es.ES.load_data">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_es.ES.load_data" title="Link to this definition"></a></dt>
+<dd><p>Loading candidates</p>
+<p>This function do not depend on robot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list where observed objectives are stored
+X_all (list[float]): the list where all descriptors are stored
+train_actions (list[float]): the list where observed actions are stored
+test_actions (list[float]): the list where test actions are stored</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>t_train (list[float])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_es.ES.select">
+<span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_es.ES.select" title="Link to this definition"></a></dt>
 <dd><p>Selecting the proposals by MI algorithm</p>
 <p>This function do not depend on robot.</p>
 <dl class="field-list simple">
@@ -302,6 +528,72 @@ test_actions (list[float]): the list where test actions are stored</p>
 </dd></dl>
 
 </section>
+<section id="module-nimo.ai_tools.ai_tool_ptr">
+<span id="nimo-ai-tools-ai-tool-ptr-module"></span><h2>nimo.ai_tools.ai_tool_ptr module<a class="headerlink" href="#module-nimo.ai_tools.ai_tool_ptr" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_ptr.PTR">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nimo.ai_tools.ai_tool_ptr.</span></span><span class="sig-name descname"><span class="pre">PTR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_objectives</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_proposals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ptr_ranges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_res</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_ptr.PTR" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class of PTR</p>
+<p>This class can select the next candidates by random exploration.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_ptr.PTR.calc_ai">
+<span class="sig-name descname"><span class="pre">calc_ai</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_all</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_actions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_actions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_ptr.PTR.calc_ai" title="Link to this definition"></a></dt>
+<dd><p>Calculating the proposals by AI algorithm</p>
+<p>This function is for BLOX.
+This function do not depend on robot.
+If the new AI alborithm is developed, this function is only changed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_train</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where observed objectives are stored</p></li>
+<li><p><strong>X_all</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where all descriptors are stored</p></li>
+<li><p><strong>train_actions</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where observed actions are stored</p></li>
+<li><p><strong>test_actions</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where test actions are stored</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the list where the selected actions are stored</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>actions (list[int])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_ptr.PTR.load_data">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_ptr.PTR.load_data" title="Link to this definition"></a></dt>
+<dd><p>Loading candidates</p>
+<p>This function do not depend on robot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list where observed objectives are stored
+X_all (list[float]): the list where all descriptors are stored
+train_actions (list[float]): the list where observed actions are stored
+test_actions (list[float]): the list where test actions are stored</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>t_train (list[float])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_ptr.PTR.select">
+<span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_ptr.PTR.select" title="Link to this definition"></a></dt>
+<dd><p>Selecting the proposals by MI algorithm</p>
+<p>This function do not depend on robot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True (str) for success.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-nimo.ai_tools.ai_tool_re">
 <span id="nimo-ai-tools-ai-tool-re-module"></span><h2>nimo.ai_tools.ai_tool_re module<a class="headerlink" href="#module-nimo.ai_tools.ai_tool_re" title="Link to this heading"></a></h2>
 <dl class="py class">
@@ -356,6 +648,178 @@ test_actions (list[float]): the list where test actions are stored</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_re.RE.select">
 <span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_re.RE.select" title="Link to this definition"></a></dt>
+<dd><p>Selecting the proposals by MI algorithm</p>
+<p>This function do not depend on robot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True (str) for success.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-nimo.ai_tools.ai_tool_rsvm">
+<span id="nimo-ai-tools-ai-tool-rsvm-module"></span><h2>nimo.ai_tools.ai_tool_rsvm module<a class="headerlink" href="#module-nimo.ai_tools.ai_tool_rsvm" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_rsvm.RSVM">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nimo.ai_tools.ai_tool_rsvm.</span></span><span class="sig-name descname"><span class="pre">RSVM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_objectives</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_proposals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_datasets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimization</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_res</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_rsvm.RSVM" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class of RSVM</p>
+<p>This class can select the next candidates by rank SVM.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_rsvm.RSVM.calc_ai">
+<span class="sig-name descname"><span class="pre">calc_ai</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_all</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_actions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_actions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_rsvm.RSVM.calc_ai" title="Link to this definition"></a></dt>
+<dd><p>Calculating the proposals by AI algorithm</p>
+<p>This function is for RSVM.
+This function do not depend on robot.
+If the new AI alborithm is developed, this function is only changed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_train</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where observed objectives are stored</p></li>
+<li><p><strong>X_all</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where all descriptors are stored</p></li>
+<li><p><strong>train_actions</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where observed actions are stored</p></li>
+<li><p><strong>test_actions</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where test actions are stored</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the list where the selected actions are stored</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>actions (list[int])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_rsvm.RSVM.load_data">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_rsvm.RSVM.load_data" title="Link to this definition"></a></dt>
+<dd><p>Loading candidates</p>
+<p>This function do not depend on robot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list where observed objectives are stored
+X_all (list[float]): the list where all descriptors are stored
+train_actions (list[float]): the list where observed actions are stored
+test_actions (list[float]): the list where test actions are stored</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>t_train (list[float])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_rsvm.RSVM.select">
+<span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_rsvm.RSVM.select" title="Link to this definition"></a></dt>
+<dd><p>Selecting the proposals by MI algorithm</p>
+<p>This function do not depend on robot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True (str) for success.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-nimo.ai_tools.ai_tool_slesa_WAM">
+<span id="nimo-ai-tools-ai-tool-slesa-wam-module"></span><h2>nimo.ai_tools.ai_tool_slesa_WAM module<a class="headerlink" href="#module-nimo.ai_tools.ai_tool_slesa_WAM" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_slesa_WAM.SLESA_WAM">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nimo.ai_tools.ai_tool_slesa_WAM.</span></span><span class="sig-name descname"><span class="pre">SLESA_WAM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_discretize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_plot_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_slesa_WAM.SLESA_WAM" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class of SLESA WAM</p>
+<p>This class can select the next candidates by random exploration.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_slesa_WAM.SLESA_WAM.calculation">
+<span class="sig-name descname"><span class="pre">calculation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_slesa_WAM.SLESA_WAM.calculation" title="Link to this definition"></a></dt>
+<dd><p>Calculation of WAM</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True (str) for success.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_slesa_WAM.SLESA_WAM.load_data">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_slesa_WAM.SLESA_WAM.load_data" title="Link to this definition"></a></dt>
+<dd><p>Loading candidates</p>
+<p>This function do not depend on robot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list where observed objectives are stored
+X_all (list[float]): the list where all descriptors are stored
+train_actions (list[float]): the list where observed actions are stored
+test_actions (list[float]): the list where test actions are stored</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>t_train (list[float])</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-nimo.ai_tools.ai_tool_slesa">
+<span id="nimo-ai-tools-ai-tool-slesa-module"></span><h2>nimo.ai_tools.ai_tool_slesa module<a class="headerlink" href="#module-nimo.ai_tools.ai_tool_slesa" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_slesa.SLESA">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nimo.ai_tools.ai_tool_slesa.</span></span><span class="sig-name descname"><span class="pre">SLESA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_objectives</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_proposals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slesa_beta_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slesa_beta_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">re_seed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_res</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_slesa.SLESA" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class of SLESA</p>
+<p>This class can select the next candidates by random exploration.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_slesa.SLESA.calc_ai">
+<span class="sig-name descname"><span class="pre">calc_ai</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_all</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_actions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_actions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_slesa.SLESA.calc_ai" title="Link to this definition"></a></dt>
+<dd><p>Calculating the proposals by AI algorithm</p>
+<p>This function is for BLOX.
+This function do not depend on robot.
+If the new AI alborithm is developed, this function is only changed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_train</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where observed objectives are stored</p></li>
+<li><p><strong>X_all</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where all descriptors are stored</p></li>
+<li><p><strong>train_actions</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where observed actions are stored</p></li>
+<li><p><strong>test_actions</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where test actions are stored</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the list where the selected actions are stored</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>actions (list[int])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_slesa.SLESA.load_data">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_slesa.SLESA.load_data" title="Link to this definition"></a></dt>
+<dd><p>Loading candidates</p>
+<p>This function do not depend on robot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list where observed objectives are stored
+X_all (list[float]): the list where all descriptors are stored
+train_actions (list[float]): the list where observed actions are stored
+test_actions (list[float]): the list where test actions are stored</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>t_train (list[float])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_slesa.SLESA.select">
+<span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_slesa.SLESA.select" title="Link to this definition"></a></dt>
 <dd><p>Selecting the proposals by MI algorithm</p>
 <p>This function do not depend on robot.</p>
 <dl class="field-list simple">
