@@ -94,6 +94,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#id23">引数</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#python">提案された実験条件をPythonのリストとして格納する</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id24">引数</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="main_sample.html">メインスクリプト例</a></li>
@@ -426,9 +430,7 @@
 </section>
 <section id="id14">
 <h2>結果の可視化<a class="headerlink" href="#id14" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">nimo.visualization</span></code> を利用することで，結果を可視化することができます．
-メインスクリプトと同じフォルダに <code class="docutils literal notranslate"><span class="pre">fig</span></code> という名前のフォルダを作成してください．
-その中に図が出力されることになります．</p>
+<p><code class="docutils literal notranslate"><span class="pre">nimo.visualization</span></code> を利用することで，結果を可視化することができます．</p>
 <section id="id15">
 <h3>履歴の可視化<a class="headerlink" href="#id15" title="Link to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">nimo.visualization.plot_history</span></code> を利用することで，履歴を可視化することができます．</p>
@@ -441,6 +443,8 @@
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: 履歴を格納したファイル”res_history”を指定します．</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">num_cycles</span></code>: サイクル数”n_cycles”を指定します．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fig_folder</span></code>: 図を出力するフォルダを指定します．指定しない場合， メインスクリプトと同じフォルダに <code class="docutils literal notranslate"><span class="pre">fig</span></code> という名前のフォルダを作成してください．その中に図が保存されます．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dpi</span></code>: 図の解像度を指定します．指定しない場合， dpi=72となります．</p></li>
 </ul>
 <p>具体的には，以下のように実行します．</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nimo</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">plot_history</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">res_history</span><span class="p">,</span>
@@ -462,6 +466,8 @@
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: 実験条件ファイル”candidates_file”を指定します．</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code>: 目的関数の個数”n_objectives”を指定します．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fig_folder</span></code>: 図を出力するフォルダを指定します．指定しない場合， メインスクリプトと同じフォルダに <code class="docutils literal notranslate"><span class="pre">fig</span></code> という名前のフォルダを作成してください．その中に図が保存されます．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dpi</span></code>: 図の解像度を指定します．指定しない場合， dpi=72となります．</p></li>
 </ul>
 <p>具体的には，以下のように実行します．</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nimo</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">plot_distribution</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">,</span>
@@ -479,6 +485,9 @@ descriptorの次元が１次元の場合，４次元以上の場合は出力さ�
 <h4>引数<a class="headerlink" href="#id20" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: 実験条件ファイル”candidates_file”を指定します．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fig_folder</span></code>: 図を出力するフォルダを指定します．指定しない場合， メインスクリプトと同じフォルダに <code class="docutils literal notranslate"><span class="pre">fig</span></code> という名前のフォルダを作成してください．その中に図が保存されます．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pdc_estimation</span></code>: 使用するアルゴリズムを選択します．”LC”，”LS”が指定できます．指定しない場合，”LC”が選択されます．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dpi</span></code>: 図の解像度を指定します．指定しない場合， dpi=72となります．</p></li>
 </ul>
 <p>具体的には，以下のように実行します．</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nimo</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">plot_phase_diagram</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">)</span>
@@ -556,6 +565,22 @@ descriptorの次元が１次元の場合，４次元以上の場合は出力さ�
                      <span class="n">output_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">,</span>
                      <span class="n">num_objectives</span> <span class="o">=</span> <span class="n">n_objectives</span><span class="p">,</span>
                      <span class="n">objective_values</span> <span class="o">=</span> <span class="n">objs</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="python">
+<h2>提案された実験条件をPythonのリストとして格納する<a class="headerlink" href="#python" title="Link to this heading"></a></h2>
+<p>上記 <code class="docutils literal notranslate"><span class="pre">nimo.selection</span></code> 関数では，proposals_fileとして指定したファイルに実験条件が記載されます．
+これをPython上でリストとして読み込む関数 <code class="docutils literal notranslate"><span class="pre">nimo.proposed_conditions</span></code> を用意しています．
+Python経由でロボット実験装置に実験条件を指定する場合に，実験条件をリストとして得ることができます．
+以下のように指定することで，”proposals.csv”の提案をconditionsというリストで読み込むことができます．</p>
+<section id="id24">
+<h3>引数<a class="headerlink" href="#id24" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: 探索アルゴリズムからの提案ファイル”proposals_file”を指定します．</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">conditions</span> <span class="o">=</span> <span class="n">nimo</span><span class="o">.</span><span class="n">proposed_conditions</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;proposals.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

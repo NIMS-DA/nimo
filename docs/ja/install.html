@@ -50,8 +50,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#id2">インストール</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id3">必要パッケージ</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#install-jp">インストール手順</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#c">C++コンパイラが使える場合</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#windows-pcc">Windows PCにおいてC++コンパイラを導入する方法</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#id5">アンインストール</a></li>
@@ -96,7 +94,7 @@
 <li><p>Python &gt;= 3.6</p></li>
 <li><p>matplotlib</p></li>
 <li><p>numpy</p></li>
-<li><p>physbo &gt;= 3.0.0</p></li>
+<li><p>physbo &gt;= 3.1.0</p></li>
 <li><p>scikit-learn</p></li>
 <li><p>scipy</p></li>
 </ul>
@@ -115,26 +113,6 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="n">nimo</span>
 </pre></div>
 </div>
-</section>
-<section id="c">
-<h3>C++コンパイラが使える場合<a class="headerlink" href="#c" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">physbo-core-cython</span></code> を追加でインストールすることで，
-PHYSBO，PTR，BOMP，COMBI等，PHYSBOを使用したアルゴリズムが高速化されます．</p>
-<p><code class="docutils literal notranslate"><span class="pre">physbo-core-cython</span></code> は，以下のようにpipでインストール可能です．</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">physbo</span><span class="o">-</span><span class="n">core</span><span class="o">-</span><span class="n">cython</span>
-</pre></div>
-</div>
-</section>
-<section id="windows-pcc">
-<h3>Windows PCにおいてC++コンパイラを導入する方法<a class="headerlink" href="#windows-pcc" title="Link to this heading"></a></h3>
-<p><strong>高速化したい場合のオプションのため必須ではありません．</strong></p>
-<ul class="simple">
-<li><p>Visual Studioのインストール</p></li>
-</ul>
-<p>MicrosoftのサイトよりVisual Studioをインストールすることで，C++を使用することができます．</p>
-<p><a class="reference external" href="https://visualstudio.microsoft.com/ja/">https://visualstudio.microsoft.com/ja/</a></p>
-<p>Windows11へのインストールをサポートするために動画を公開しています．</p>
-<p><a class="reference external" href="https://www.youtube.com/watch?v=qk-flhphewc">https://www.youtube.com/watch?v=qk-flhphewc</a></p>
 </section>
 </section>
 <section id="id5">
