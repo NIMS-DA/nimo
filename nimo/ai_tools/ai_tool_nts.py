@@ -111,12 +111,9 @@ class NTS():
 
         """
 
-        # print("Checkpoint 1")
         arr = np.genfromtxt(self.input_file, skip_header=1, delimiter=',')
-        # print("Checkpoint 2")
         arr_train = arr[~np.isnan(arr[:, - 1]), :]
         arr_test = arr[np.isnan(arr[:, - 1]), :]
-        # print("Checkpoint 3")
 
         X_train = arr_train[:, : - self.num_objectives]
         t_train = arr_train[:, - self.num_objectives:]
@@ -163,8 +160,7 @@ class NTS():
             num_rand_basis=5000,
             is_disp=False,
         )
-        # Threshold is a scaled value of the maximum value of the observed objectives        
-        # lstar = max(t_initial) * self.lstar_scale
+        # Threshold is a scaled value of the maximum value of the observed objectives
         lstar = np.percentile(t_initial, [int(self.lstar_scale * 100)])[0]
         print("lstar:", lstar)
         # Initialization by ones_like method means that each action has a chance to be selected
