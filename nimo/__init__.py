@@ -20,6 +20,7 @@ from .ai_tools import ai_tool_slesa_WAM
 from .ai_tools import ai_tool_bomp
 from .ai_tools import ai_tool_es
 from .ai_tools import ai_tool_combi
+from .ai_tools import ai_tool_nts
 
 from .input_tools import preparation_input_standard
 from .input_tools import preparation_input_naree
