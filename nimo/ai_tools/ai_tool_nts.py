@@ -47,21 +47,21 @@ def dpp_mcmc(
     return current_batch
 
 
-class Mode(enum.Enum):
-    """Enum class for the mode of threshold update
-    """
-    aggressive = 1
-    moderate = 2
-    conservative = 3
+#class Mode(enum.Enum):
+#    """Enum class for the mode of threshold update
+#    """
+#    aggressive = 1
+#    moderate = 2
+#    conservative = 3
 
 class NTS():
-    """Class of RE
+    """Class of NTS
 
     This class can select the next candidates by random exploration.
 
     """
 
-    def __init__(self, input_file, output_file, num_proposals, sample_mode, use_dpp, re_seed, output_res):
+    def __init__(self, input_file, output_file, num_objectives, num_proposals, sample_mode, minimization, use_dpp, re_seed, output_res):
         """Constructor
         
         This function do not depend on robot.
@@ -69,9 +69,11 @@ class NTS():
         Args:
             input_file (str): the file for candidates for MI algorithm
             output_file (str): the file for proposals from MI algorithm
-            sample_mode (Mode): the mode of sampling
-            use_dpp (bool): whether to use DPP or not
+            num_objectives (int): the number of objectives
             num_proposals (int): the number of proposals
+            sample_mode (Mode): the mode of sampling
+            minimization (str): True or False to perform minimization
+            use_dpp (bool): whether to use DPP or not
             re_seed (int): seed of random number
 
         """
@@ -81,11 +83,11 @@ class NTS():
         self.num_objectives = 1
         self.num_proposals = num_proposals
         self.sample_mode = sample_mode
-        if self.sample_mode == Mode.aggressive:
+        if self.sample_mode == "aggressive":
             self.lstar_scale = 0.99
-        elif self.sample_mode == Mode.moderate:
+        elif self.sample_mode == "moderate":
             self.lstar_scale = 0.95
-        elif self.sample_mode == Mode.conservative:
+        elif self.sample_mode == "conservative":
             self.lstar_scale = 0.9
         else:
             raise ValueError("Invalid sample_mode")
@@ -96,6 +98,11 @@ class NTS():
         self.num_thompson_sampling = 100
         self.dpp_mcmc_length = num_proposals * 10
         self.dpp_sigma = 0.1
+        
+        self.minimization = minimization
+        
+        if self.minimization == None:
+            self.minimization = False
 
 
     def load_data(self):
@@ -116,7 +123,11 @@ class NTS():
         arr_test = arr[np.isnan(arr[:, - 1]), :]
 
         X_train = arr_train[:, : - self.num_objectives]
-        t_train = arr_train[:, - self.num_objectives:]
+        
+        if self.minimization == False:
+            t_train = arr_train[:, - self.num_objectives:]
+        else:
+            t_train = - arr_train[:, - self.num_objectives:]
 
         X_test = arr_test[:, : - self.num_objectives]
 
@@ -151,7 +162,7 @@ class NTS():
         """
         X = physbo.misc.centering( X_all )
         t_initial = np.array( list(itertools.chain.from_iterable(t_train)) )
-        policy = physbo.search.discrete.policy( test_X = X, initial_data = [train_actions, t_initial] )
+        policy = physbo.search.discrete.Policy( test_X = X, initial_data = [train_actions, t_initial] )
         policy.bayes_search(
             max_num_probes=0,
             simulator=None,
@@ -253,7 +264,7 @@ class NTS():
         actions = self.calc_ai(t_train = t_train, X_all = X_all, 
         train_actions = train_actions, test_actions = test_actions)
 
-        print("Selected actions:", actions)
+        #print("Selected actions:", actions)
         print('Proposals')
 
         proposals_all = []
