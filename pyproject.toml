@@ -7,7 +7,7 @@ packages = ["nimo", "nimo.ai_tools", "nimo.input_tools", "nimo.output_tools", "n
 
 [project]
 name = "nimo"
-version = "2.0.4"
+version = "2.1.0"
 description = "NIMO package"
 readme = "README.md"
 authors = [
