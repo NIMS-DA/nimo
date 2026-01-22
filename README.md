@@ -18,6 +18,7 @@ NIMO is a Python library to realize a closed loop of robotic experiments and art
 - physbo >= 3.1.0
 - scikit-learn
 - scipy
+- pyDOE3
 
 # Install
 
