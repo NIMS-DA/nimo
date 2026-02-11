@@ -114,7 +114,7 @@ class PDC():
         label_list = []
         for i in range(len(data_list)):
             if i in train_actions:
-                phase = int(t_train[train_actions.index(i)])
+                phase = int(t_train[train_actions.index(i)][0])
             else:
                 phase = - 1
             label_list.append(phase)
