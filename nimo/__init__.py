@@ -5,6 +5,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from .nimo_modules import selection
 from .nimo_modules import preparation_input
 from .nimo_modules import analysis_output
+from .nimo_modules import insert_objectives
 from .nimo_modules import output_update
 from .nimo_modules import history
 from .nimo_modules import analysis
@@ -31,6 +32,7 @@ from .output_tools import analysis_output_standard
 from .output_tools import analysis_output_naree
 from .output_tools import analysis_output_combat
 from .output_tools import analysis_output_update
+from .output_tools import analysis_output_insert
 
 from .visualization import plot_history
 from .visualization import plot_phase_diagram
