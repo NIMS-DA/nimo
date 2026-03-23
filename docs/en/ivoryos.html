@@ -1,0 +1,360 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IvoryOS Interface &mdash; NIMO 3.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=acc74ff5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="api.html" />
+    <link rel="prev" title="Example of Main Script" href="main_sample.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html">
+            
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install and Uninstall</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_usage.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_sample.html">Example of Main Script</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">IvoryOS Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#launching-the-interface">Launching the Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#designing-a-workflow">Designing a Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-experiment-plan">Running the Experiment Plan</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#running-the-experiment">Running the Experiment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#advanced-uploading-preliminary-experimental-results">(Advanced) Uploading Preliminary Experimental Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#known-issues">Known Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NIMO</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">IvoryOS Interface</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ivoryos-interface">
+<h1>IvoryOS Interface<a class="headerlink" href="#ivoryos-interface" title="Link to this heading"></a></h1>
+<p>This page describes how to use NIMO with the IvoryOS interface, using the creation of a phase diagram for material X as an example.</p>
+<p>Material X has the following phase diagram:</p>
+<ul class="simple">
+<li><p>The region below the line passing through the triple point (0 °C, 5000 Pa) is gas</p></li>
+<li><p>Above the line, the region below 0 °C is solid and the region at 0 °C or above is liquid</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/phase.png"><img alt="_images/phase.png" class="align-center" src="_images/phase.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>An additional installation is required to use IvoryOS.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>ivoryos
+</pre></div>
+</div>
+<p>This has been verified with NIMO v2.1.2 and IvoryOS v1.5.13.</p>
+</section>
+<section id="launching-the-interface">
+<h2>Launching the Interface<a class="headerlink" href="#launching-the-interface" title="Link to this heading"></a></h2>
+<p>Open your editor, enter the following Python program, and save it as <code class="docutils literal notranslate"><span class="pre">main.py</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ivoryos</span>
+
+
+<span class="c1"># Definition of the SDL class</span>
+<span class="k">class</span> <span class="nc">SampleSDL</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Phase diagram parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">t_triple</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p_triple</span> <span class="o">=</span> <span class="mi">5000</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slope</span> <span class="o">=</span> <span class="mi">50</span>
+
+    <span class="k">def</span> <span class="nf">get_phase</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">pressure</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the phase corresponding to the given temperature and pressure.</span>
+<span class="sd">        0: solid, 1: liquid, 2: gas</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">boundary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">slope</span> <span class="o">*</span> <span class="p">(</span><span class="n">temperature</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_triple</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">p_triple</span>
+
+        <span class="k">if</span> <span class="n">pressure</span> <span class="o">&lt;</span> <span class="n">boundary</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">temperature</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_triple</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">1</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># Create an instance of the SDL class</span>
+    <span class="n">sdl</span> <span class="o">=</span> <span class="n">SampleSDL</span><span class="p">()</span>
+
+    <span class="c1"># Launch the IvoryOS interface</span>
+    <span class="n">ivoryos</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8888</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Run the saved Python program to launch the IvoryOS interface.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>main.py
+</pre></div>
+</div>
+</section>
+<section id="designing-a-workflow">
+<h2>Designing a Workflow<a class="headerlink" href="#designing-a-workflow" title="Link to this heading"></a></h2>
+<p>While the program is running, open a web browser and access <code class="docutils literal notranslate"><span class="pre">http://127.0.0.1:8888/</span></code>. The following login screen will appear.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot01.png"><img alt="_images/screenshot01.png" class="align-center" src="_images/screenshot01.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Click <code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">a</span> <span class="pre">new</span> <span class="pre">account</span></code> and set your username and password.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot02.png"><img alt="_images/screenshot02.png" class="align-center" src="_images/screenshot02.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Enter the username and password you set to log in.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot03.png"><img alt="_images/screenshot03.png" class="align-center" src="_images/screenshot03.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>After logging in, the following menu screen will open.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot04.png"><img alt="_images/screenshot04.png" class="align-center" src="_images/screenshot04.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Click <code class="docutils literal notranslate"><span class="pre">Edit</span> <span class="pre">designs</span></code> in the upper right to open the workflow editing screen.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot05.png"><img alt="_images/screenshot05.png" class="align-center" src="_images/screenshot05.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Click <code class="docutils literal notranslate"><span class="pre">Sdl</span></code> under <code class="docutils literal notranslate"><span class="pre">Instruments</span></code> and enter the following values.</p>
+<ul class="simple">
+<li><p>Temperature: <code class="docutils literal notranslate"><span class="pre">#temperature</span></code></p></li>
+<li><p>Pressure: <code class="docutils literal notranslate"><span class="pre">#pressure</span></code></p></li>
+<li><p>Run once per batch: unchecked</p></li>
+<li><p>Save value as: <code class="docutils literal notranslate"><span class="pre">objective</span></code></p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot06.png"><img alt="_images/screenshot06.png" class="align-center" src="_images/screenshot06.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Click the <code class="docutils literal notranslate"><span class="pre">Add</span></code> button to add the block.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot07.png"><img alt="_images/screenshot07.png" class="align-center" src="_images/screenshot07.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>By combining blocks in this way, you can design your workflow.</p>
+</section>
+<section id="running-the-experiment-plan">
+<h2>Running the Experiment Plan<a class="headerlink" href="#running-the-experiment-plan" title="Link to this heading"></a></h2>
+<p>When you have finished designing the workflow, click the <code class="docutils literal notranslate"><span class="pre">Prepare</span> <span class="pre">Run</span></code> button to open the experiment plan settings screen.
+Configure the values as follows.</p>
+<ul class="simple">
+<li><p>Optimizer Strategy: <code class="docutils literal notranslate"><span class="pre">nimo</span></code></p></li>
+<li><p>temperature: <code class="docutils literal notranslate"><span class="pre">-50</span></code> (Min), <code class="docutils literal notranslate"><span class="pre">150</span></code> (Max), <code class="docutils literal notranslate"><span class="pre">10</span></code> (Step)</p></li>
+<li><p>pressure: <code class="docutils literal notranslate"><span class="pre">0</span></code> (Min), <code class="docutils literal notranslate"><span class="pre">20000</span></code> (Max), <code class="docutils literal notranslate"><span class="pre">1000</span></code> (Step)</p></li>
+<li><p>Max Iterations: <code class="docutils literal notranslate"><span class="pre">40</span></code></p></li>
+</ul>
+<p>No other settings need to be changed.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot08.png"><img alt="_images/screenshot08.png" class="align-center" src="_images/screenshot08.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Next, open <code class="docutils literal notranslate"><span class="pre">Model</span> <span class="pre">Configuration</span></code> and configure it as follows.</p>
+<ul class="simple">
+<li><p>Surrogate Model: <code class="docutils literal notranslate"><span class="pre">RE</span></code></p></li>
+<li><p>Num Samples: <code class="docutils literal notranslate"><span class="pre">10</span></code></p></li>
+<li><p>Acquisition Function: <code class="docutils literal notranslate"><span class="pre">PDC</span></code></p></li>
+</ul>
+<p>With this configuration, the first 10 iterations use random search, followed by exploration using the PDC algorithm.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot09.png"><img alt="_images/screenshot09.png" class="align-center" src="_images/screenshot09.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<section id="running-the-experiment">
+<h3>Running the Experiment<a class="headerlink" href="#running-the-experiment" title="Link to this heading"></a></h3>
+<p>Click the <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">Optimization</span></code> button to start the experiment with NIMO.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot10.png"><img alt="_images/screenshot10.png" class="align-center" src="_images/screenshot10.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>After a short wait, the experiment will complete.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot11.png"><img alt="_images/screenshot11.png" class="align-center" src="_images/screenshot11.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Open <code class="docutils literal notranslate"><span class="pre">Optimizer</span> <span class="pre">Plot</span></code> and click <code class="docutils literal notranslate"><span class="pre">Refresh</span> <span class="pre">Plot</span></code> to display the generated phase diagram.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot12.png"><img alt="_images/screenshot12.png" class="align-center" src="_images/screenshot12.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The displayed phase diagram may differ depending on the results of the random search.</p>
+</div>
+</section>
+<section id="advanced-uploading-preliminary-experimental-results">
+<h3>(Advanced) Uploading Preliminary Experimental Results<a class="headerlink" href="#advanced-uploading-preliminary-experimental-results" title="Link to this heading"></a></h3>
+<p>If you already have preliminary experimental results, you can enable <code class="docutils literal notranslate"><span class="pre">Upload</span> <span class="pre">new</span> <span class="pre">data</span></code> under <code class="docutils literal notranslate"><span class="pre">Data</span> <span class="pre">Source</span></code> in the upper left of the experiment plan settings screen and upload a CSV file containing those results.
+The column names in the CSV must match the variable names entered in the workflow design screen.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>temperature,pressure,objective
+-50,0,2
+-50,20000,0
+150,20000,1
+</pre></div>
+</div>
+</section>
+</section>
+<section id="known-issues">
+<h2>Known Issues<a class="headerlink" href="#known-issues" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>IvoryOS may crash if you run a second experiment and display the phase diagram on a screen where an experiment has already been performed. Restarting IvoryOS appears to resolve the issue, but the cause is still under investigation.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="main_sample.html" class="btn btn-neutral float-left" title="Example of Main Script" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024-, NIMO developers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXX-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-XXXXXXX-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>
