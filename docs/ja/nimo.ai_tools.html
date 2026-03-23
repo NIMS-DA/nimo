@@ -49,6 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="install.html">インストール</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic_usage.html">基本的な使い方</a></li>
 <li class="toctree-l1"><a class="reference internal" href="main_sample.html">メインスクリプト例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ivoryos.html">IvoryOSインターフェース</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="api.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="nimo.html">nimo package</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">nimo.ai_tools package</a><ul>
@@ -60,7 +61,11 @@
 <li class="toctree-l4"><a class="reference internal" href="#nimo.ai_tools.ai_tool_bomp.BOMP"><code class="docutils literal notranslate"><span class="pre">BOMP</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#module-nimo.ai_tools.ai_tool_combi">nimo.ai_tools.ai_tool_combi module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-nimo.ai_tools.ai_tool_doe">nimo.ai_tools.ai_tool_combi module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nimo.ai_tools.ai_tool_doe.DOE"><code class="docutils literal notranslate"><span class="pre">DOE</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nimo.ai_tools.ai_tool_combi">nimo.ai_tools.ai_tool_doe module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#nimo.ai_tools.ai_tool_combi.COMBI"><code class="docutils literal notranslate"><span class="pre">COMBI</span></code></a></li>
 </ul>
 </li>
@@ -264,8 +269,74 @@ test_actions (list[float]): the list where test actions are stored</p>
 </dd></dl>
 
 </section>
+<section id="module-nimo.ai_tools.ai_tool_doe">
+<span id="nimo-ai-tools-ai-tool-combi-module"></span><h2>nimo.ai_tools.ai_tool_combi module<a class="headerlink" href="#module-nimo.ai_tools.ai_tool_doe" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_doe.DOE">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nimo.ai_tools.ai_tool_doe.</span></span><span class="sig-name descname"><span class="pre">DOE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_objectives</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_proposals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_doe.DOE" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class of DOE</p>
+<p>This class can select the next candidates by exhaustive search.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_doe.DOE.calc_ai">
+<span class="sig-name descname"><span class="pre">calc_ai</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_all</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_actions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_actions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_doe.DOE.calc_ai" title="Link to this definition"></a></dt>
+<dd><p>Calculating the proposals by AI algorithm</p>
+<p>This function is for RE.
+This function do not depend on robot.
+If the new AI alborithm is developed, this function is only changed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_train</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where observed objectives are stored</p></li>
+<li><p><strong>X_all</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where all descriptors are stored</p></li>
+<li><p><strong>train_actions</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where observed actions are stored</p></li>
+<li><p><strong>test_actions</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the list where test actions are stored</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the list where the selected actions are stored</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>actions (list[int])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_doe.DOE.load_data">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_doe.DOE.load_data" title="Link to this definition"></a></dt>
+<dd><p>Loading candidates</p>
+<p>This function do not depend on robot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the list where observed objectives are stored
+X_all (list[float]): the list where all descriptors are stored
+train_actions (list[float]): the list where observed actions are stored
+test_actions (list[float]): the list where test actions are stored</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>t_train (list[float])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_doe.DOE.select">
+<span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_doe.DOE.select" title="Link to this definition"></a></dt>
+<dd><p>Selecting the proposals by MI algorithm</p>
+<p>This function do not depend on robot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True (str) for success.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-nimo.ai_tools.ai_tool_combi">
-<span id="nimo-ai-tools-ai-tool-combi-module"></span><h2>nimo.ai_tools.ai_tool_combi module<a class="headerlink" href="#module-nimo.ai_tools.ai_tool_combi" title="Link to this heading"></a></h2>
+<span id="nimo-ai-tools-ai-tool-doe-module"></span><h2>nimo.ai_tools.ai_tool_doe module<a class="headerlink" href="#module-nimo.ai_tools.ai_tool_combi" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="nimo.ai_tools.ai_tool_combi.COMBI">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nimo.ai_tools.ai_tool_combi.</span></span><span class="sig-name descname"><span class="pre">COMBI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_objectives</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_proposals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">physbo_score</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimization</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">combi_ranges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spread_elements</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nimo.ai_tools.ai_tool_combi.COMBI" title="Link to this definition"></a></dt>

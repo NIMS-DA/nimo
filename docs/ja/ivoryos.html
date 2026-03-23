@@ -1,0 +1,361 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IvoryOSインターフェース &mdash; NIMO 2.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=51b770b3"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="api.html" />
+    <link rel="prev" title="メインスクリプト例" href="main_sample.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/NIMO.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">インストール</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_usage.html">基本的な使い方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_sample.html">メインスクリプト例</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">IvoryOSインターフェース</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">インストール</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">インターフェースの起動</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">ワークフローの設計</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">実験計画の実行</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">実験の実行</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">（発展）予備実験結果の入力</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">既知の問題点</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NIMO</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">IvoryOSインターフェース</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ivoryos">
+<h1>IvoryOSインターフェース<a class="headerlink" href="#ivoryos" title="Link to this heading"></a></h1>
+<p>このページでは，物質Xの相図を作成する想定でIvoryOSインターフェースを使ったNIMOの使い方を説明します．</p>
+<p>物質Xは以下のような相図を持ちます．</p>
+<ul class="simple">
+<li><p>三重点 (0 ℃, 5000 Pa) を通る直線より下の領域は気体</p></li>
+<li><p>直線よりも上の領域で0℃未満では固体，0℃以上では液体</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/phase.png"><img alt="_images/phase.png" class="align-center" src="_images/phase.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<section id="id1">
+<h2>インストール<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>IvoryOSを使う場合は追加のインストールが必要です．</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>ivoryos
+</pre></div>
+</div>
+<p>動作確認はNIMO v2.1.2，IvoryOS v1.5.13で行いました．</p>
+</section>
+<section id="id2">
+<h2>インターフェースの起動<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>エディターを起動して，以下のPythonプログラムを入力し <code class="docutils literal notranslate"><span class="pre">main.py</span></code> という名前で保存してください．</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ivoryos</span>
+
+
+<span class="c1"># SDLクラスの定義</span>
+<span class="k">class</span> <span class="nc">SampleSDL</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># 相図パラメータの定義</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">t_triple</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p_triple</span> <span class="o">=</span> <span class="mi">5000</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slope</span> <span class="o">=</span> <span class="mi">50</span>
+
+    <span class="k">def</span> <span class="nf">get_phase</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">pressure</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        指定された温度・圧力に対応する相を求める</span>
+<span class="sd">        0: 固相, 1: 液相, 2: 気相</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">boundary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">slope</span> <span class="o">*</span> <span class="p">(</span><span class="n">temperature</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_triple</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">p_triple</span>
+
+        <span class="k">if</span> <span class="n">pressure</span> <span class="o">&lt;</span> <span class="n">boundary</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">temperature</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_triple</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">1</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># SDLクラスインスタンスの作成</span>
+    <span class="n">sdl</span> <span class="o">=</span> <span class="n">SampleSDL</span><span class="p">()</span>
+
+    <span class="c1"># IvoryOSインターフェースの起動</span>
+    <span class="n">ivoryos</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8888</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>保存したPythonプログラムを実行して，IvoryOSインターフェースを起動してください．</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>main.py
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>ワークフローの設計<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>これを実行したまま，Webブラウザーで <code class="docutils literal notranslate"><span class="pre">http://127.0.0.1:8888/</span></code> にアクセスすると，以下のようなログイン画面が開きます．</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot01.png"><img alt="_images/screenshot01.png" class="align-center" src="_images/screenshot01.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">a</span> <span class="pre">new</span> <span class="pre">account</span></code> をクリックして，ユーザー名とパスワードを設定してください．</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot02.png"><img alt="_images/screenshot02.png" class="align-center" src="_images/screenshot02.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>設定したユーザー名とパスワードを入力してログインしてください．</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot03.png"><img alt="_images/screenshot03.png" class="align-center" src="_images/screenshot03.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>ログインすると，次のようなメニュー画面が開きます．</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot04.png"><img alt="_images/screenshot04.png" class="align-center" src="_images/screenshot04.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>右上の <code class="docutils literal notranslate"><span class="pre">Edit</span> <span class="pre">designs</span></code> をクリックすると次のようなワークフロー編集画面が開きます．</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot05.png"><img alt="_images/screenshot05.png" class="align-center" src="_images/screenshot05.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Instruments</span></code> の下の <code class="docutils literal notranslate"><span class="pre">Sdl</span></code> をクリックして，次のように入力します．</p>
+<ul class="simple">
+<li><p>Temperature: <code class="docutils literal notranslate"><span class="pre">#temperature</span></code></p></li>
+<li><p>Pressure: <code class="docutils literal notranslate"><span class="pre">#pressure</span></code></p></li>
+<li><p>Run once per batch: チェックしない</p></li>
+<li><p>Save value as: <code class="docutils literal notranslate"><span class="pre">objective</span></code></p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot06.png"><img alt="_images/screenshot06.png" class="align-center" src="_images/screenshot06.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Add</span></code> ボタンをクリックすると，ブロックが追加されます．</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot07.png"><img alt="_images/screenshot07.png" class="align-center" src="_images/screenshot07.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>このようにブロックを組み合わせることでワークフローを設計できます．</p>
+</section>
+<section id="id4">
+<h2>実験計画の実行<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>ワークフローの設計が終わったら，<code class="docutils literal notranslate"><span class="pre">Prepare</span> <span class="pre">Run</span></code> ボタンをクリックして実験計画の設定画面を開きます．
+以下のように数値を設定してください．</p>
+<ul class="simple">
+<li><p>Optimizer Strategy: <code class="docutils literal notranslate"><span class="pre">nimo</span></code></p></li>
+<li><p>temperature: <code class="docutils literal notranslate"><span class="pre">-50</span></code> (Min)，<code class="docutils literal notranslate"><span class="pre">150</span></code> (Max)，<code class="docutils literal notranslate"><span class="pre">10</span></code> (Step)</p></li>
+<li><p>pressure: <code class="docutils literal notranslate"><span class="pre">0</span></code> (Min)，<code class="docutils literal notranslate"><span class="pre">20000</span></code> (Max)，<code class="docutils literal notranslate"><span class="pre">1000</span></code> (Step)</p></li>
+<li><p>Max Iterations: <code class="docutils literal notranslate"><span class="pre">40</span></code></p></li>
+</ul>
+<p>その他の設定は変更する必要がありません．</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot08.png"><img alt="_images/screenshot08.png" class="align-center" src="_images/screenshot08.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>次に <code class="docutils literal notranslate"><span class="pre">Model</span> <span class="pre">Configuration</span></code> を開いて，次のように設定してください．</p>
+<ul class="simple">
+<li><p>Surrogate Model: <code class="docutils literal notranslate"><span class="pre">RE</span></code></p></li>
+<li><p>Num Samples: <code class="docutils literal notranslate"><span class="pre">10</span></code></p></li>
+<li><p>Acquisition Function: <code class="docutils literal notranslate"><span class="pre">PDC</span></code></p></li>
+</ul>
+<p>この設定では最初の10回はランダム探索を行い，その後はPDCアルゴリズムによる探索を行います．</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot09.png"><img alt="_images/screenshot09.png" class="align-center" src="_images/screenshot09.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<section id="id5">
+<h3>実験の実行<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">Optimization</span></code> ボタンをクリックすると，NIMOによる実験がスタートします．</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot10.png"><img alt="_images/screenshot10.png" class="align-center" src="_images/screenshot10.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>少し待っていると実験が終了します．</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot11.png"><img alt="_images/screenshot11.png" class="align-center" src="_images/screenshot11.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Optimizer</span> <span class="pre">Plot</span></code> を開き <code class="docutils literal notranslate"><span class="pre">Refresh</span> <span class="pre">Plot</span></code> をクリックすると作成された相図が表示されます．</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/screenshot12.png"><img alt="_images/screenshot12.png" class="align-center" src="_images/screenshot12.png" style="width: 80%;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>ランダム探索の結果によっては，表示される相図が異なる場合があります．</p>
+</div>
+</section>
+<section id="id6">
+<h3>（発展）予備実験結果の入力<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>既に予備実験の結果がある場合は，実験計画設定画面の左上にある <code class="docutils literal notranslate"><span class="pre">Data</span> <span class="pre">Source</span></code> の <code class="docutils literal notranslate"><span class="pre">Upload</span> <span class="pre">new</span> <span class="pre">data</span></code> を有効にして，予備実験の結果を入力したCSVファイルをアップロードすることができます．
+CSVの列名はワークフロー設計画面で入力した変数名と一致させる必要があります．</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>temperature,pressure,objective
+-50,0,2
+-50,20000,0
+150,20000,1
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id7">
+<h2>既知の問題点<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>一度実験を行った画面で再度実験を実行して相図を表示するとIvoryOSが落ちることがあります．IvoryOSを再起動することで問題は解決するようですが，原因は調査中です．</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="main_sample.html" class="btn btn-neutral float-left" title="メインスクリプト例" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024-, NIMO developers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXX-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-XXXXXXX-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>
