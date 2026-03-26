@@ -103,6 +103,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="main_sample.html">メインスクリプト例</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ivoryos.html">IvoryOSインターフェース</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ai_tools_manual.html">AI ツールモジュール</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
 </ul>
@@ -136,7 +137,7 @@
 <h2>チュートリアル<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
 <p>NIMOの実行例をGoogle Colaboratoryのノートブックで試すことができます．
 実際のコードを動かしながら使い方を確認したい場合は，以下のリンクからご利用ください．</p>
-<a class="reference external image-reference" href="https://colab.research.google.com/github/NIMS-DA/nimo-tutorial/blob/main/notebook/tutorial_jp.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" />
+<a class="reference external image-reference" href="https://colab.research.google.com/github/NIMS-DA/nimo/blob/main/docs/ja/tutorial/tutorial_jp.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" />
 </a>
 </section>
 <section id="id3">
@@ -350,13 +351,32 @@
 <section id="id8">
 <h3>引数<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">method</span></code>: 探索アルゴリズムの手法を指定します．”PHYSBO”: PHYSBOによるベイズ最適化，”BLOX”: BLOXによる無目的探索，”PDC”: PDCによる相図作成， “RE”: ランダム探索等が指定できます．</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">method</span></code>: 探索アルゴリズムの手法を指定します．指定できる手法は以下の通りです．</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;BLOX&quot;</span></code>: BLOXによる無目的探索（<a class="reference internal" href="ai_tools_manual.html#blox"><span class="std std-ref">詳細</span></a>）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;BOMP&quot;</span></code>: プロセス制約付きベイズ最適化（<a class="reference internal" href="ai_tools_manual.html#bomp"><span class="std std-ref">詳細</span></a>）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;COMBI&quot;</span></code>: 組成スプレッド探索（<a class="reference internal" href="ai_tools_manual.html#combi"><span class="std std-ref">詳細</span></a>）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;DOE&quot;</span></code>: 実験計画法（<a class="reference internal" href="ai_tools_manual.html#doe"><span class="std std-ref">詳細</span></a>）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;ES&quot;</span></code>: 網羅的探索（<a class="reference internal" href="ai_tools_manual.html#es"><span class="std std-ref">詳細</span></a>）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;NTS&quot;</span></code>: Nested Thompson Sampling（<a class="reference internal" href="ai_tools_manual.html#nts"><span class="std std-ref">詳細</span></a>）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;PDC&quot;</span></code>: PDCによる相図作成（<a class="reference internal" href="ai_tools_manual.html#pdc"><span class="std std-ref">詳細</span></a>）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;PHYSBO&quot;</span></code>: PHYSBOによるベイズ最適化（<a class="reference internal" href="ai_tools_manual.html#physbo"><span class="std std-ref">詳細</span></a>）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;PTR&quot;</span></code>: 目標範囲確率最大化（<a class="reference internal" href="ai_tools_manual.html#ptr"><span class="std std-ref">詳細</span></a>）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;RE&quot;</span></code>: ランダム探索（<a class="reference internal" href="ai_tools_manual.html#re"><span class="std std-ref">詳細</span></a>）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;RSVM&quot;</span></code>: ランクSVM（<a class="reference internal" href="ai_tools_manual.html#rsvm"><span class="std std-ref">詳細</span></a>）</p></li>
+</ul>
+</li>
 <li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: 実験条件ファイル”candidates_file”を指定します．</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code>: 探索アルゴリズムからの提案ファイル”proposals_file”を指定します．</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code>: 目的関数の個数”n_objectives”を指定します．もちろん，直接，値を指定することもできます．</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">num_proposals</span></code>: 一度のサイクルで探索アルゴリズムが提案する条件数”n_proposals”を指定します．もちろん，直接，値を指定することもできます．</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">output_res</span></code>: “True”を指定することで，”RE”以外の探索アルゴリズムを利用する場合，目的関数の予測値および獲得関数が格納されたoutput_res.csvを得ることができます．デフォルトでは”False”になっています．</p></li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>アルゴリズムに応じて，追加で引数が必要な場合があります．
+各アルゴリズムの詳細な引数については，上記リンク先の <a class="reference internal" href="ai_tools_manual.html"><span class="doc">AI ツールモジュール</span></a> を参照してください．</p>
+</div>
 <p>例えば，ベイズ最適化による提案を計算する場合は以下のように指定します．</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nimo</span><span class="o">.</span><span class="n">selection</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;PHYSBO&quot;</span><span class="p">,</span>
                  <span class="n">input_file</span> <span class="o">=</span> <span class="n">candidates_file</span><span class="p">,</span>
