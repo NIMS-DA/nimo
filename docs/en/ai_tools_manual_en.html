@@ -1,0 +1,1043 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Tool Modules &mdash; NIMO 3.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=acc74ff5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="api.html" />
+    <link rel="prev" title="IvoryOS Interface" href="ivoryos.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/NIMO.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install and Uninstall</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_usage.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_sample.html">Example of Main Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ivoryos.html">IvoryOS Interface</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">AI Tool Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#blox-boundless-objective-free-exploration">BLOX: Boundless Objective-Free Exploration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arguments">Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#license-and-citation">License and Citation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#bomp-bayesian-optimization-with-material-process">BOMP: Bayesian Optimization with Material Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#combi-composition-spread-exploration">COMBI: Composition-Spread Exploration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">License and Citation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#doe-design-of-experiments">DOE: Design of Experiments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#es-exhaustive-search">ES: Exhaustive Search</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id11">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#nts-nested-thompson-sampling">NTS: Nested Thompson Sampling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id14">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id16">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pdc-phase-diagram-construction">PDC: Phase Diagram Construction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id17">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id19">License and Citation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id20">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#physbo-bayesian-optimization">PHYSBO: Bayesian Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id21">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id22">Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id23">License and Citation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id24">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ptr-probability-of-target-range">PTR: Probability of Target Range</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id25">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id26">Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id27">License and Citation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id28">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#re-random-exploration">RE: Random Exploration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id29">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id30">Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id31">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#rsvm-ranking-support-vector-machine">RSVM: Ranking Support Vector Machine</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id32">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id33">Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id34">License and Citation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id35">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NIMO</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">AI Tool Modules</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ai-tool-modules">
+<h1>AI Tool Modules<a class="headerlink" href="#ai-tool-modules" title="Link to this heading"></a></h1>
+<p>This page lists the search algorithm modules available in NIMO.
+Each module can be specified via the <code class="docutils literal notranslate"><span class="pre">method</span></code> argument of the <code class="docutils literal notranslate"><span class="pre">nimo.selection</span></code> function, or imported and used directly.</p>
+<nav class="contents local" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#blox-boundless-objective-free-exploration" id="id36">BLOX: Boundless Objective-Free Exploration</a></p></li>
+<li><p><a class="reference internal" href="#bomp-bayesian-optimization-with-material-process" id="id37">BOMP: Bayesian Optimization with Material Process</a></p></li>
+<li><p><a class="reference internal" href="#combi-composition-spread-exploration" id="id38">COMBI: Composition-Spread Exploration</a></p></li>
+<li><p><a class="reference internal" href="#doe-design-of-experiments" id="id39">DOE: Design of Experiments</a></p></li>
+<li><p><a class="reference internal" href="#es-exhaustive-search" id="id40">ES: Exhaustive Search</a></p></li>
+<li><p><a class="reference internal" href="#nts-nested-thompson-sampling" id="id41">NTS: Nested Thompson Sampling</a></p></li>
+<li><p><a class="reference internal" href="#pdc-phase-diagram-construction" id="id42">PDC: Phase Diagram Construction</a></p></li>
+<li><p><a class="reference internal" href="#physbo-bayesian-optimization" id="id43">PHYSBO: Bayesian Optimization</a></p></li>
+<li><p><a class="reference internal" href="#ptr-probability-of-target-range" id="id44">PTR: Probability of Target Range</a></p></li>
+<li><p><a class="reference internal" href="#re-random-exploration" id="id45">RE: Random Exploration</a></p></li>
+<li><p><a class="reference internal" href="#rsvm-ranking-support-vector-machine" id="id46">RSVM: Ranking Support Vector Machine</a></p></li>
+</ul>
+</nav>
+<hr class="docutils" />
+<section id="blox-boundless-objective-free-exploration">
+<span id="blox-en"></span><h2><a class="toc-backref" href="#id36" role="doc-backlink">BLOX: Boundless Objective-Free Exploration</a><a class="headerlink" href="#blox-boundless-objective-free-exploration" title="Link to this heading"></a></h2>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ai_tool_blox.py</span></code> implements the BLOX algorithm.
+Rather than maximizing an objective function, it efficiently explores uncharted regions using Stein Novelty as a measure of diversity in the objective function space.
+It is suited for “objective-free exploration,” where no objective function is defined in advance.</p>
+</section>
+<section id="arguments">
+<h3>Arguments<a class="headerlink" href="#arguments" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the candidates file</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the proposals file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of objectives</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">num_proposals</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of proposals per cycle</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">output_res</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code> , outputs predicted values and acquisition function values to <code class="docutils literal notranslate"><span class="pre">output_res.csv</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="license-and-citation">
+<h3>License and Citation<a class="headerlink" href="#license-and-citation" title="Link to this heading"></a></h3>
+<p>License: MIT</p>
+<p>If you use BLOX, please cite the following paper.</p>
+<p>Kei Terayama, Masato Sumita, Ryo Tamura, Daniel T. Payne, Mandeep K. Chahal, Shinsuke Ishihara, and Koji Tsuda,
+Pushing property limits in materials discovery via boundless objective-free exploration,
+Chemical Science 11, 5959-5968 (2020).
+Available from <a class="reference external" href="https://pubs.rsc.org/en/content/articlelanding/2020/SC/d0sc00982b">https://pubs.rsc.org/en/content/articlelanding/2020/SC/d0sc00982b</a>.</p>
+</section>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ai_tool_blox</span>
+<span class="n">ai_tool_blox</span><span class="o">.</span><span class="n">BLOX</span><span class="p">(</span>
+    <span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;candidates.csv&quot;</span><span class="p">,</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="s2">&quot;proposals.csv&quot;</span><span class="p">,</span>
+    <span class="n">num_objectives</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">num_proposals</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">output_res</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+</section>
+</section>
+<section id="bomp-bayesian-optimization-with-material-process">
+<span id="bomp-en"></span><h2><a class="toc-backref" href="#id37" role="doc-backlink">BOMP: Bayesian Optimization with Material Process</a><a class="headerlink" href="#bomp-bayesian-optimization-with-material-process" title="Link to this heading"></a></h2>
+<section id="id1">
+<h3>Overview<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ai_tool_bomp.py</span></code> implements BOMP (Bayesian Optimization with Material Process).
+In addition to standard Bayesian optimization using PHYSBO, it performs process-constrained Bayesian optimization by fixing the process parameters specified by <code class="docutils literal notranslate"><span class="pre">process_X</span></code> and optimizing the remaining parameter space.</p>
+</section>
+<section id="id2">
+<h3>Arguments<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the candidates file</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the proposals file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of objectives</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">num_proposals</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of proposals per cycle</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">physbo_score</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Acquisition function. Choose from <code class="docutils literal notranslate"><span class="pre">'TS'</span></code> , <code class="docutils literal notranslate"><span class="pre">'EI'</span></code> , <code class="docutils literal notranslate"><span class="pre">'PI'</span></code> . If <code class="docutils literal notranslate"><span class="pre">None</span></code> , <code class="docutils literal notranslate"><span class="pre">'EI'</span></code> is used for single-objective and <code class="docutils literal notranslate"><span class="pre">'TS'</span></code> for multi-objective</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">minimization</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code> , treats as a minimization problem. If <code class="docutils literal notranslate"><span class="pre">None</span></code> , defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">process_X</span></code></p></td>
+<td><p>list</p></td>
+<td><p>Index list of process parameters to fix</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_res</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code> , outputs prediction results to <code class="docutils literal notranslate"><span class="pre">output_res.csv</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">training_res</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code> , outputs prediction results for training data to <code class="docutils literal notranslate"><span class="pre">training_res.csv</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id3">
+<h3>Example<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ai_tool_bomp</span>
+<span class="n">ai_tool_bomp</span><span class="o">.</span><span class="n">BOMP</span><span class="p">(</span>
+    <span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;candidates.csv&quot;</span><span class="p">,</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="s2">&quot;proposals.csv&quot;</span><span class="p">,</span>
+    <span class="n">num_objectives</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">num_proposals</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">physbo_score</span> <span class="o">=</span> <span class="s2">&quot;EI&quot;</span><span class="p">,</span>
+    <span class="n">minimization</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">process_X</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">output_res</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">training_res</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+</section>
+</section>
+<section id="combi-composition-spread-exploration">
+<span id="combi-en"></span><h2><a class="toc-backref" href="#id38" role="doc-backlink">COMBI: Composition-Spread Exploration</a><a class="headerlink" href="#combi-composition-spread-exploration" title="Link to this heading"></a></h2>
+<section id="id4">
+<h3>Overview<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ai_tool_combi.py</span></code> implements the COMBI (Combinatorial) method.
+It first determines the best composition point using Bayesian optimization, then proposes a set of candidates (composition spread) by continuously varying the composition between specified element pairs starting from that point, and also proposes the element pair with the highest potential among them.
+This method is suited for combinatorial experiments.</p>
+</section>
+<section id="id5">
+<h3>Arguments<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the candidates file</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the proposals file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of objectives</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">num_proposals</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of proposals per cycle (number of divisions in the composition spread)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">physbo_score</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Acquisition function. Choose from <code class="docutils literal notranslate"><span class="pre">'TS'</span></code> , <code class="docutils literal notranslate"><span class="pre">'EI'</span></code> , <code class="docutils literal notranslate"><span class="pre">'PI'</span></code> , <code class="docutils literal notranslate"><span class="pre">'RE'</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">minimization</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code> , treats as a minimization problem. If <code class="docutils literal notranslate"><span class="pre">None</span></code> , defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">combi_ranges</span></code></p></td>
+<td><p>list</p></td>
+<td><p>Composition range for each element <code class="docutils literal notranslate"><span class="pre">[[min,</span> <span class="pre">max],</span> <span class="pre">...]</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">spread_elements</span></code></p></td>
+<td><p>list</p></td>
+<td><p>Index list of element pairs for composition spread <code class="docutils literal notranslate"><span class="pre">[[i,</span> <span class="pre">j],</span> <span class="pre">...]</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id6">
+<h3>License and Citation<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>If you use COMBI, please cite the following paper.</p>
+<p>Ryo Toyama, Ryo Tamura, Shoichi Matsuda, Yuma Iwasaki, and Yuya Sakuraba,
+Autonomous closed-loop exploration of composition-spread films for the anomalous Hall effect,
+npj Computational Materials 11, 329 (2025).
+Available from <a class="reference external" href="https://www.nature.com/articles/s41524-025-01828-7">https://www.nature.com/articles/s41524-025-01828-7</a>.</p>
+</section>
+<section id="id7">
+<h3>Example<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ai_tool_combi</span>
+<span class="n">ai_tool_combi</span><span class="o">.</span><span class="n">COMBI</span><span class="p">(</span>
+    <span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;candidates.csv&quot;</span><span class="p">,</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="s2">&quot;proposals.csv&quot;</span><span class="p">,</span>
+    <span class="n">num_objectives</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">num_proposals</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">physbo_score</span> <span class="o">=</span> <span class="s2">&quot;EI&quot;</span><span class="p">,</span>
+    <span class="n">minimization</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">combi_ranges</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">]],</span>
+    <span class="n">spread_elements</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+</section>
+</section>
+<section id="doe-design-of-experiments">
+<span id="doe-en"></span><h2><a class="toc-backref" href="#id39" role="doc-backlink">DOE: Design of Experiments</a><a class="headerlink" href="#doe-design-of-experiments" title="Link to this heading"></a></h2>
+<section id="id8">
+<h3>Overview<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ai_tool_doe.py</span></code> is a module based on Design of Experiments (DOE).
+It selects experimental conditions that uniformly cover the search space, using criteria such as distance from existing observations or matrix determinants.
+Four modes are available: <code class="docutils literal notranslate"><span class="pre">greedy</span></code> , <code class="docutils literal notranslate"><span class="pre">distance</span></code> , <code class="docutils literal notranslate"><span class="pre">d_optimal</span></code> , and <code class="docutils literal notranslate"><span class="pre">lhs</span></code>.</p>
+</section>
+<section id="id9">
+<h3>Arguments<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the candidates file</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the proposals file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of objectives</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">num_proposals</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of proposals per cycle</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mode</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Sampling mode. Choose from <code class="docutils literal notranslate"><span class="pre">'greedy'</span></code> , <code class="docutils literal notranslate"><span class="pre">'distance'</span></code> , <code class="docutils literal notranslate"><span class="pre">'d_optimal'</span></code> , <code class="docutils literal notranslate"><span class="pre">'lhs'</span></code> . If <code class="docutils literal notranslate"><span class="pre">None</span></code> , defaults to <code class="docutils literal notranslate"><span class="pre">'distance'</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">max_iter</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of iterations for the Exchange Algorithm. If <code class="docutils literal notranslate"><span class="pre">None</span></code> , defaults to <code class="docutils literal notranslate"><span class="pre">1000</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id10">
+<h3>Example<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ai_tool_doe</span>
+<span class="n">ai_tool_doe</span><span class="o">.</span><span class="n">DOE</span><span class="p">(</span>
+    <span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;candidates.csv&quot;</span><span class="p">,</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="s2">&quot;proposals.csv&quot;</span><span class="p">,</span>
+    <span class="n">num_objectives</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">num_proposals</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;distance&quot;</span><span class="p">,</span>
+    <span class="n">max_iter</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+</section>
+</section>
+<section id="es-exhaustive-search">
+<span id="es-en"></span><h2><a class="toc-backref" href="#id40" role="doc-backlink">ES: Exhaustive Search</a><a class="headerlink" href="#es-exhaustive-search" title="Link to this heading"></a></h2>
+<section id="id11">
+<h3>Overview<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ai_tool_es.py</span></code> implements Exhaustive Search.
+It proposes <code class="docutils literal notranslate"><span class="pre">num_proposals</span></code> candidates in order from the top of the candidates file.
+Useful when you want to experiment on all candidates in sequence, or when the number of candidates is small.</p>
+</section>
+<section id="id12">
+<h3>Arguments<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the candidates file</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the proposals file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of objectives</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">num_proposals</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of proposals per cycle</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id13">
+<h3>Example<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ai_tool_es</span>
+<span class="n">ai_tool_es</span><span class="o">.</span><span class="n">ES</span><span class="p">(</span>
+    <span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;candidates.csv&quot;</span><span class="p">,</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="s2">&quot;proposals.csv&quot;</span><span class="p">,</span>
+    <span class="n">num_objectives</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">num_proposals</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+</section>
+</section>
+<section id="nts-nested-thompson-sampling">
+<span id="nts-en"></span><h2><a class="toc-backref" href="#id41" role="doc-backlink">NTS: Nested Thompson Sampling</a><a class="headerlink" href="#nts-nested-thompson-sampling" title="Link to this heading"></a></h2>
+<section id="id14">
+<h3>Overview<a class="headerlink" href="#id14" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ai_tool_nts.py</span></code> implements NTS (Nested Thompson Sampling).
+It sets a threshold based on the maximum value of observed objectives and preferentially selects candidates with a high probability of exceeding that threshold.
+The strictness of the threshold can be adjusted via <code class="docutils literal notranslate"><span class="pre">sample_mode</span></code>.</p>
+</section>
+<section id="id15">
+<h3>Arguments<a class="headerlink" href="#id15" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the candidates file</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the proposals file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of objectives (currently only <code class="docutils literal notranslate"><span class="pre">1</span></code> is supported)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">num_proposals</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of proposals per cycle</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sample_mode</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Threshold scale mode. Choose from <code class="docutils literal notranslate"><span class="pre">'aggressive'</span></code> (0.99), <code class="docutils literal notranslate"><span class="pre">'moderate'</span></code> (0.95), <code class="docutils literal notranslate"><span class="pre">'conservative'</span></code> (0.9)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">minimization</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code> , treats as a minimization problem. If <code class="docutils literal notranslate"><span class="pre">None</span></code> , defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code> (maximization)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">use_dpp</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code> , uses DPP to account for diversity within a batch</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">re_seed</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Random seed</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">output_res</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code> , outputs predicted values, variance, and acquisition function values to <code class="docutils literal notranslate"><span class="pre">output_res.csv</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id16">
+<h3>Example<a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ai_tool_nts</span>
+<span class="n">ai_tool_nts</span><span class="o">.</span><span class="n">NTS</span><span class="p">(</span>
+    <span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;candidates.csv&quot;</span><span class="p">,</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="s2">&quot;proposals.csv&quot;</span><span class="p">,</span>
+    <span class="n">num_objectives</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">num_proposals</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">sample_mode</span> <span class="o">=</span> <span class="s2">&quot;moderate&quot;</span><span class="p">,</span>
+    <span class="n">minimization</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">use_dpp</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">re_seed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">output_res</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+</section>
+</section>
+<section id="pdc-phase-diagram-construction">
+<span id="pdc-en"></span><h2><a class="toc-backref" href="#id42" role="doc-backlink">PDC: Phase Diagram Construction</a><a class="headerlink" href="#pdc-phase-diagram-construction" title="Link to this heading"></a></h2>
+<section id="id17">
+<h3>Overview<a class="headerlink" href="#id17" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ai_tool_pdc.py</span></code> is a module for efficient Phase Diagram Construction.
+It predicts the phase of each experimental condition using label propagation (Label Propagation / Label Spreading) and prioritizes exploration of high-uncertainty regions to construct phase diagrams efficiently.</p>
+</section>
+<section id="id18">
+<h3>Arguments<a class="headerlink" href="#id18" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the candidates file</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the proposals file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of objectives (number of phase label columns). Only <code class="docutils literal notranslate"><span class="pre">1</span></code> is supported for PDC</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">num_proposals</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of proposals per cycle</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pdc_estimation</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Phase estimation algorithm. <code class="docutils literal notranslate"><span class="pre">'LP'</span></code> (Label Propagation) or <code class="docutils literal notranslate"><span class="pre">'LS'</span></code> (Label Spreading). If <code class="docutils literal notranslate"><span class="pre">None</span></code> , defaults to <code class="docutils literal notranslate"><span class="pre">'LP'</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pdc_sampling</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Sampling strategy. Choose from <code class="docutils literal notranslate"><span class="pre">'LC'</span></code> (Least Confidence), <code class="docutils literal notranslate"><span class="pre">'MS'</span></code> (Margin Sampling), <code class="docutils literal notranslate"><span class="pre">'EA'</span></code> (Entropy). If <code class="docutils literal notranslate"><span class="pre">None</span></code> , defaults to <code class="docutils literal notranslate"><span class="pre">'LC'</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">output_res</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code> , outputs predicted probabilities for each phase to <code class="docutils literal notranslate"><span class="pre">output_res.csv</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id19">
+<h3>License and Citation<a class="headerlink" href="#id19" title="Link to this heading"></a></h3>
+<p>License: MIT</p>
+<p>If you use PDC, please cite the following papers.</p>
+<p>Kei Terayama, Ryo Tamura, Yoshitaro Nose, Hidenori Hiramatsu, Hideo Hosono, Yasushi Okuno, and Koji Tsuda,
+Efficient construction method for phase diagrams using uncertainty sampling,
+Physical Review Materials 3, 033802 (2019).
+Available from <a class="reference external" href="https://journals.aps.org/prmaterials/abstract/10.1103/PhysRevMaterials.3.033802">https://journals.aps.org/prmaterials/abstract/10.1103/PhysRevMaterials.3.033802</a>.</p>
+<p>Ryo Tamura, Guillaume Deffrennes, Kwangsik Han, Taichi Abe, Haruhiko Morito, Yasuyuki Nakamura, Masanobu Naito, Ryoji Katsube, Yoshitaro Nose, and Kei Terayama,
+Machine-learning-based phase diagram construction for high-throughput batch experiments,
+Science and Technology of Advanced Materials: Methods 2, 153-161 (2022).
+Available from <a class="reference external" href="https://www.tandfonline.com/doi/full/10.1080/27660400.2022.2076548">https://www.tandfonline.com/doi/full/10.1080/27660400.2022.2076548</a>.</p>
+</section>
+<section id="id20">
+<h3>Example<a class="headerlink" href="#id20" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ai_tool_pdc</span>
+<span class="n">ai_tool_pdc</span><span class="o">.</span><span class="n">PDC</span><span class="p">(</span>
+    <span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;candidates.csv&quot;</span><span class="p">,</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="s2">&quot;proposals.csv&quot;</span><span class="p">,</span>
+    <span class="n">num_objectives</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">num_proposals</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">pdc_estimation</span> <span class="o">=</span> <span class="s2">&quot;LP&quot;</span><span class="p">,</span>
+    <span class="n">pdc_sampling</span> <span class="o">=</span> <span class="s2">&quot;LC&quot;</span><span class="p">,</span>
+    <span class="n">output_res</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+</section>
+</section>
+<section id="physbo-bayesian-optimization">
+<span id="physbo-en"></span><h2><a class="toc-backref" href="#id43" role="doc-backlink">PHYSBO: Bayesian Optimization</a><a class="headerlink" href="#physbo-bayesian-optimization" title="Link to this heading"></a></h2>
+<section id="id21">
+<h3>Overview<a class="headerlink" href="#id21" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ai_tool_physbo.py</span></code> is a Bayesian optimization module using the PHYSBO package.
+It supports both single-objective and multi-objective optimization.
+Acquisition functions TS (Thompson Sampling), EI (Expected Improvement), and PI (Probability of Improvement) are available.</p>
+</section>
+<section id="id22">
+<h3>Arguments<a class="headerlink" href="#id22" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the candidates file</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the proposals file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of objectives</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">num_proposals</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of proposals per cycle</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">physbo_score</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Acquisition function. For single-objective, choose from <code class="docutils literal notranslate"><span class="pre">'TS'</span></code> , <code class="docutils literal notranslate"><span class="pre">'EI'</span></code> , <code class="docutils literal notranslate"><span class="pre">'PI'</span></code> . For multi-objective, choose from <code class="docutils literal notranslate"><span class="pre">'TS'</span></code> , <code class="docutils literal notranslate"><span class="pre">'HVPI'</span></code> , <code class="docutils literal notranslate"><span class="pre">'EHVI'</span></code> . If <code class="docutils literal notranslate"><span class="pre">None</span></code> , <code class="docutils literal notranslate"><span class="pre">'EI'</span></code> is used for single-objective and <code class="docutils literal notranslate"><span class="pre">'TS'</span></code> for multi-objective</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">minimization</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code> , treats as a minimization problem. If <code class="docutils literal notranslate"><span class="pre">None</span></code> , defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code> (maximization)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">output_res</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code> , outputs predicted values, variance, and acquisition function values to <code class="docutils literal notranslate"><span class="pre">output_res.csv</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">training_res</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code> , outputs prediction results for training data to <code class="docutils literal notranslate"><span class="pre">training_res.csv</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id23">
+<h3>License and Citation<a class="headerlink" href="#id23" title="Link to this heading"></a></h3>
+<p>License: Mozilla Public License version 2.0 (MPL v2)</p>
+<p>If you use PHYSBO, please cite the following paper.</p>
+<p>Yuichi Motoyama, Ryo Tamura, Kazuyoshi Yoshimi, Kei Terayama, Tsuyoshi Ueno, and Koji Tsuda,
+Bayesian optimization package: PHYSBO,
+Computer Physics Communications 278, 108405 (2022).
+Available from <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S0010465522001242?via%3Dihub">https://www.sciencedirect.com/science/article/pii/S0010465522001242?via%3Dihub</a>.</p>
+</section>
+<section id="id24">
+<h3>Example<a class="headerlink" href="#id24" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ai_tool_physbo</span>
+<span class="n">ai_tool_physbo</span><span class="o">.</span><span class="n">PHYSBO</span><span class="p">(</span>
+    <span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;candidates.csv&quot;</span><span class="p">,</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="s2">&quot;proposals.csv&quot;</span><span class="p">,</span>
+    <span class="n">num_objectives</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">num_proposals</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">physbo_score</span> <span class="o">=</span> <span class="s2">&quot;EI&quot;</span><span class="p">,</span>
+    <span class="n">minimization</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">output_res</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">training_res</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+</section>
+</section>
+<section id="ptr-probability-of-target-range">
+<span id="ptr-en"></span><h2><a class="toc-backref" href="#id44" role="doc-backlink">PTR: Probability of Target Range</a><a class="headerlink" href="#ptr-probability-of-target-range" title="Link to this heading"></a></h2>
+<section id="id25">
+<h3>Overview<a class="headerlink" href="#id25" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ai_tool_ptr.py</span></code> implements PTR (Probability of Target Range).
+It predicts each objective function using Gaussian process regression and proposes the experimental condition that maximizes the probability of falling within a user-specified target range.
+Different target ranges can be set for each objective function in multi-objective optimization.</p>
+</section>
+<section id="id26">
+<h3>Arguments<a class="headerlink" href="#id26" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the candidates file</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the proposals file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of objectives</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">num_proposals</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of proposals per cycle</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ptr_ranges</span></code></p></td>
+<td><p>list</p></td>
+<td><p>Target range for each objective in the format <code class="docutils literal notranslate"><span class="pre">[[lower1,</span> <span class="pre">upper1],</span> <span class="pre">[lower2,</span> <span class="pre">upper2],</span> <span class="pre">...]</span></code>. Specifying <code class="docutils literal notranslate"><span class="pre">'max'</span></code> or <code class="docutils literal notranslate"><span class="pre">'min'</span></code> uses the observed maximum or minimum value</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_res</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code> , outputs predicted values and acquisition function values to <code class="docutils literal notranslate"><span class="pre">output_res.csv</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id27">
+<h3>License and Citation<a class="headerlink" href="#id27" title="Link to this heading"></a></h3>
+<p>If you use PTR, please cite the following paper.</p>
+<p>Akira Takahashi, Kei Terayama, Yu Kumagai, Ryo Tamura, and Fumiyasu Oba,
+Fully autonomous materials screening methodology combining first-principles calculations, machine learning and high-performance computing system,
+Science and Technology of Advanced Materials: Methods 3, 1, 2261834 (2023).
+Available from <a class="reference external" href="https://www.tandfonline.com/doi/full/10.1080/27660400.2023.2261834">https://www.tandfonline.com/doi/full/10.1080/27660400.2023.2261834</a>.</p>
+</section>
+<section id="id28">
+<h3>Example<a class="headerlink" href="#id28" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ai_tool_ptr</span>
+<span class="n">ai_tool_ptr</span><span class="o">.</span><span class="n">PTR</span><span class="p">(</span>
+    <span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;candidates.csv&quot;</span><span class="p">,</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="s2">&quot;proposals.csv&quot;</span><span class="p">,</span>
+    <span class="n">num_objectives</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">num_proposals</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">ptr_ranges</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]],</span>
+    <span class="n">output_res</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+</section>
+</section>
+<section id="re-random-exploration">
+<span id="re-en"></span><h2><a class="toc-backref" href="#id45" role="doc-backlink">RE: Random Exploration</a><a class="headerlink" href="#re-random-exploration" title="Link to this heading"></a></h2>
+<section id="id29">
+<h3>Overview<a class="headerlink" href="#id29" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ai_tool_re.py</span></code> implements Random Exploration.
+It randomly selects experimental conditions from untested candidates.
+Useful as an initial search or as a baseline for comparison with other methods.</p>
+</section>
+<section id="id30">
+<h3>Arguments<a class="headerlink" href="#id30" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the candidates file</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the proposals file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of objectives</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">num_proposals</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of proposals per cycle</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">process_X</span></code></p></td>
+<td><p>list</p></td>
+<td><p>Index list of process parameters. If <code class="docutils literal notranslate"><span class="pre">None</span></code> , not used</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">re_seed</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Random seed. If <code class="docutils literal notranslate"><span class="pre">None</span></code> , seed is not fixed</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id31">
+<h3>Example<a class="headerlink" href="#id31" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ai_tool_re</span>
+<span class="n">ai_tool_re</span><span class="o">.</span><span class="n">RE</span><span class="p">(</span>
+    <span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;candidates.csv&quot;</span><span class="p">,</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="s2">&quot;proposals.csv&quot;</span><span class="p">,</span>
+    <span class="n">num_objectives</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">num_proposals</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">process_X</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">re_seed</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+</section>
+</section>
+<section id="rsvm-ranking-support-vector-machine">
+<span id="rsvm-en"></span><h2><a class="toc-backref" href="#id46" role="doc-backlink">RSVM: Ranking Support Vector Machine</a><a class="headerlink" href="#rsvm-ranking-support-vector-machine" title="Link to this heading"></a></h2>
+<section id="id32">
+<h3>Overview<a class="headerlink" href="#id32" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ai_tool_rsvm.py</span></code> implements RSVM (Ranking Support Vector Machine).
+Rather than the absolute values of objective functions, it learns the ordinal relationships (ranking information) of observed data and predicts scores for unobserved data to select experimental conditions.
+By adding external datasets via <code class="docutils literal notranslate"><span class="pre">other_datasets</span></code> , ranking information from other material systems can be leveraged in a transfer learning fashion.</p>
+</section>
+<section id="id33">
+<h3>Arguments<a class="headerlink" href="#id33" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the candidates file</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Path to the proposals file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of objectives</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">num_proposals</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of proposals per cycle</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">other_datasets</span></code></p></td>
+<td><p>list</p></td>
+<td><p>List of paths to external datasets for transfer learning. Use an empty list <code class="docutils literal notranslate"><span class="pre">[]</span></code> if not used</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">minimization</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code> , treats as a minimization problem. If <code class="docutils literal notranslate"><span class="pre">None</span></code> , defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">output_res</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code> , outputs predicted scores to <code class="docutils literal notranslate"><span class="pre">output_res.csv</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id34">
+<h3>License and Citation<a class="headerlink" href="#id34" title="Link to this heading"></a></h3>
+<p>If you use RSVM, please cite the following paper.</p>
+<p>Weilin Yuan, Yusuke Hibi, Ryo Tamura, Masato Sumita, Yasuyuki Nakamura, Masanobu Naito, and Koji Tsuda,
+Revealing factors influencing polymer degradation with rank-based machine learning,
+Patterns 4, 100846 (2023).
+Available from <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/S2666389923002258">https://linkinghub.elsevier.com/retrieve/pii/S2666389923002258</a>.</p>
+</section>
+<section id="id35">
+<h3>Example<a class="headerlink" href="#id35" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ai_tool_rsvm</span>
+<span class="n">ai_tool_rsvm</span><span class="o">.</span><span class="n">RSVM</span><span class="p">(</span>
+    <span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;candidates.csv&quot;</span><span class="p">,</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="s2">&quot;proposals.csv&quot;</span><span class="p">,</span>
+    <span class="n">num_objectives</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">num_proposals</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">other_datasets</span> <span class="o">=</span> <span class="p">[],</span>
+    <span class="n">minimization</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">output_res</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ivoryos.html" class="btn btn-neutral float-left" title="IvoryOS Interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024-, NIMO developers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXX-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-XXXXXXX-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

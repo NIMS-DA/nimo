@@ -49,6 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Install and Uninstall</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Basic Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tutorial">Tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#import">Import</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#definition-of-parameters">Definition of parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#preparation-of-candidates-file">Preparation of candidates file</a></li>
@@ -96,6 +97,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="main_sample.html">Example of Main Script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ivoryos.html">IvoryOS Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ai_tools_manual_en.html">AI Tool Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
 </ul>
@@ -125,6 +127,13 @@
              
   <section id="basic-usage">
 <h1>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h1>
+<section id="tutorial">
+<h2>Tutorial<a class="headerlink" href="#tutorial" title="Link to this heading"></a></h2>
+<p>You can try NIMO examples using Google Colaboratory notebooks.
+If you want to learn how to use NIMO by running the actual code, please use the link below.</p>
+<a class="reference external image-reference" href="https://colab.research.google.com/github/NIMS-DA/nimo/blob/main/docs/en/tutorial/tutorial_en.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" />
+</a>
+</section>
 <section id="import">
 <h2>Import<a class="headerlink" href="#import" title="Link to this heading"></a></h2>
 <p>First, we will import NIMO.</p>
@@ -336,13 +345,32 @@ Since this information is not required for conducting the experiments, please ig
 <section id="arguments">
 <h3>Arguments<a class="headerlink" href="#arguments" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">method</span></code>: Specify the exploration algorithm.” PHYSBO”: Bayesian Optimization by PHYSBO, “BLOX”: Boundless objective-free exploration by BLOX, “PDC”: Phase diagram construction by PDC, “RE”: Random exploration can be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">method</span></code>: Specify the exploration algorithm. Available methods are listed below.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;BLOX&quot;</span></code>: Boundless objective-free exploration (<a class="reference internal" href="ai_tools_manual_en.html#blox-en"><span class="std std-ref">Details</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;BOMP&quot;</span></code>: Bayesian optimization with process constraints (<a class="reference internal" href="ai_tools_manual_en.html#bomp-en"><span class="std std-ref">Details</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;COMBI&quot;</span></code>: Composition-spread exploration (<a class="reference internal" href="ai_tools_manual_en.html#combi-en"><span class="std std-ref">Details</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;DOE&quot;</span></code>: Design of Experiments (<a class="reference internal" href="ai_tools_manual_en.html#doe-en"><span class="std std-ref">Details</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;ES&quot;</span></code>: Exhaustive Search (<a class="reference internal" href="ai_tools_manual_en.html#es-en"><span class="std std-ref">Details</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;NTS&quot;</span></code>: Nested Thompson Sampling (<a class="reference internal" href="ai_tools_manual_en.html#nts-en"><span class="std std-ref">Details</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;PDC&quot;</span></code>: Phase Diagram Construction (<a class="reference internal" href="ai_tools_manual_en.html#pdc-en"><span class="std std-ref">Details</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;PHYSBO&quot;</span></code>: Bayesian Optimization by PHYSBO (<a class="reference internal" href="ai_tools_manual_en.html#physbo-en"><span class="std std-ref">Details</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;PTR&quot;</span></code>: Probability of Target Range (<a class="reference internal" href="ai_tools_manual_en.html#ptr-en"><span class="std std-ref">Details</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;RE&quot;</span></code>: Random Exploration (<a class="reference internal" href="ai_tools_manual_en.html#re-en"><span class="std std-ref">Details</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;RSVM&quot;</span></code>: Ranking Support Vector Machine (<a class="reference internal" href="ai_tools_manual_en.html#rsvm-en"><span class="std std-ref">Details</span></a>)</p></li>
+</ul>
+</li>
 <li><p><code class="docutils literal notranslate"><span class="pre">input_file</span></code>: Specify the file stored experimental conditions, that is, “candidates_file”.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code>: Specify the file stored proposal conditions by exploration algorithm, that is “proposals_file”.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">num_objectives</span></code>: Specify “n_objectives”, the number of objective functions. Of course, you can also directly specify a numerical value.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">num_proposals</span></code>: Specify “n_proposals”, the number of conditions proposed by the exploration algorithm in one cycle. Of course, you can also directly specify a numerical value.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">output_res</span></code>: By specifying “True”, we can obtain output_res.csv that contains the predicted values of the objective functions and the acquisition function when using an AI other than “RE”. The default value is “False”.</p></li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Depending on the algorithm, additional arguments may be required.
+See the <a class="reference internal" href="ai_tools_manual_en.html"><span class="doc">AI Tool Modules</span></a> linked above for details on each algorithm’s arguments.</p>
+</div>
 <p>For example, to compute proposals by Bayesian optimization,
 set as follows.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nimo</span><span class="o">.</span><span class="n">selection</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;PHYSBO&quot;</span><span class="p">,</span>
