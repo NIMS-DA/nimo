@@ -21,7 +21,10 @@ class selection():
                  combi_ranges = None, spread_elements = None,
                  sample_mode = None,
                  mode = None, max_iter = None,
-                 output_res = None, training_res = None):
+                 output_res = None, training_res = None,
+                 prompt_file = None, system_prompt_file = None,
+                 llm_model = None, num_runs = None,
+                 log_file = None, api_key = None, max_tokens = None):
 
         """Constructor
         
@@ -49,6 +52,13 @@ class selection():
             max_iter (int): max iteration for DOE
             output_res (str): True or False to output res file
             training_res (str): True or False to training res file
+            prompt_file (str): path to the Markdown file describing the experimental context
+            system_prompt_file (str): path to a file containing the system prompt.
+            llm_model (str): Anthropic model ID to use
+            num_runs (int): number of independent LLM selection runs (for majority vote)
+            log_file (str): if provided, save the full selection log as Markdown
+            api_key (str): Anthropic API key. If None, reads from ANTHROPIC_API_KEY env variable.
+            max_tokens (int): maximum number of tokens in the LLM response (default: 8192).
 
         """
 
@@ -79,6 +89,16 @@ class selection():
 
         self.output_res = output_res
         self.training_res = training_res
+
+
+        self.prompt_file = prompt_file
+        self.system_prompt_file = system_prompt_file
+        self.llm_model = llm_model
+        self.num_runs = num_runs
+        self.log_file = log_file
+        self.api_key = api_key
+        self.max_tokens = max_tokens
+
 
         res = self.module_selection()
         
@@ -153,6 +173,13 @@ class selection():
             res = nimo.ai_tools.ai_tool_doe.DOE(self.input_file, self.output_file, 
             self.num_objectives, self.num_proposals, self.mode, self.max_iter).select()
             return res
+        
+
+        if self.method == "LLMEP":
+            res = nimo.ai_tools.ai_tool_llmep.LLMEP(self.input_file, self.output_file, 
+            self.num_objectives, self.num_proposals,
+            self.prompt_file, self.system_prompt_file, self.llm_model,
+            self.num_runs, self.log_file, self.api_key, self.max_tokens).select()
 
 
 class preparation_input():
