@@ -1,5 +1,6 @@
 import numpy as np
 import csv
+import os
 
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
@@ -10,7 +11,8 @@ import sklearn.semi_supervised
 from sklearn.preprocessing import StandardScaler
 from scipy.spatial import distance
 
-def plot(input_file, fig_folder = None, pdc_estimation = None, num_phases = None, dpi = None):
+def plot(input_file, fig_folder = None, pdc_estimation = None, num_phases = None, 
+         filename_phase = None, filename_diagram = None, dpi = None):
     """Loading candidates
 
     This function do not depend on robot.
@@ -20,7 +22,7 @@ def plot(input_file, fig_folder = None, pdc_estimation = None, num_phases = None
 
     """
     
-    if fig_folder == None:
+    if fig_folder is None:
         fig_path = "./fig"
     else:
         fig_path = fig_folder
@@ -29,10 +31,10 @@ def plot(input_file, fig_folder = None, pdc_estimation = None, num_phases = None
 
     LP_algorithm = pdc_estimation
 
-    if pdc_estimation == None:
+    if pdc_estimation is None:
         LP_algorithm = 'LP'
 
-    if dpi == None:
+    if dpi is None:
         dpi = 72
 
     #Preparation of data    
@@ -93,6 +95,13 @@ def plot(input_file, fig_folder = None, pdc_estimation = None, num_phases = None
 
     dt_now = time.localtime()
 
+    if filename_phase is None:
+        filename_phase = "phase_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png"
+
+    if filename_diagram is None:
+        filename_diagram = "phase_diagram_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png"
+
+
     if len(data_list[0]) == 2:
        
         with open(input_file, 'r') as f:
@@ -110,7 +119,7 @@ def plot(input_file, fig_folder = None, pdc_estimation = None, num_phases = None
         plt.xlabel(header[0])
         plt.ylabel(header[1])
         
-        plt.savefig(fig_path + "/phase_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png", dpi = dpi)
+        plt.savefig(os.path.join(fig_path, filename_phase), dpi = dpi)
         plt.clf()
         plt.close() 
         
@@ -126,7 +135,7 @@ def plot(input_file, fig_folder = None, pdc_estimation = None, num_phases = None
         plt.xlabel(header[0])
         plt.ylabel(header[1])
         
-        plt.savefig(fig_path + "/phase_diagram_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png", dpi = dpi)
+        plt.savefig(os.path.join(fig_path, filename_diagram), dpi = dpi)
         plt.clf()
         plt.close() 
 
@@ -152,7 +161,7 @@ def plot(input_file, fig_folder = None, pdc_estimation = None, num_phases = None
         ax.set_ylabel(header[1])
         ax.set_zlabel(header[2])
      
-        plt.savefig(fig_path + "/phase_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png", dpi = dpi)
+        plt.savefig(os.path.join(fig_path, filename_phase), dpi = dpi)
         plt.clf()
         plt.close() 
 
@@ -172,7 +181,7 @@ def plot(input_file, fig_folder = None, pdc_estimation = None, num_phases = None
         ax.set_ylabel(header[1])
         ax.set_zlabel(header[2])
         
-        plt.savefig(fig_path + "/phase_diagram_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png", dpi = dpi)
+        plt.savefig(os.path.join(fig_path, filename_diagram), dpi = dpi)
         plt.clf()
         plt.close() 
 

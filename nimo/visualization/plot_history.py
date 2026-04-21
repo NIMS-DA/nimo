@@ -1,9 +1,10 @@
 import matplotlib.pyplot as plt
 import time
 import collections
+import os
 
 
-def cycle(input_file, num_cycles, fig_folder = None, dpi = None):
+def cycle(input_file, num_cycles, fig_folder = None, filename = None, dpi = None):
     """Creating the figure of datapoints depending on the cycles
 
     This function do not depend on robot.
@@ -14,12 +15,12 @@ def cycle(input_file, num_cycles, fig_folder = None, dpi = None):
 
     """
     
-    if fig_folder == None:
+    if fig_folder is None:
         fig_path = "./fig"
     else:
         fig_path = fig_folder
     
-    if dpi == None:
+    if dpi is None:
         dpi = 72
 
     obs_itt = []
@@ -34,18 +35,28 @@ def cycle(input_file, num_cycles, fig_folder = None, dpi = None):
 
     for i in range(len(obs_y[0])):
 
+        if filename is None:
+            name = "history_step_" + time.strftime('%y%m%d%H%M%S', dt_now) + "_" + str(i+1)+ ".png"
+        else:
+            if len(obs_y[0]) == 1: # Use the provided name when the number of objectives is 1
+                name = filename
+            else:
+                root, ext = os.path.splitext(filename)
+                name = f"{root}_{i+1}{ext}"
+
+
         fig = plt.figure()
 
         plt.scatter(obs_itt, [r[i] for r in obs_y], alpha=0.7)
         plt.xlim(0, num_cycles)
         plt.xlabel("Cycle")
         plt.ylabel("Objective"+str(i+1))
-        plt.savefig(fig_path + "/history_step_" + time.strftime('%y%m%d%H%M%S', dt_now) + "_" + str(i+1)+ ".png", dpi = dpi)
+        plt.savefig(os.path.join(fig_path, name), dpi = dpi)
         plt.clf()
         plt.close() 
 
 
-def best(input_file, num_cycles, fig_folder = None):
+def best(input_file, num_cycles, fig_folder = None, filename = None, dpi = None):
     """Creating the figure of best datapoints depending on the cycles
 
     This function do not depend on robot.
@@ -56,10 +67,13 @@ def best(input_file, num_cycles, fig_folder = None):
 
     """
     
-    if fig_folder == None:
+    if fig_folder is None:
         fig_path = "./fig"
     else:
         fig_path = fig_folder
+    
+    if dpi is None:
+        dpi = 72
     
     obs_itt = []
     obs_y = []
@@ -105,6 +119,15 @@ def best(input_file, num_cycles, fig_folder = None):
             best_y.append(max_list[target_index[j]])
 
 
+        if filename is None:
+            name = "history_best_" + time.strftime('%y%m%d%H%M%S', dt_now) + "_" + str(i+1)+ ".png"
+        else:
+            if len(obs_y[0]) == 1: # Use the provided name when the number of objectives is 1
+                name = filename
+            else:
+                root, ext = os.path.splitext(filename)
+                name = f"{root}_{i+1}{ext}"
+
         fig = plt.figure()
 
         plt.scatter(best_itt, best_y)
@@ -112,6 +135,6 @@ def best(input_file, num_cycles, fig_folder = None):
         plt.xlim(0, num_cycles)
         plt.xlabel("Cycle")
         plt.ylabel("Best objective"+str(i+1))
-        plt.savefig(fig_path + "/history_best_" + time.strftime('%y%m%d%H%M%S', dt_now) + "_" + str(i+1)+ ".png", dpi = dpi)
+        plt.savefig(os.path.join(fig_path, name), dpi = dpi)
         plt.clf()
         plt.close() 

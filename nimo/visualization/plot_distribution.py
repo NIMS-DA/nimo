@@ -1,12 +1,13 @@
 import numpy as np
 import csv
+import os
 
 import matplotlib.pyplot as plt
 import time
 from mpl_toolkits.mplot3d import Axes3D
 
 
-def plot(input_file, num_objectives, fig_folder = None, dpi = None):
+def plot(input_file, num_objectives, fig_folder = None, filename = None, dpi = None):
     """Loading candidates
 
     This function do not depend on robot.
@@ -17,17 +18,23 @@ def plot(input_file, num_objectives, fig_folder = None, dpi = None):
 
     """
 
-    if fig_folder == None:
+    if fig_folder is None:
         fig_path = "./fig"
     else:
         fig_path = fig_folder
 
     t_train, X_all, train_actions, test_actions = load_data(input_file, num_objectives)
     
-    if dpi == None:
+    if dpi is None:
         dpi = 72
 
     dt_now = time.localtime()
+
+    if filename is None:
+        name = "distribution_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png"
+    else:
+        name = filename
+
 
     if num_objectives == 1:
         
@@ -36,7 +43,7 @@ def plot(input_file, num_objectives, fig_folder = None, dpi = None):
         plt.hist(t_train)
         plt.xlabel("Objectives")
         plt.ylabel("Counts")
-        plt.savefig(fig_path + "/distribution_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png", dpi = dpi)
+        plt.savefig(os.path.join(fig_path, name), dpi = dpi)
         plt.clf()
         plt.close() 
 
@@ -55,7 +62,7 @@ def plot(input_file, num_objectives, fig_folder = None, dpi = None):
         plt.scatter(x, y)
         plt.xlabel("Objective 1")
         plt.ylabel("Objective 2")
-        plt.savefig(fig_path + "/distribution_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png", dpi = dpi)
+        plt.savefig(os.path.join(fig_path, name), dpi = dpi)
         plt.clf()
         plt.close() 
 
@@ -78,7 +85,7 @@ def plot(input_file, num_objectives, fig_folder = None, dpi = None):
         ax.set_xlabel("Objective 1")
         ax.set_ylabel("Objective 2")
         ax.set_zlabel("Objective 3")
-        plt.savefig(fig_path + "/distribution_" + time.strftime('%y%m%d%H%M%S', dt_now) + ".png", dpi = dpi)
+        plt.savefig(os.path.join(fig_path, name), dpi = dpi)
         plt.clf()
         plt.close() 
 
