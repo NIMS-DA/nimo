@@ -11,7 +11,10 @@ class selection():
 
     """
 
-    def __init__(self, method, input_file, output_file, num_objectives, num_proposals, 
+    available_methods = ["RE", "PHYSBO", "PDC", "BLOX", "PTR", "SLESA", "BOMP",
+                         "ES", "COMBI", "NTS", "RSVM", "DOE", "LLMEP"]
+
+    def __init__(self, method, input_file, output_file, num_objectives, num_proposals,
                  re_seed = None,
                  ptr_ranges = None,
                  slesa_beta_max = None, slesa_beta_num = None,
@@ -20,6 +23,7 @@ class selection():
                  process_X = None,
                  combi_ranges = None, spread_elements = None,
                  sample_mode = None,
+                 other_datasets = None,
                  mode = None, max_iter = None,
                  output_res = None, training_res = None,
                  prompt_file = None, system_prompt_file = None,
@@ -48,6 +52,7 @@ class selection():
             combi_ranges (list[float]): the ranges for each element in COMBI method
             spread_elements (list[int]): the list of spread elements in COMBI method
             sample_mode (str): mode for nts algorithm
+            other_datasets (list[str]): the list of csv files used as additional training data in RSVM method
             mode (str): mode for DOE
             max_iter (int): max iteration for DOE
             output_res (str): True or False to output res file
@@ -83,6 +88,8 @@ class selection():
         self.spread_elements = spread_elements
 
         self.sample_mode = sample_mode
+
+        self.other_datasets = other_datasets
 
         self.mode = mode
         self.max_iter = max_iter
@@ -169,6 +176,12 @@ class selection():
             return res
 
 
+        if self.method == "RSVM":
+            res = nimo.ai_tools.ai_tool_rsvm.RSVM(self.input_file, self.output_file,
+            self.num_objectives, self.num_proposals, self.other_datasets, self.minimization, self.output_res).select()
+            return res
+
+
         if self.method == "DOE":
             res = nimo.ai_tools.ai_tool_doe.DOE(self.input_file, self.output_file, 
             self.num_objectives, self.num_proposals, self.mode, self.max_iter).select()
@@ -180,6 +193,11 @@ class selection():
             self.num_objectives, self.num_proposals,
             self.prompt_file, self.system_prompt_file, self.llm_model,
             self.num_runs, self.log_file, self.api_key, self.max_tokens).select()
+            return res
+
+
+        raise ValueError("Unknown method for selection: '%s'. Available methods are %s."
+        % (self.method, ", ".join(self.available_methods)))
 
 
 class preparation_input():

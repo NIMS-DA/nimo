@@ -7,18 +7,19 @@ packages = ["nimo", "nimo.ai_tools", "nimo.input_tools", "nimo.output_tools", "n
 
 [project]
 name = "nimo"
-version = "2.1.2"
+version = "2.1.5"
 description = "NIMO package"
 readme = "README.md"
 authors = [
     { name = "NIMO developers" }
 ]
-license = "MIT"
+license = { text = "MIT" }
 dependencies = [
     "matplotlib",
     "numpy",
     "physbo>=3.1.0",
     "scikit-learn",
     "scipy",
-    "pyDOE3"
+    "pyDOE3",
+    "anthropic"
 ]

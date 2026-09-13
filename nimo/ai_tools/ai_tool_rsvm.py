@@ -42,6 +42,9 @@ class RSVM():
         if self.minimization == None:
             self.minimization = False
 
+        if self.other_datasets == None:
+            self.other_datasets = []
+
         
 
 
@@ -200,19 +203,19 @@ class RSVM():
                 writer.writerows(res_tot)
 
 
-            #Select next candidates
-            if self.minimization == True:
-                rank_index = np.array(predicted_properties_list).argsort()[::]
+        #Select next candidates
+        if self.minimization == True:
+            rank_index = np.array(predicted_properties_list).argsort()[::]
 
-            else:
-                rank_index = np.array(predicted_properties_list).argsort()[::-1]
+        else:
+            rank_index = np.array(predicted_properties_list).argsort()[::-1]
 
 
-            actions = []
+        actions = []
 
-            for i in range(self.num_proposals):
+        for i in range(self.num_proposals):
 
-                actions.append(test_actions[rank_index[i]])
+            actions.append(test_actions[rank_index[i]])
 
         return actions
 
