@@ -102,7 +102,7 @@ class COMBI():
 
         This function is for PHYSBO with inclination.
         This function do not depend on robot.
-        If the new AI alborithm is developed, this function is only changed.
+        If the new AI algorithm is developed, this function is only changed.
         
         Args:
             t_train (list[float]): the list where observed objectives are stored
