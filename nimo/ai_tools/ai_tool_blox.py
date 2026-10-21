@@ -12,11 +12,12 @@ from sklearn.preprocessing import MinMaxScaler
 class BLOX():
     """Class of BLOX
 
-    This class can select the next candidates by random exploration.
+    This class selects candidates that expand the observed property space.
 
     """
 
-    def __init__(self, input_file, output_file, num_objectives, num_proposals, output_res):
+    def __init__(self, input_file, output_file, num_objectives, num_proposals, output_res,
+                 batch_mode="fixed"):
         """Constructor
         
         This function do not depend on robot.
@@ -27,8 +28,15 @@ class BLOX():
             num_objectives (int): the number of objectives
             num_proposals (int): the number of proposals
             output_res (str): True or False to export prediction results
+            batch_mode (str): "fixed" fits each objective model once per batch;
+                "refit" retrains with predicted observations after each selection.
+                Both modes update Stein novelty using each selected prediction.
 
         """
+
+        if batch_mode not in ("fixed", "refit"):
+            raise ValueError('BLOX batch_mode must be "fixed" or "refit".')
+        self.batch_mode = batch_mode
 
         self.input_file = input_file
         self.output_file = output_file
@@ -187,18 +195,20 @@ class BLOX():
 
             sc_properties_observed = sc_property.transform(properties_observed)
 
-            #Build prediction models
-            model_list = []
-            for d in range(dimension):
-                model = build_model(prediction_model, sc_features_observed, properties_observed[:,d])
-                model_list.append(model)
+            # Fixed mode retains the initial predictions throughout this batch.
+            if i == 0 or self.batch_mode == "refit":
+                #Build prediction models
+                model_list = []
+                for d in range(dimension):
+                    model = build_model(prediction_model, sc_features_observed, properties_observed[:,d])
+                    model_list.append(model)
 
 
-            #Predict properties of unchecked data
-            predicted_properties_list = []
-            for d in range(dimension):
-                predicted_properties_list.append(model_list[d].predict(sc_features_unchecked))
-            predicted_properties_list = np.array(predicted_properties_list).T
+                #Predict properties of unchecked data
+                predicted_properties_list = []
+                for d in range(dimension):
+                    predicted_properties_list.append(model_list[d].predict(sc_features_unchecked))
+                predicted_properties_list = np.array(predicted_properties_list).T
 
             
             #Calc. Stein Novelty
@@ -259,6 +269,9 @@ class BLOX():
             test_actions.pop(rank_index[0])
 
             sc_features_unchecked = np.delete(sc_features_unchecked, rank_index[0], axis = 0)
+            if self.batch_mode == "fixed":
+                predicted_properties_list = np.delete(
+                    predicted_properties_list, rank_index[0], axis=0)
 
         return actions
 
