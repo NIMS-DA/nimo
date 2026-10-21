@@ -16,6 +16,8 @@ from .ai_tools import ai_tool_physbo
 from .ai_tools import ai_tool_blox
 from .ai_tools import ai_tool_pdc
 from .ai_tools import ai_tool_ptr
+from .ai_tools import ai_tool_lse
+from .ai_tools import ai_tool_bald
 from .ai_tools import ai_tool_slesa
 from .ai_tools import ai_tool_slesa_WAM
 from .ai_tools import ai_tool_bomp

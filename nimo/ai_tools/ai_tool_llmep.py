@@ -1,3 +1,11 @@
+"""NIMO LLMEP local revision based on old/ai_tool_llmep.py.
+Web-search support retained; final vote aggregation is deterministic Python.
+"""
+from collections import Counter
+from pathlib import Path
+from datetime import datetime, timezone
+import hashlib
+import time
 import numpy as np
 import csv
 import json
@@ -5,7 +13,7 @@ import re
 import anthropic
 
 
-class LLMEP():
+class _BaseLLMEP():
     """Class of LLMEP
 
     This class selects the next experimental candidates using a Large Language Model (LLM).
@@ -18,7 +26,10 @@ class LLMEP():
 
     def __init__(self, input_file, output_file, num_objectives, num_proposals,
                  prompt_file, system_prompt_file, llm_model,
-                 num_runs, log_file, api_key, max_tokens):
+                 num_runs, log_file, api_key, max_tokens,
+                 use_web_search=False,
+                 web_search_tool_version="web_search_20250305",
+                 max_web_searches=5):
         """Constructor
 
         Args:
@@ -29,10 +40,15 @@ class LLMEP():
             prompt_file (str): path to the Markdown file describing the experimental context
             system_prompt_file (str): path to a file containing the system prompt.
             llm_model (str): Anthropic model ID to use
-            num_runs (int): number of independent LLM selection runs (for majority vote)
+            num_runs (int): number of alternative proposals generated in one API response
             log_file (str): if provided, save the full selection log as Markdown
             api_key (str): Anthropic API key. If None, reads from ANTHROPIC_API_KEY env variable.
             max_tokens (int): maximum number of tokens in the LLM response (default: 8192).
+            use_web_search (bool): if True, expose the Anthropic web_search server tool
+                to the model so it can retrieve literature at inference time. If False
+                (default), the model answers from parametric knowledge only.
+            web_search_tool_version (str): tool type string for the web_search tool.
+            max_web_searches (int): max number of searches the model may run per request.
 
         """
         self.input_file         = input_file
@@ -46,9 +62,18 @@ class LLMEP():
         if num_runs == None: self.num_runs = 10
         self.log_file           = log_file
         if log_file == None: self.log_file = "log"
-        self.client             = anthropic.Anthropic(api_key = api_key)
+        self.client             = anthropic.Anthropic(api_key=api_key, max_retries=0)
         self.max_tokens         = max_tokens
         if max_tokens == None: self.max_tokens = 8192
+        if type(self.num_runs) is not int or self.num_runs < 1:
+            raise ValueError("num_runs must be a positive integer")
+        if type(self.num_proposals) is not int or self.num_proposals < 1:
+            raise ValueError("num_proposals must be a positive integer")
+        if type(max_web_searches) is not int or max_web_searches < 1:
+            raise ValueError("max_web_searches must be a positive integer")
+        self.use_web_search          = use_web_search
+        self.web_search_tool_version = web_search_tool_version
+        self.max_web_searches        = max_web_searches
 
 
     # ------------------------------------------------------------------
@@ -130,104 +155,99 @@ class LLMEP():
 
 
     def _build_messages(self, user_prompt_md, candidates_text, objective_headers):
-        """Construct the system prompt and user message for the single LLM call."""
-        with open(self.system_prompt_file, 'r', encoding='utf-8') as f:
-            system = f.read()
-
-        obj_cols = ", ".join(f"`{h}`" for h in objective_headers)
-        is_are = 'is' if len(objective_headers) == 1 else 'are'
-
-        user = (
-            f"{user_prompt_md}\n"
-            "\n---\n"
-            "\n## Candidates\n"
-            "\nThe following table lists all candidate experimental conditions.\n"
-            f"- Rows with a value in {obj_cols} are already observed data points.\n"
-            f"- Rows where {obj_cols} {is_are} 'unknown' have not yet been measured.\n"
-            "\n```\n"
-            f"{candidates_text}\n"
-            "```\n"
-            "\n---\n"
-            "\n## Your Task\n"
-            f"\nPerform {self.num_runs} independent selection runs, then aggregate by majority vote.\n"
-            "\n### Step 1 Independent Runs\n"
-            f"\nFor each run (Run 1 through Run {self.num_runs}):\n"
-            "- Choose a **distinct exploration strategy**.\n"
-            f"- Select exactly {self.num_proposals} indices from the 'index' column above.\n"
-            f"- Only select rows where {obj_cols} {is_are} 'unknown'.\n"
-            "- Document the strategy and the selected indices.\n"
-
-            "\n### Step 2 Majority Vote\n"
-            f"\nAfter all {self.num_runs} runs:\n"
-            "- Count how many times each index was selected across all runs.\n"
-            "- Rank indices by vote count (descending). Break ties by preferring lower index values.\n"
-            f"- Select the top {self.num_proposals} indices as the final proposals.\n"
-            "- Document the vote counts for all indices that received at least one vote.\n"
-            "\n### Output Format\n"
-            "\nAfter your reasoning, output **exactly one** JSON object in the following format.\n"
-            "This must be the last thing in your response.\n"
-            "\n```json\n"
-            "{\n"
-            '  "runs": [\n'
-            '    {\n'
-            '      "run": 1,\n'
-            '      "strategy": "<one-line description>",\n'
-            '      "selected_indices": [<index1>, <index2>, ...]\n'
-            '    },\n'
-            '    ...\n'
-            '  ],\n'
-            '  "vote_counts": {\n'
-            '    "<index>": <count>,\n'
-            '    ...\n'
-            '  },\n'
-            '  "final_selected_indices": [<index1>, <index2>, ...],\n'
-            '  "reasons": {\n'
-            '    "<index>": "<one-sentence reason why this composition was selected>",\n'
-            '    ...\n'
-            '  }\n'
-            "}\n"
-            "```\n"
-        )
-        return [{"role": "user", "content": user}], system
+        system = Path(self.system_prompt_file).read_text(encoding="utf-8")
+        user = (f"{user_prompt_md}\n\n## Candidates\n{candidates_text}\n\n"
+                f"Generate exactly {self.num_runs} alternative proposals in this single response. "
+                "These are alternative proposals, not independent API trials. "
+                "Use a distinct exploration strategy for each proposal. "
+                f"Each proposal must contain exactly {self.num_proposals} distinct integer indices "
+                "from the index column, and only select rows with unknown observed labels. "
+                "Do not count votes or select a final batch: Python will count one vote per "
+                "proposal per index, sort by descending vote count, break ties by ascending "
+                "integer index, and select the required number of points. "
+                "Return a single JSON object and no other text, with this structure: "
+                '{"runs":[{"run":1,"strategy":"brief explanation","selected_indices":[0,1]}]}. '
+                "The example is schematic: use the required number of runs and indices. "
+                "Number the runs consecutively from 1.")
+        return [{"role":"user", "content":user}], system
 
 
     def _parse_result(self, response_text):
-        """Extract the result JSON from the LLM response.
+        def unique_keys(pairs):
+            obj = {}
+            for key, value in pairs:
+                if key in obj:
+                    raise ValueError("Duplicate JSON key")
+                obj[key] = value
+            return obj
+        text = response_text.strip()
+        match = re.fullmatch(r"```(?:json)?\s*(.*?)\s*```", text, re.DOTALL)
+        if match:
+            text = match.group(1)
+        result = json.loads(text, object_pairs_hook=unique_keys)
+        if not isinstance(result, dict):
+            raise ValueError("Response must be a JSON object")
+        return result
 
-        Raises:
-            ValueError: if parsing fails
+    def _aggregate_votes(self, result, test_actions):
+        runs = result.get("runs")
+        if not isinstance(runs, list) or len(runs) != self.num_runs:
+            raise ValueError(f"Expected exactly {self.num_runs} proposals")
+        available = set(map(int, test_actions))
+        votes = Counter()
+        for number, proposal in enumerate(runs, 1):
+            if not isinstance(proposal, dict):
+                raise ValueError(f"Proposal {number} is not an object")
+            if type(proposal.get("run")) is not int or proposal["run"] != number:
+                raise ValueError(f"Proposal {number} has an invalid run number")
+            ids = proposal.get("selected_indices")
+            if not isinstance(ids, list) or len(ids) != self.num_proposals:
+                raise ValueError(f"Proposal {number} must contain {self.num_proposals} indices")
+            if any(type(i) is not int for i in ids):
+                raise ValueError(f"Proposal {number} has a non-integer index")
+            if len(set(ids)) != self.num_proposals:
+                raise ValueError(f"Proposal {number} repeats an index")
+            if not set(ids) <= available:
+                raise ValueError(f"Proposal {number} selects an observed or unknown index")
+            votes.update(ids)
+        selected = sorted(votes, key=lambda i: (-votes[i], i))[:self.num_proposals]
+        if len(selected) != self.num_proposals:
+            raise ValueError("Not enough valid candidates")
+        return selected, dict(sorted(votes.items()))
+
+
+    def _extract_text(self, response):
+        """Concatenate all text blocks and collect web-search provenance.
+
+        When the web_search tool is enabled, response.content is a mix of
+        'text', 'server_tool_use', and 'web_search_tool_result' blocks, so the
+        old `response.content[0].text` decode is no longer safe. This joins every
+        text block and, for reproducibility / data-leakage analysis, also returns
+        the cited sources and the number of searches actually performed.
+
+        Returns:
+            response_text (str): concatenated text of all text blocks
+            citations (list[dict]): [{'url':..., 'title':...}, ...] from web search
+            n_searches (int): number of web_search_requests actually executed
         """
-        # Try last ```json ... ``` block first
-        json_blocks = re.findall(r'```json\s*(.*?)\s*```', response_text, re.DOTALL)
-        if json_blocks:
-            try:
-                return json.loads(json_blocks[-1])
-            except json.JSONDecodeError:
-                pass
+        texts     = []
+        citations = []
+        for block in response.content:
+            if getattr(block, "type", None) == "text":
+                texts.append(block.text)
+                for c in (getattr(block, "citations", None) or []):
+                    url = getattr(c, "url", None)
+                    if url:
+                        citations.append({"url": url, "title": getattr(c, "title", None)})
+        response_text = "\n".join(texts)
 
-        # Fallback: find the last {...} containing final_selected_indices
-        for m in reversed(list(re.finditer(r'\{', response_text))):
-            candidate = response_text[m.start():]
-            depth, end = 0, -1
-            for i, ch in enumerate(candidate):
-                if ch == '{':
-                    depth += 1
-                elif ch == '}':
-                    depth -= 1
-                    if depth == 0:
-                        end = i
-                        break
-            if end != -1:
-                try:
-                    data = json.loads(candidate[:end + 1])
-                    if "final_selected_indices" in data:
-                        return data
-                except json.JSONDecodeError:
-                    continue
+        n_searches = 0
+        usage = getattr(response, "usage", None)
+        stu   = getattr(usage, "server_tool_use", None) if usage is not None else None
+        if stu is not None:
+            n_searches = getattr(stu, "web_search_requests", 0) or 0
 
-        raise ValueError(
-            f"Could not parse result JSON from LLM response:\n{response_text[:500]}"
-        )
+        return response_text, citations, n_searches
 
 
     # ------------------------------------------------------------------
@@ -235,72 +255,58 @@ class LLMEP():
     # ------------------------------------------------------------------
 
     def calc_ai(self, t_train, X_all, train_actions, test_actions):
-        """Select proposals by delegating all runs + majority vote to the LLM.
-
-        Args:
-            t_train (np.ndarray): observed objective values
-            X_all (np.ndarray): all descriptor rows
-            train_actions (np.ndarray): indices of observed rows
-            test_actions (list[int]): indices of unobserved rows
-
-        Returns:
-            actions (list[int]): selected action indices (length = num_proposals)
-        """
-        user_prompt_md  = self._load_prompt()
-        candidates_text, objective_headers = self._build_candidates_text(X_all, train_actions, test_actions)
-
-        print(f"  [LLMEP] Sending request ({self.num_runs} runs + majority vote) ...")
-
-        messages, system = self._build_messages(user_prompt_md, candidates_text, objective_headers)
-
-        response = self.client.messages.create(
-            model=self.model,
-            max_tokens=self.max_tokens,
-            system=system,
-            messages=messages,
-        )
-
-        response_text = response.content[0].text
-        result        = self._parse_result(response_text)
-
-        # Validate: keep only indices that are actually unobserved
-        test_actions_set = set(test_actions)
-        actions = [int(i) for i in result["final_selected_indices"] if int(i) in test_actions_set]
-        reasons = result.get("reasons", {})
-
-        if len(actions) < self.num_proposals:
-            print(f"  [LLMEP] Warning: only {len(actions)} valid indices returned "
-                  f"(expected {self.num_proposals}). Padding with remaining candidates.")
-            used = set(actions)
-            for a in test_actions:
-                if len(actions) >= self.num_proposals:
-                    break
-                if a not in used:
-                    actions.append(a)
-
-        actions = actions[:self.num_proposals]
-
-        if self.log_file:
-            log_lines = [
-                "# LLMEP Selection Log\n",
-                f"Model    : {self.model}",
-                f"Runs     : {self.num_runs}",
-                f"Proposals: {self.num_proposals}\n",
-                "---\n",
-                "## Full LLM Response\n",
-                response_text,
-                "\n---\n",
-                "## Final Selected Indices (Python-validated)\n",
-            ]
-            for rank, action in enumerate(actions, 1):
-                reason = reasons.get(str(action), "")
-                log_lines.append(f"  {rank}. index={action}, descriptors={X_all[action]}, reason={reason}")
-            with open(self.log_file, 'w', encoding='utf-8') as f:
-                f.write("\n".join(log_lines))
-            print(f"  [LLMEP] Log saved to {self.log_file}")
-
-        print(f"  [LLMEP] Final proposals: {actions}")
-        return actions, reasons
+        if len(test_actions) < self.num_proposals:
+            raise ValueError("Not enough unobserved candidates")
+        audit_path = Path(str(self.log_file) + ".json")
+        if audit_path.exists() or Path(self.output_file).exists():
+            raise FileExistsError("Use fresh output/log paths to avoid overwriting a previous attempt")
+        audit_path.parent.mkdir(parents=True, exist_ok=True)
+        candidates_text, headers = self._build_candidates_text(X_all, train_actions, test_actions)
+        messages, system = self._build_messages(self._load_prompt(), candidates_text, headers)
+        request = dict(model=self.model, max_tokens=self.max_tokens, system=system, messages=messages)
+        if self.use_web_search:
+            request["tools"] = [{"type":self.web_search_tool_version, "name":"web_search",
+                                  "max_uses":self.max_web_searches}]
+        audit = {"implementation":"python_vote_v1", "requested_model":self.model,
+                 "num_runs":self.num_runs, "num_proposals":self.num_proposals,
+                 "use_web_search":self.use_web_search, "request":request,
+                 "started_utc":datetime.now(timezone.utc).isoformat(),
+                 "code_sha256":hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+                 "status":"request_started"}
+        audit_path.write_text(json.dumps(audit, indent=2), encoding="utf-8")
+        text = ""
+        started = time.perf_counter()
+        try:
+            response = self.client.messages.create(**request)
+            text, citations, searches = self._extract_text(response)
+            audit.update(response=response.model_dump(mode="json"), citations=citations,
+                         web_search_requests=searches, response_text=text)
+            # Save even truncated, tool-paused, or malformed responses for diagnosis.
+            audit_path.write_text(json.dumps(audit, indent=2), encoding="utf-8")
+            if response.stop_reason != "end_turn":
+                raise ValueError(f"Incomplete response: stop_reason={response.stop_reason}")
+            result = self._parse_result(text)
+            actions, votes = self._aggregate_votes(result, test_actions)
+            audit.update(status="validated", python_vote_counts=votes, selected_indices=actions)
+            reasons = {str(i):f"Selected by Python aggregation: {votes[i]} votes" for i in actions}
+            return actions, reasons
+        except Exception as exc:
+            # Do not copy API error strings or headers into logs: they may contain secrets.
+            audit.update(status="failed", error_type=type(exc).__name__)
+            if isinstance(exc, (ValueError, FileExistsError)):
+                audit["validation_error"] = str(exc)
+            raise
+        finally:
+            audit["elapsed_seconds"] = time.perf_counter() - started
+            audit_path.write_text(json.dumps(audit, indent=2), encoding="utf-8")
+            Path(self.log_file).write_text(
+                "# LLMEP Python-vote log\n\n"
+                + f"Status: {audit['status']}\nModel: {self.model}\nWeb search: {self.use_web_search}\n"
+                + "\n## Full response\n" + text
+                + "\n\n## Python selection\n" + json.dumps(audit.get("selected_indices", []))
+                + "\n\n## Python votes\n" + json.dumps(audit.get("python_vote_counts", {}))
+                + "\n\nSee the adjacent JSON for request, usage, citations and validation details.\n",
+                encoding="utf-8")
 
 
     # ------------------------------------------------------------------
@@ -344,3 +350,104 @@ class LLMEP():
 
         print("Finish selection of proposals!")
         return "True"
+
+"""Validated single-batch selection or Python voting over alternative proposals."""
+import hashlib,json,random,re,time
+from collections import Counter
+from datetime import datetime,timezone
+from pathlib import Path
+
+
+class LLMEP(_BaseLLMEP):
+    def __init__(self,*args,tie_seed=0,**kwargs):
+        super().__init__(*args,**kwargs)
+        if type(tie_seed) is not int or tie_seed < 0:raise ValueError('tie_seed must be a nonnegative integer')
+        self.tie_seed=tie_seed
+
+    def _build_messages(self,user_prompt_md,candidates_text,objective_headers):
+        system=Path(self.system_prompt_file).read_text()
+        if self.num_runs==1:
+            instruction=f'Propose one batch of exactly {self.num_proposals} compositions. Select them as a coherent batch.'
+        else:
+            instruction=(f'Generate exactly {self.num_runs} alternative proposals with distinct exploration strategies, '
+                         f'each containing exactly {self.num_proposals} compositions. These are alternatives in one response, not independent API trials. '
+                         'Python will count one vote per proposal per index, select by descending vote count, and resolve tied votes by a seeded uniform random permutation. Do not aggregate votes yourself.')
+        common=('Each selected index must be an integer from the index column whose observed label is unknown. '
+                'Do not repeat an index within a proposal. Return one JSON object: '
+                '{"runs":[{"run":1,"strategy":"brief explanation","selected_indices":[...]}]}. '
+                f'Include exactly {self.num_runs} runs numbered consecutively from 1. Each list must contain exactly {self.num_proposals} valid indices.')
+        return [{'role':'user','content':f'{user_prompt_md}\n\n## Candidates\n{candidates_text}\n\n## Selection protocol\n{instruction}\n{common}'}],system
+
+    def _parse_result(self,text):
+        # A single fenced JSON object may be preceded by explanation; don't
+        # conflate harmless formatting with invalid scientific proposals.
+        blocks=re.findall(r'```(?:json)?\s*(.*?)\s*```',text,re.S)
+        if len(blocks)>1:raise ValueError('Return exactly one JSON object, not multiple blocks')
+        return super()._parse_result(blocks[0] if blocks else text)
+
+    def _aggregate_votes(self,result,test_actions):
+        available=set(map(int,test_actions))
+        runs=result.get('runs')
+        if isinstance(runs,list):
+            for index,run in enumerate(runs,1):
+                if not isinstance(run,dict):continue
+                ids=run.get('selected_indices')
+                if not isinstance(ids,list) or any(type(i)is not int for i in ids):continue
+                invalid=sorted(set(ids)-available)
+                if invalid:raise ValueError(f'Proposal {index} selected unavailable IDs {invalid}. Use only rows labelled unknown.')
+                repeated=sorted(i for i,n in Counter(ids).items() if n>1)
+                if repeated:raise ValueError(f'Proposal {index} repeats IDs {repeated}; all IDs in each proposal must differ.')
+        _,votes=super()._aggregate_votes(result,test_actions)
+        if self.num_runs==1:return list(result['runs'][0]['selected_indices']),votes
+        rng=random.Random(self.tie_seed);ranked=[]
+        for count in sorted(set(votes.values()),reverse=True):
+            group=sorted(i for i,v in votes.items() if v==count);rng.shuffle(group);ranked.extend(group)
+        return ranked[:self.num_proposals],votes
+
+    def calc_ai(self,t_train,X_all,train_actions,test_actions):
+        if len(test_actions)<self.num_proposals:raise ValueError('Insufficient candidates')
+        summary_path=Path(str(self.log_file)+'.json')
+        if summary_path.exists() or Path(self.output_file).exists():raise FileExistsError('Use fresh output paths')
+        candidates,headers=self._build_candidates_text(X_all,train_actions,test_actions)
+        messages,system=self._build_messages(self._load_prompt(),candidates,headers)
+        summary={'protocol':'validated_llmep_python_voting','num_runs':self.num_runs,'num_proposals':self.num_proposals,
+                 'tie_seed':self.tie_seed,'use_web_search':self.use_web_search,'model':self.model,'max_attempts':3,
+                 'started_utc':datetime.now(timezone.utc).isoformat(),'status':'started','attempts':[],
+                 'code_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
+        summary_path.write_text(json.dumps(summary,indent=2))
+        for attempt in range(1,4):
+            request={'model':self.model,'max_tokens':self.max_tokens,'system':system,'messages':list(messages)}
+            if self.use_web_search:
+                request['tools']=[{'type':self.web_search_tool_version,'name':'web_search','max_uses':self.max_web_searches}]
+            record={'attempt':attempt,'request':request,'status':'request_started'}
+            path=Path(str(self.log_file)+f'.attempt_{attempt}.json');path.write_text(json.dumps(record,indent=2))
+            start=time.perf_counter()
+            text=''
+            try:
+                response=self.client.messages.create(**request)
+                text,citations,searches=self._extract_text(response)
+                record.update(response=response.model_dump(mode='json'),response_text=text,citations=citations,web_search_requests=searches)
+                if response.stop_reason!='end_turn':raise ValueError(f'Incomplete response: {response.stop_reason}. Return a complete concise JSON object.')
+                result=self._parse_result(text);ids,votes=self._aggregate_votes(result,test_actions)
+                record.update(status='validated',selected_indices=ids,python_vote_counts=votes)
+            except ValueError as exc:
+                record.update(status='invalid',validation_error=str(exc))
+            except Exception as exc:
+                record.update(status='api_error',error_type=type(exc).__name__)
+                raise
+            finally:
+                record['elapsed_seconds']=time.perf_counter()-start
+                path.write_text(json.dumps(record,indent=2))
+                summary['attempts'].append(str(path));summary['status']=record['status'];summary_path.write_text(json.dumps(summary,indent=2))
+            if record['status']=='validated':
+                summary.update(status='validated',selected_indices=ids,python_vote_counts=votes,accepted_attempt=attempt)
+                summary_path.write_text(json.dumps(summary,indent=2))
+                Path(self.log_file).write_text('# Validated selection\n\n'+json.dumps(summary,indent=2))
+                return ids,{str(i):f'{votes[i]} votes' for i in ids}
+            if attempt<3:
+                messages=messages+[{'role':'assistant','content':text},{'role':'user','content':
+                    'Your previous response failed validation: '+record['validation_error']+
+                    f' Return a corrected complete JSON object with all {self.num_runs} proposals. '
+                    'Do not select any observed point. The observations and scientific objective are unchanged. '
+                    'Allowed unobserved IDs: '+json.dumps(list(map(int,test_actions)))}]
+        raise ValueError('Three attempts exhausted; no batch adopted')

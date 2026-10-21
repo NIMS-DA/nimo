@@ -12,7 +12,7 @@ class selection():
     """
 
     available_methods = ["RE", "PHYSBO", "PDC", "BLOX", "PTR", "SLESA", "BOMP",
-                         "ES", "COMBI", "NTS", "RSVM", "DOE", "LLMEP"]
+                         "ES", "COMBI", "NTS", "RSVM", "DOE", "LLMEP", "LSE", "BALD"]
 
     def __init__(self, method, input_file, output_file, num_objectives, num_proposals,
                  re_seed = None,
@@ -28,7 +28,13 @@ class selection():
                  output_res = None, training_res = None,
                  prompt_file = None, system_prompt_file = None,
                  llm_model = None, num_runs = None,
-                 log_file = None, api_key = None, max_tokens = None):
+                 log_file = None, api_key = None, max_tokens = None,
+                 lse_threshold = None, lse_epsilon = None,
+                 bald_samples = 4096, bald_lengthscale = 0.25,
+                 bald_prior_sd = 2.0, bald_num_centers = 21, bald_scaling = None,
+                 bald_seed = 0, bald_log_file = None,
+                 use_web_search = False, web_search_tool_version = "web_search_20250305",
+                 max_web_searches = 5, llmep_tie_seed = 0):
 
         """Constructor
         
@@ -60,13 +66,31 @@ class selection():
             prompt_file (str): path to the Markdown file describing the experimental context
             system_prompt_file (str): path to a file containing the system prompt.
             llm_model (str): Anthropic model ID to use
-            num_runs (int): number of independent LLM selection runs (for majority vote)
+            num_runs (int): number of alternative proposals in one LLM response; Python aggregates when >1
             log_file (str): if provided, save the full selection log as Markdown
             api_key (str): Anthropic API key. If None, reads from ANTHROPIC_API_KEY env variable.
             max_tokens (int): maximum number of tokens in the LLM response (default: 8192).
+            lse_threshold (float): fixed level-set threshold in original objective units.
+            lse_epsilon (float): full tolerance width; None uses automatic width (L=5, confidence=0.99).
+            bald_samples (int): number of posterior draws (default: 4096).
+            bald_lengthscale (float): RBF length scale in transformed feature coordinates.
+            bald_prior_sd (float): Gaussian weight prior standard deviation.
+            bald_num_centers (int): maximum number of candidate-based RBF centers.
+            bald_scaling (str): 'minmax' or 'none'; None defaults to minmax.
+            bald_seed (int): posterior/fallback seed; None uses nondeterministic draws.
+            bald_log_file (str): diagnostic JSON path; defaults to output_file + '.bald.json'.
+            use_web_search (bool): enable LLMEP Web search (default: False).
+            web_search_tool_version (str): Anthropic Web search tool identifier.
+            max_web_searches (int): maximum Web searches per LLMEP request.
+            llmep_tie_seed (int): seed for tied Python vote counts when num_runs > 1.
 
         """
 
+        self.bald_options = dict(samples=bald_samples,
+            lengthscale=bald_lengthscale, prior_sd=bald_prior_sd,
+            num_centers=bald_num_centers, scaling=bald_scaling,
+            seed=bald_seed, log_file=bald_log_file)
+        self.lse_options = dict(lse_threshold=lse_threshold, lse_epsilon=lse_epsilon)
         self.method = method
         self.input_file = input_file
         self.output_file = output_file
@@ -105,6 +129,9 @@ class selection():
         self.log_file = log_file
         self.api_key = api_key
         self.max_tokens = max_tokens
+        self.llmep_options = dict(use_web_search=use_web_search,
+            web_search_tool_version=web_search_tool_version,
+            max_web_searches=max_web_searches, tie_seed=llmep_tie_seed)
 
 
         res = self.module_selection()
@@ -129,6 +156,16 @@ class selection():
         if self.method == "PHYSBO":
             res = nimo.ai_tools.ai_tool_physbo.PHYSBO(self.input_file, self.output_file, 
             self.num_objectives, self.num_proposals, self.physbo_score, self.minimization,  self.output_res, self.training_res).select()
+            return res
+
+        if self.method == "LSE":
+            return nimo.ai_tools.ai_tool_lse.LSE(self.input_file, self.output_file,
+                self.num_objectives, self.num_proposals, output_res=self.output_res,
+                **self.lse_options).select()
+
+        if self.method == "BALD":
+            res = nimo.ai_tools.ai_tool_bald.BALD(self.input_file, self.output_file,
+                self.num_objectives, self.num_proposals, **self.bald_options).select()
             return res
 
         if self.method == "PDC":
@@ -192,7 +229,7 @@ class selection():
             res = nimo.ai_tools.ai_tool_llmep.LLMEP(self.input_file, self.output_file, 
             self.num_objectives, self.num_proposals,
             self.prompt_file, self.system_prompt_file, self.llm_model,
-            self.num_runs, self.log_file, self.api_key, self.max_tokens).select()
+            self.num_runs, self.log_file, self.api_key, self.max_tokens, **self.llmep_options).select()
             return res
 
 
