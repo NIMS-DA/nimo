@@ -34,7 +34,8 @@ class selection():
                  bald_prior_sd = 2.0, bald_num_centers = 21, bald_scaling = None,
                  bald_seed = 0, bald_log_file = None,
                  use_web_search = False, web_search_tool_version = "web_search_20250305",
-                 max_web_searches = 5, llmep_tie_seed = 0):
+                 max_web_searches = 5, llmep_tie_seed = 0,
+                 blox_batch_mode = "fixed"):
 
         """Constructor
         
@@ -83,6 +84,8 @@ class selection():
             web_search_tool_version (str): Anthropic Web search tool identifier.
             max_web_searches (int): maximum Web searches per LLMEP request.
             llmep_tie_seed (int): seed for tied Python vote counts when num_runs > 1.
+            blox_batch_mode (str): "fixed" fits BLOX models once per batch (default);
+                "refit" retrains with each selected prediction. Both update novelty.
 
         """
 
@@ -97,6 +100,7 @@ class selection():
         self.num_objectives = num_objectives
         self.num_proposals = num_proposals
 
+        self.blox_batch_mode = blox_batch_mode
         self.re_seed = re_seed
         self.ptr_ranges = ptr_ranges
         self.slesa_beta_max = slesa_beta_max
@@ -176,7 +180,8 @@ class selection():
 
         if self.method == "BLOX":
             res = nimo.ai_tools.ai_tool_blox.BLOX(self.input_file, self.output_file, 
-            self.num_objectives, self.num_proposals, self.output_res).select()
+            self.num_objectives, self.num_proposals, self.output_res,
+            batch_mode=self.blox_batch_mode).select()
             return res
         
         if self.method == "PTR":
