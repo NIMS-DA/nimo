@@ -60,24 +60,22 @@ class PDC():
 
         """
 
-        arr = np.genfromtxt(self.input_file, skip_header=1, delimiter=',')
-
-        arr_train = arr[~np.isnan(arr[:, - 1]), :]
-        arr_test = arr[np.isnan(arr[:, - 1]), :]
-
-
-        X_train = arr_train[:, : - self.num_objectives]
-        t_train = arr_train[:, - self.num_objectives:]
-
-        X_test = arr_test[:, : - self.num_objectives]
-
-        test_actions = np.where(np.isnan(arr[:, -1]))[0].tolist()
-
-        X_all=arr[:, : - self.num_objectives]
-
-        all_actions = [i for i in range(len(X_all))]
-
-        train_actions = list(np.sort(list(set(all_actions) - set(test_actions))))
+        if self.num_objectives != 1:
+            raise ValueError("PDC requires exactly one classification label column")
+        with open(self.input_file, newline='', encoding='utf-8-sig') as f:
+            rows = list(csv.reader(f))
+        if not rows or len(rows[0]) < 2:
+            raise ValueError("CSV requires numeric features and one label column")
+        header, rows = rows[0], rows[1:]
+        if not rows or any(len(row) != len(header) for row in rows):
+            raise ValueError("CSV must contain nonempty, rectangular candidate data")
+        X_all = np.asarray([[float(v) for v in row[:-1]] for row in rows])
+        if not np.isfinite(X_all).all():
+            raise ValueError("PDC features must be finite numbers")
+        labels = [row[-1].strip() for row in rows]
+        train_actions = [i for i, label in enumerate(labels) if label]
+        test_actions = [i for i, label in enumerate(labels) if not label]
+        t_train = np.asarray([[labels[i]] for i in train_actions], dtype=object)
 
         return t_train, X_all, train_actions, test_actions
 
@@ -111,22 +109,26 @@ class PDC():
         #Preparation of data    
         data_list = np.array(X_all)
 
-        label_list = []
-        for i in range(len(data_list)):
-            if i in train_actions:
-                phase = int(t_train[train_actions.index(i)][0])
-            else:
-                phase = - 1
-            label_list.append(phase)
-
-
-        if len(list(set(label_list))) == 2:
-            
-            print("(Kill) If there is only one phase, use RE for selection.")
-
-            import sys
-            sys.exit()
-
+        # Encode categories; -1 is reserved internally for unobserved rows.
+        observed = [str(row[0]).strip() for row in t_train]
+        self.classes_ = sorted(set(observed))
+        # Preserve the numerical class ordering of legacy integer-labelled data.
+        try:
+            numeric = {label: float(label) for label in self.classes_}
+            if all(np.isfinite(v) for v in numeric.values()):
+                self.classes_.sort(key=lambda label: (numeric[label], label))
+        except ValueError:
+            pass
+        if len(self.classes_) < 2:
+            raise ValueError("PDC requires at least two observed classes; use RE for initialization")
+        if not test_actions:
+            raise ValueError("PDC requires at least one unobserved candidate")
+        if self.num_proposals < 1 or self.num_proposals > len(test_actions):
+            raise ValueError("num_proposals must be between 1 and the unobserved candidate count")
+        mapping = {label: i for i, label in enumerate(self.classes_)}
+        label_list = np.full(len(data_list), -1, dtype=int)
+        for action, label in zip(train_actions, observed):
+            label_list[action] = mapping[label]
 
         label_index_list = range(len(data_list))
         labeled_index_list = train_actions
@@ -159,6 +161,10 @@ class PDC():
         classes = lp_model.classes_
 
 
+        # probability_j corresponds to classes_[j], also saved beside predictions.
+        self.predicted_labels_ = np.asarray(self.classes_)[predicted_all_labels]
+        self.label_distributions_ = label_distributions_all
+
         #Output prediction results
         if self.output_res == True:
 
@@ -181,13 +187,19 @@ class PDC():
                 for jj in range(len(X_all[0])):
                     res_each.append(X_all[ii][jj])
 
-                res_each.append(predicted_all_labels[ii])
+                res_each.append(self.classes_[predicted_all_labels[ii]])
                 
                 for jj in range(len(label_distributions_all[0])):
                     res_each.append(label_distributions_all[ii][jj])
 
                 res_tot.append(res_each)
 
+
+            with open('output_res_classes.csv', 'w', newline="") as f:
+                writer = csv.writer(f)
+                writer.writerow(['probability_column', 'label'])
+                writer.writerows(('probability_' + str(i), label)
+                                 for i, label in enumerate(self.classes_))
 
             with open('output_res.csv', 'w', newline="") as f:
                 writer = csv.writer(f)
