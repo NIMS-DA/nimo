@@ -299,6 +299,7 @@ class LSE():
         """
         if self.output_file is None:
             raise ValueError('LSE selection requires output_file.')
+        print("Start selection of proposals by LSE!")
         result = self.evaluate()
         if len(self.unmeasured) == 0:
             raise ValueError('LSE has no unmeasured candidates.')
@@ -331,5 +332,12 @@ class LSE():
             writer = csv.writer(f)
             writer.writerow(['actions'] + self.header[:-1])
             writer.writerows([action] + self.features[action].tolist() for action in self.actions)
-        print('LSE proposals: actions = %s' % self.actions)
+        print("Proposals")
+        for number, action in enumerate(self.actions, start=1):
+            print("###")
+            print("number =", number)
+            print("actions = ", action)
+            print("proposal = ", self.features[action])
+            print("###")
+        print("Finish selection of proposals!")
         return 'True'

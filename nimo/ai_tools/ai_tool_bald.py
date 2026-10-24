@@ -70,6 +70,7 @@ class BALD:
         return x, y, observed, available
 
     def select(self):
+        print("Start selection of proposals by BALD!")
         x, y, observed, available = self.load_data()
         # Validate the feature configuration even if no classifier can yet be fitted.
         self.classifier.features(x)
@@ -93,4 +94,12 @@ class BALD:
             writer.writerow(['actions'] + self.headers[:-1])
             writer.writerows([[i] + self.raw_rows[i][:-1] for i in ids])
         self.log_file.write_text(json.dumps(metadata, indent=2, ensure_ascii=False), encoding='utf-8')
+        print("Proposals")
+        for number, action in enumerate(ids, start=1):
+            print("###")
+            print("number =", number)
+            print("actions = ", action)
+            print("proposal = ", x[action])
+            print("###")
+        print("Finish selection of proposals!")
         return 'True'
